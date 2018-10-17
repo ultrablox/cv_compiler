@@ -1,0 +1,268 @@
+{
+    "skills" : {
+        "C++" : {
+            "attitude" : "favourite"
+        },
+        "AI" : {
+            "name" : "Artificial Intelligence",
+            "attitude" : "favourite"
+        },
+        "AI Planning" : {
+            "name" : "Automated Planning",
+            "attitude" : "favourite"
+        },
+        "Expert Systems" : {
+            "attitude" : "neutral"
+        },
+        "STL" : {
+            "attitude" : "favourite"
+        }, 
+        "OpenGL" : {
+            "attitude" : "favourite"
+        },
+        "QT" : {
+            "attitude" : "favourite"
+        },
+        "CUDA" : {
+            "attitude" : "favourite"
+        },
+        "Ruby" : {
+            "attitude" : "neutral"
+        },
+        "Ruby On Rails" : {
+            "attitude" : "neutral"
+        },
+        "git" : {
+            "attitude" : "favourite"
+        },
+        "LLVM API" : {
+            "attitude" : "favourite"
+        },
+        "Embedded" : {
+            "attitude" : "favourite"
+        },
+        "C#" : {
+            "attitude" : "negative"
+        },
+        "ASP.NET" : {
+            "attitude" : "negative"
+        },
+        "python" : {
+            "attitude" : "negative"
+        },
+        "Compiler Development" : {
+            "attitude" : "favourite"
+        },
+        "Algorithms" : {
+            "attitude" : "favourite"
+        }
+    },
+    "projects" : [
+        {
+            "name" : "TomTom Demo",
+            "period" : "17.07.2017-now",
+            "skills" : ["Python", "ansible", "SCRUM"],
+            "icon" : "tomtom.png",
+            "description" : "Customer Systems for Demonstration",
+            "team-size" : "8",
+            "achievements" : []
+        },
+    	{
+            "name" : "charon-hppa",
+            "period" : "17.07.2017-27.08.2018",
+            "skills" : ["C++", "STL", "boost", "LLVM API", "GIT", "ASM", "Real-Time Programming", "TDD", "BDD", "Optimization", "Linux", "LLDB", "GDB", "Ruby", "Go", "Agile"],
+            "secondary_skills" : [
+                { "Assembler" : "01.01.2018-27.08.2018" },
+                { "Ruby" : "17.07.2017-01.12.2017" }
+            ],
+            "icon" : "charon_project.png",
+            "description" : "Emulator of HP-PARISC based computers",
+            "web" : "https://www.stromasys.com/solutions/charon-hpa/",
+            "team-size" : "3",
+            "achievements" : [
+                "4x increased emulated CPU performance with development of LLVM-based JIT-compiler",
+                "reduced emulated CPU timecost with automating of verification process"
+            ]
+    	},
+    	{
+    	    "name" : "ultra_outliner",
+    	    "period" : "01.05.2016-01.10.2017",
+    	    "skills" : ["C++", "STL", "QT", "fullstack", "Ruby on Rails", "Javascript", "Agile", "marketing", "SEO"],
+            "icon" : "outliner_project.png",
+            "description" : "Card-based outlining software for screenwriters and storytellers",
+            "web" : "http://ultraoutliner.com",
+            "team-size" : "1-3",
+            "achievements" : [
+                "alone with no investments implemented idea into software, promoted it, attracted audience, partners and contributors",
+                "got 1000+ active users total, 150-200 unique site visitors/week"
+            ]
+    	},
+    	{
+            "name" : "Tizerbank",
+            "period" : "01.09.2014-28.02.2016",
+            "skills" : ["C++", "STL", "boost", "BigData", "Linux", "Expert Systems", "Ruby on Rails", "Javascript", "fullstack", "TDD", "BDD", "Agile"],
+            "icon" : "tizerbank_project.png",
+            "description" : "Automated Demand Side Platform",
+            "web" : "http://tizerbank.com",
+            "team-size" : "8",
+            "achievements" : [
+                "overperformed B-tree and noSQL databases by reducing all HDD I/O to serial access",
+                "stable, robust processing and storage up to 1.2TB/day/node"
+            ],
+            "notes" : "responsible for development of specialized high-performance database management system for user activity database server, including development and implementation of high performance algorithms for analyzing users activity, BigData handling and processing"
+    	},
+    	{
+            "name" : "3dSurvey",
+            "period" : "01.04.2012-14.07.2017",
+            "skills" : ["C++", "STL", "OpenGL", "Shaders", "GLSL", "RTR", "fullstack", "TDD", "MS Visual Studio"],
+            "secondary_skills" : [
+                { "Vulkan" : "3 months" },
+                { "Ruby On Rails" : "8 months" }
+            ],
+            "icon" : "survey_project.png",
+            "description" : "Real-Time Rendering engine for huge BIM-based scenes",
+            "team-size" : "1-5",
+            "achievements" : [
+                "invented fast real-time rendering method for immovable huge scenes, implemented it and successfully applied in building monitoring domains",
+                "simplified BIM models development process by reducing visual presentation preparations (decreased time-cost up to 20%"
+            ]
+    	},
+    	{
+            "name" : "Lement Pro",
+            "period" : "01.05.2015-31.07.2016",
+            "skills" : ["C#", "ASP.NET", "MS Visual Studio", "AI Planning"],
+            "icon" : "lementpro_project.png",
+            "description" : "Collaborative software for small/middle-size business",
+            "web" : "http://lement.pro",
+            "team-size" : "5-10",
+            "achievements" : [
+                "applied AI planning for project planning, results have scientific meaning and are published",
+                "reduced up to 4 days / month of managers time used for planning"
+            ]
+    	},
+    	{
+            "name" : "BIM automation",
+            "period" : "01.02.2015-30.05.2017",
+            "skills" : ["C#", "BIM", "C++", "3dsMax API", "Revit API", "AutoCAD API"],
+            "icon" : "sodislabs_project.png",
+            "description" : "Plugins for BIM models development automation in Autodesk Revit, Max, Maya, AutoCAD",
+            "team-size" : "1-2",
+            "achievements" : [
+                "decreased time-cost for BIM models development up to 15% depending on model"
+            ]
+    	},
+    	{
+            "name" : "AT-TECHNOLOGY",
+            "period" : "01.09.2011-14.02.2018",
+            "skills" : ["C++", "AI", "AI Planning", "QT", "Expert Systems"],
+            "icon" : "at_technology.png",
+            "description" : "IDE for Expert Systems with AI-based automation",
+            "team-size" : "5-10",
+            "achievements" : [
+                "decreased time-cost for development of typical expert systems up to 15-20%"
+            ]
+    	},
+    	{
+            "name" : "ultra_planner",
+            "period" : "01.10.2014-30.09.2015",
+            "skills" : ["C++", "HPC", "STL", "CUDA", "AI Planning"],
+            "description" : "Heuristic search based planner with hybrid external/internal memory usage",
+            "web" : "https://github.com/ultrablox/ultra_planner",
+            "team-size" : "1-2",
+            "achievements" : [
+                "in middle-sized state space performance better than analogues, scientific results are published"
+            ]
+    	},
+        {
+            "name" : "Vertibird",
+            "period" : "01.06.2014-30.01.2016",
+            "skills" : ["C++", "Embedded", "Real-Time Programming", "Embedded", "ARM", "QNX", "FreeRTOS", "PCB development"],
+            "description" : "Hardware and sofware for multicopter based UAV for autonomous flights",
+            "team-size" : "1-2",
+            "achievements" : []
+        },
+        {
+            "name" : "NocView",
+            "period" : "01.02.2008-30.08.2011",
+            "skills" : ["C++", "QT"],
+            "icon" : "nocview.png",
+            "description" : "Maintenance monitoring utilty for remotely located hotel TV systems",
+            "team-size" : "1-2",
+            "achievements" : []
+        },
+        {
+            "name" : "GEN CRM",
+            "period" : "01.07.2009-28.02.2011",
+            "skills" : ["Ruby on Rails", "CSS", "JS"],
+            "description" : "CRM for communication with hotel TV customers",
+            "team-size" : "1",
+            "achievements" : []
+        }
+    ],
+    "employments" :[
+        {
+            "name" : "TomTom",
+            "role" : "Software Engineer",
+            "location" : "Eindhoven, NL",
+            "description" : "embedded naviation software development",
+            "period" : "01.09.2018-now",
+            "web" : "https://www.tomtom.com/en_ru/",
+            "projects" : [],
+            "notes" : []
+        },
+        {
+            "name" : "Stromasys Inc",
+            "description" : "development of emulation software",
+            "role" : "Software Engineer",
+            "location" : "Moscow, RU",
+            "period" : "17.07.2017-27.08.2018",
+            "web" : "https://www.stromasys.com",
+            "projects" : []
+        },
+        {
+            "name" : "Lement LLC",
+            "role" : "Sr. Software Engineer",
+            "description" : "NPO SODIS LLC affiliated company operating in a field of software development and IT support",
+            "location" : "Moscow, RU",
+            "period" : "01.01.2012-16.07.2017",
+            "web" : "http://sodislab.com",
+            "projects" : []
+        },
+        {
+            "name" : "Sobmag Ltd",
+            "description" : "software project based company",
+            "role" : "Software Engineer",
+            "location" : "Moscow, RU",
+            "period" : "01.09.2014-31.01.2016",
+            "web" : "http://tizerbank.com",
+            "projects" : []
+        },
+        {
+            "name" : "MEPHI Unviversity",
+            "description" : "Dept. of Cybernetics",
+            "role" : "Research Assistant",
+            "location" : "Moscow, RU",
+            "period" : "01.11.2012-31.08.2018",
+            "web" : "https://eng.mephi.ru",
+            "projects" : []
+        },
+        {
+            "name" : "NPO SODIS LLC",
+            "description" : "Structural Health Monitoring Systems and Building Services Monitoring",
+            "role" : "Software Engineer",
+            "location" : "Moscow, RU",
+            "period" : "01.09.2011-31.12.2011",
+            "web" : "http://sodislab.com",
+            "projects" : []
+        },
+        {
+            "name" : "GEN Enterprise Ltd",
+            "description" : "Hotel TV systems",
+            "role" : "Software Developer",
+            "location" : "Moscow, RU",
+            "period" : "01.02.2008-31.08.2011",
+            "web" : "http://www.genen.ru",
+            "projects" : ["NocView", "GEN CRM"]
+        }
+    ]
+}

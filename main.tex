@@ -1,0 +1,276 @@
+
+\documentclass[10pt]{article} % Default font size
+
+\usepackage[labelformat=empty,labelsep=none]{caption}
+
+\input{styles.tex} % Include the file specifying document layout
+
+
+
+%----------------------------------------------------------------------------------------
+
+\newcommand{\vcenteredinclude}[1]{\begingroup
+\setbox0=\hbox{\includegraphics[width=12pt]{#1}}%
+\parbox{\wd0}{\box0}\endgroup}
+
+\begin{document}
+
+\bibliographystyle{plain}
+\nobibliography{blohin}{}
+
+\pagenumbering{gobble}
+
+\blocksection{Personal and Contact Info}{Name: Yury Blokhin \splitter Sex: Male \splitter Date of birth: 14.01.1989 \splitter Nationality: Russian \\
+    % 121596, Russia, Moscow, Govorova str., 15-201 \\
+    5615 PW, Netherlands, Eindhoven, Hoogstraat 188B \\
+    \vcenteredinclude{img/mail_logo.png} \href{mailto:ultrablox@gmail.com}{ultrablox@gmail.com}
+    \vcenteredinclude{img/phone_logo.png} +7 (926) 529 9731 \vcenteredinclude{img/linkedin_logo.png}
+    \href{https://www.linkedin.com/in/yuri-blokhin-01688a78/}{linkedin.com/in/yuri-blokhin-01688a78/}
+    \vcenteredinclude{img/skype_logo.png} ultrablox
+    \vspace{\blocksep}
+}
+
+\blocksection{Objective and Summary}{
+    \input{lead.tex}
+    \vspace{\blocksep}
+}
+
+\blocksection{Education}{
+    \education{National Research Nuclear University MEPHI}{2011-2018}{PhD in Engineering Sciences}{GPA 100\%}{
+	\begin{itemize-noindent}
+	    \item Thesis: Development of Intelligent software environment for Integrated Expert System Construction
+	    \item Specialization: AI, Computer Science, Expert Systems, AI Planning, Heuristic Search
+	\end{itemize-noindent}
+    }
+
+    \education{National Research Nuclear University MEPHI (\href{https://eng.mephi.ru}{eng.mephi.ru})}{2006-2011}{Specialist in Applied mathematics, Informatics}{GPA: 96\%}{
+	\begin{itemize-noindent}
+	    \item Thesis: Development of Algorithms and Software for Standard Design Procedure \enquote{Tutoring expert systems development} for AT-TECHNOLOGY workbench
+	    \item Specialization: AI, Computer Science
+	\end{itemize-noindent}
+    }
+}
+
+\blocksection{Professional Skills}{
+    \includegraphics[width=0.75\textwidth]{skill_matrix.pdf}
+    % \input{generated_skills.tex}
+
+    \textbf{Primary:} C/C++11/14 (9 yr.), STL (9 yr.), Algorithms, Data Structure, boost (2 yr.), GDB/LLDB (5 yr.), OpenGL/GLSL (6 yr.), AI (8 yr.), git (7 yr.), TDD (7 yr.), BDD (3 yr.), QT (5 yr.)\\
+    \skillgroup{Advanced:}{ Ruby (5 yr.), SQL (2 yr.), Automated Planning, Expert Systems, noSQL, Agile, Scrum, fullstack;}{
+	\item Compilers, LLVM IR/API (1 yr.), Optimization, Translation;
+	\item Computer Graphics, Real-Time Rendering, Big Data, Real Time Programming, Parallel Programming;
+	\item Ogre3d, FBX, sqlite, libxml, freetype, PostgreSQL, MySQL, SQLite, GigaBASE, HPUX, HP PA-RISC;
+	\item Microsoft Visual Studio, QT Creator, XCode, ECLIPS, Keil uVision, Code Composer, GCC;
+	\item Mac OSX, Windows, Linux, IOS, Cross-Platform Programming;
+	\item unit/functional testing, testing automation, verification.
+    }
+    
+    \skillgroup{Intermediate:}{Ruby on Rails, Javascript, Python, Go, Assembler (PA-RISC, x86), C\#, .NET, Delphi;}{
+	\item Mobile Development: IOS, Objective-C (2 yr.);
+	\item Plugins Autodesk Revit API, Autocad API, Navisworks API, 3ds MAX API, Maya API, Rhinoceros Rhino API;
+	\item Embedded Programming (2 yr.): ARMs (STM32, Sitara), Arduino, 8051s and some others, PCB prototyping and development (Altium Designer, PCAD), QNX, Free RTOS, Baremetal;
+	\item Mercurial HG, SVN.
+    }
+
+    \textbf{Basic:} CUDA, and other languages.
+
+    \textbf{Languages:}	Russian (native), English (advanced), German (basic)
+
+    \skillgroup{Writing:}{scientific paper publications, popular articles, technical writing, documentation writing}{
+	\item automating documentation writing
+	\item LaTex (this CV is written with LaTex)
+	\item fast typewriter: 70+ wpm EN, 80+ wpm RU
+    }
+
+    \vspace{\blocksep}
+}
+
+\blocksection{Main Projects}{
+    \input{generated_projects.tex}
+
+    \project{cs-demo}{tomtom.png}{2018-present}{in TomTom}{Custom Systems for Demonstration}{
+	\item skills: Embedded, Automotive, Python, C/C++, Scrum, Linux
+    }{csdemo:project}
+
+    \project{charon-hppa}{charon_project.png}{2017-present}{in Stromasys Ltd.}{Emulator of HP-PARISC based computers}{
+	\item \weblink{https://www.stromasys.com/solutions/charon-hpa/}{https://www.stromasys.com/solutions/charon-hpa/}
+	\item skills: C/C++, LLVM API, ASM, Real-Time Programming, TDD, BDD, Optimization, Linux, LLDB, GDB, Ruby, Go, Agile
+	\item achievements: automated verification process of emulated CPU
+    }{charon:project}
+
+    \project{ultra\_outliner}{outliner_project.png}{2016-present}{hobby}{Card-based outlining software for screenwriters and storytellers}{
+	\item \weblink{http://ultraoutliner.com}{http://ultraoutliner.com}
+	\item skills: C++, QT, Ruby on Rails, Javascript, fullstack, Agile, marketing, CEO
+	\item achievement: alone with no investments implemented idea into software, promoted it, attracted audience, partners and contributors
+	\item effect: got 1000+ active users total, 150-200 unique site visitors/week
+    }{outliner:project}
+
+    \project{Tizerbank}{tizerbank_project.png}{2014-2016}{in SOBMAG LTD}{
+	Automated Demand Side Platform}{
+	\item \weblink{http://tizerbank.com}{http://tizerbank.com}
+	\item skills: C++, HPC, BigData, STL, boost, Linux, Expert Systems, Ruby on Rails, Javascript, fullstack, TDD, BDD, Agile
+	\item role: Developer (team size --- 8), responsible for development of specialized high-performance database management system for user activity database server, including development and implementation of high performance algorithms for analyzing users activity, BigData handling and processing
+	\item achievement: overperformed B-tree and noSQL databases by reducing all HDD I/O to serial access
+	\item effects: stable, robust processing and storage up to 1.2TB/day/node
+    }{tizerbank:project}
+
+    \project{3dSurvey}{survey_project.png}{2012-2017}{in Lement LLC}{Real-Time Rendering engine for huge BIM-based scenes}{
+	\item skills: C++, STL, OpenGL, GLSL, Real-Time Rendering, fullstack, Agile, TDD, MS Visual Studio
+	\item role: Team Lead / Sr. Software Engineer (team size --- 5), Mentor
+	\item achievement: invented fast real-time rendering method for immovable huge scenes, implemented it and successfully applied in building monitoring domains
+	\item effect: simplified BIM models development process by reducing visual presentation preparations (decreased time-cost up to 20\%)
+    }{survey:project}
+
+    \project{Lement Pro}{lementpro_project.png}{2015-2016}{in Lement LLC}{Collaborative software for small/middle-size business}{
+	\item \weblink{http://lement.pro}{http://lement.pro}
+	\item skills: C\#, C++, ASP.NET, MS Visual Studio
+	\item role: Developer (team size --- 5-10)
+	\item achievements: applied AI planning for project planning, results have scientific meaning and are published
+	\item effect: reduced up to 4 days / month of managers time used for planning
+    }{lement:project}
+    
+    \project{BIM automation}{sodislabs_project.png}{2015-2017}{in Lement LLC}{Plugins for BIM models development automation in Autodesk Revit, Max, Maya, AutoCAD}{
+	\item skills: C\#, BIM, C++, 3dsMax API, Revit API, AutoCAD API
+	\item effects: decreased time-cost for BIM models development up to 15\% depending on model
+    }{bim:project}
+    
+    % \phantomsection
+    % \label{AT:project}
+    \project{AT-TECHNOLOGY}{at_technology.png}{2011-2018}{PhD}{IDE for Expert Systems with AI-based automation}{
+    	\item skills: C++, AI, AI Planning, Expert Systems
+	\item role: Team Lead / Sr. Software Engineer (team size --- 5-10), Mentor
+	\item effect: Decreased time-cost for development of typical expert systems up to 15-20\%
+    }{AT:project}
+    
+    % \phantomsection
+    % \label{ultraplanner:project}
+    \project{ultra\_planner}{}{2016-2018}{PhD}{Heuristic search based planner with hybrid external/internal memory usage}{
+	\item \weblink{https://github.com/ultrablox/ultra\_planner}{https://github.com/ultrablox/ultra\_planner}
+	\item skills: C++, High-Performance Computing, STL, AI Planning, CUDA
+	\item achievement: created universal C++ open source library easy configurable for planning in different domains
+	\item effect: in middle-sized state space performance better than analogues, scientific results are published
+    }{planner:project}
+
+% ===============
+    \project{Vertibird}{}{2014-2016}{hobby}{Hardware and sofware for multicopter based UAV for autonomous flights}{
+	\item skills: C++, Real-Time Programming, Embedded Programming, ARM, QNX, FreeRTOS, DataSheet reading, PCB development
+    }{vertibird:project}
+
+    
+ %    \project{iMotiw}{}{xxxx}{in NPO SODIS}{
+	% Mobile IOS client for Motiw collaborative software
+	% Skills: Objective-C, C++, SQL, IOS, XCode
+ %    }
+
+ %    \project{ultra\_crypt}{}{xxxx}{hobby}{
+	% First WPA2 bruteforce imlpementation for supercomputers\\
+	% Effect: achieved paralleling with approximately linear scalability for supercomputers
+ %    }
+
+ %    \project{GenMonitor}{}{xxxx}{Gen Enterprise Ltd}{
+	% Maintenance monitoring system for remotely located hotel TV systems\\
+	% Effect: decreased time of Gen Enterprise stuff used to discover failures, configure and maintain hardware of remotely located hotel TV systems\\
+	% Skills: C++, QT
+ %    }
+
+}
+
+\blocksection{Employment History}{
+    \input{generated_employments.tex}
+
+    \job{Sept 2018}{Present}{TomTom}{https://www.tomtom.com}{Software Engineer}{automotive, embedded}{
+	\begin{itemize-noindent}
+	    \item{worked on \projectlink{csdemo:project}{cs-demo} project}
+	    \item{development of solutions of software delivery for internal customers}
+	\end{itemize-noindent}
+    }
+
+    \job{July 2017}{Aug 2018}{Stromasys INC}{https://www.stromasys.com}{Software Engineer}{development of emulation software}{
+	\begin{itemize-noindent}
+	    \item{worked on \projectlink{charon:project}{charon-hppa} project}
+	    \item{development of assembler/disassembler, debugger, hardware verification}
+	\end{itemize-noindent}
+    }
+    
+    \job{Jan 2012}{July 2017}{Lement LLC, Skolkovo, Moscow}{http://sodislab.com}{Sr. Software Engineer}{NPO SODIS LLC affiliated company operating in a field of software development and IT support}{
+	\begin{itemize-noindent}
+	    \item{started and lead \projectlink{survey:project}{3dSurvey} project, took part in \projectlink{lement:project}{Lement Pro} and \projectlink{bim:project}{BIM automation} projects}
+	    \item{porting and maintenance 3dSurvey to JS/WebGL (emscripten), IOS}
+	    \item{documentation development, patent writing}
+	\end{itemize-noindent}
+    }
+
+    \job{Sept 2014}{Jan 2016}{SOBMAG LTD.}{http://tizerbank.com}{Software Engineer}{software project based company}{
+	\begin{itemize-noindent}
+	    \item{worked on \projectlink{tizerbank:project}{Tizerbank} project}
+	\end{itemize-noindent}
+    }
+
+    \job{Nov 2012}{Aug 2018}{MEPHI University}{https://eng.mephi.ru}{Research Assistant}{Dept. of Cybernetics}{
+	Performed researches in scientific group (under supervising of Dr. Prof. Rybina G.V. in the fields of AI, Automated Planning, Expert Systems and Development Automation.
+	\begin{itemize-noindent}
+	    \item{Worked on \projectlink{AT:project}{AT-TECHNOLOGY} and \projectlink{planner:project}{ultra\_planner} projects}
+	    \item{Executor in projects \enquote{Development of models, methods and software for intelligent planning and control of integrated expert system construction}, \enquote{Development of theory and software for dynamic integrated expert systems development}, \enquote{Methods and software tools for development of intelligent tutoring systems based on integrated expert systems} funded by Russian Foundation for Basic Research support}
+	    \item{Teaching Lectures, Seminars and Practice lessons in courses \enquote{Models Methods and Program Tools for Knowledge Representation}, \enquote{Designing of Knowledge-based Software Systems}, \enquote{Dynamic Intelligent Systems}, \enquote{Programming Languages and Translation Methods}, \enquote{System programming and Operation Systems} etc.}
+	\end{itemize-noindent}
+    }
+
+    \job{Aug 2011}{Jan 2012}{NPO SODIS LLC, Moscow}{http://sodislab.com}{Software Engineer}{Structural Health Monitoring Systems and Building Services Monitoring}{
+	\begin{itemize-noindent}
+	    \item{IOS Mobile Client Development for business management system (Obj-C, C++)}
+	\end{itemize-noindent}
+    }
+
+    \job{Feb 2008}{Aug 2011}{GEN Enterprise Ltd., Moscow}{http://www.genen.ru}{Software Developer}{Hotel TV systems}{
+	\begin{itemize-noindent}
+	    \item{CRM system development (Ruby on Rails)}
+	    \item{Developing utilities for maintenance of Hotel TV systems (C++, QT)}
+	    % \item{Cisco Hardware configuration}
+	\end{itemize-noindent}
+    }
+}
+
+\blocksection{Professional Activities}{
+    \textbf{Recent Scientific Publications} (total 9 Scopus, 11 articles, 20+ others):
+    \begin{itemize-noindent}
+	% \item \scopusbibentry{Rybina2019266}
+	\item 2019 --- Intelligent Planning and Control of Integrated Expert Systems Development Process // Advances in Intelligent Systems and Computing, vol. 848 \scopus
+	% \item \scopusbibentry{Rybina201811}
+	\item 2018 --- Intelligent support of educational process basing on ontological approach with use of tutoring integrated expert systems // Advances in Intelligent Systems and Computing, vol. 680 \scopus
+	% \item \scopusbibentry{Rybina2017145}
+	\item 2018 --- Using ontological approach in tutoring integrated expert systems // Proceedings of the 2nd Russian-Pacific Conference on Computer Technology and Applications \scopus
+	% \item \scopusbibentry{Rybina20171}	
+	\item 2017 -- Distributed Knowledge Acquisition Basing on Integration of Data Mining and Text Mining Methods and Their Usage with AT-TECHNOLOGY Workbench // Proceedings - 2017 5th International Conference on Future Internet of Things and Cloud Workshops \scopus
+	% \item \scopusbibentry{Rybina2017320}
+	\item 2017 --- Intelligent software environment for integrated expert system designing and development // CEUR Workshop Proceedings, vol. 1989 \scopus
+	%\item \bibentry{Blohin_2017_en}
+	\item 2017 --- State-space search with hybrid usage of external memory for automated planning // Information-measuring and Control Systems, \textnumero 7
+	% \item \scopusbibentry{DBLP:conf/is/RybinaB16}
+	\item 2016 --- Use of intelligent planning for integrated expert systems development // 8th IEEE International Conference on Intelligent Systems \scopus
+    \end{itemize-noindent}
+
+    \textbf{Recent Popular Publications} (approx. 2-4 publications / year):
+    \begin{itemize-noindent}
+	\item \ppublication{2017}{Card-based storytelling: simplifying screenwriters life}{geektimes}{https://geektimes.ru/post/286968/}
+	\item \ppublication{2016}{Orthogonal Connections Routing in Diagram Editors}{habrahabr}{https://habrahabr.ru/post/318722/?lipi=urn\%3Ali\%3Apage\%3Ad\_flagship3\_profile\_view\_base\%3BPi6qZyaTRE6D\%2F0ktyAx43A\%3D\%3D}
+	\item \ppublication{2016}{Undo/Redo Model Implementation for Complex Documents}{habrahabr}{https://habrahabr.ru/post/313654/?lipi=urn\%3Ali\%3Apage3Ad\_flagship3\_profile\_view\_base\%3BPi6qZyaTRE6D\%2F0ktyAx43A\%3D\%3D}
+	% \item etc.
+    \end{itemize-noindent}
+
+    \textbf{Speaker of} (approx 3-5 presentations / year): 7th International Conference on Systems analysis and information technologies (Svetlogorsk, Russia, 2017), IEEE 8th International Conference on Intelligent Systems (Sofia, Bulgaria, 2016), 18th International Conference on Artificial Intelligence (USA, Las Vegas, 2016), 15th National Conference on Artificial Intelligence with International Participation (Smolensk, Russia, 2016), Biologically Inspired Cognitive Architectures (NY, USA, 2016), etc.
+
+    \vspace{\blocksep}
+}
+
+
+\blocksection{Interests and Personal Traits}{
+    \begin{itemize-noindent}
+	\item \textbf{Interests:} AI, Computer Graphics, Embedded Systems, GameDev, Robotics and Hardware, HPC
+	\item \textbf{Hobby:} Radio Controlled Helicopters and Planes
+	\item \textbf{Non-professional skills:} Screenwriting, Storytelling, Cinema
+	\item \textbf{Advantages:} leader, author and starter of creative ideas, fast executor, good organizer
+	\item \textbf{Teamwork:} participated and leaded small teams
+    \end{itemize-noindent}
+}
+
+\end{document}
