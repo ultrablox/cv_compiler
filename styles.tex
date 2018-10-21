@@ -150,6 +150,8 @@
     #2 --- \textbf{#3}, #1, #4
     #5
     \vspace{\blocksep}
+    % \hfill \break
+    % \newline
 }
 
 \newcommand{\scopus}{\textcolor{slateblue}{[Scopus]}}
@@ -198,14 +200,15 @@
     \else
 	\vcenteredinclude{img/#2}
     \fi
-    #3 --- \textbf{\hypertarget{#7}{#1}} [#4]: #5
+    #3 --- \textbf{\hypertarget{#7}{#1}}: #5
     \begin{itemize-noindent}
 	#6
     \end{itemize-noindent}
     \vspace{\blocksep}   
 }
 
-\newcommand{\projectlink}[2]{\textbf{\hyperlink{#1}{#2}}}
+% \newcommand{\projectlink}[2]{\textbf{\hyperlink{#1}{#2}}}
+\newcommand{\projectlink}[2]{\textbf{#2}}
 
 \newcommand{\weblink}[2]{
 	\vcenteredinclude{img/internet_image.png} \href{#1}{#2}
