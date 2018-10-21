@@ -121,10 +121,10 @@
             "name" : "charon-hppa",
             "period" : "17.07.2017-27.08.2018",
             "skills" : ["C++", "STL", "boost", "LLVM API", "GIT", "ASM", "Real-Time Programming", "TDD", "BDD", "Optimization", "Linux", "LLDB", "GDB", "Ruby", "Go", "Agile"],
-            "secondary_skills" : [
-                { "Assembler" : "01.01.2018-27.08.2018" },
-                { "Ruby" : "17.07.2017-01.12.2017" }
-            ],
+            "secondary_skills" : {
+                "Assembler" : "01.01.2018-27.08.2018",
+                "Ruby" : "17.07.2017-01.12.2017"
+            },
             "icon" : "charon_project.png",
             "description" : "Emulator of HP-PARISC based computers",
             "web" : "https://www.stromasys.com/solutions/charon-hpa/",
@@ -165,10 +165,10 @@
             "name" : "3dSurvey",
             "period" : "01.04.2012-14.07.2017",
             "skills" : ["C++", "STL", "OpenGL", "Shaders", "GLSL", "RTR", "fullstack", "TDD", "MS Visual Studio"],
-            "secondary_skills" : [
-                { "Vulkan" : "3 months" },
-                { "Ruby On Rails" : "8 months" }
-            ],
+            "secondary_skills" : {
+                "Vulkan" : "01.02.2017-30.05.2017",
+                "Ruby On Rails" : "01.05.2016-31.01.2017"
+            },
             "icon" : "survey_project.png",
             "description" : "Real-Time Rendering engine for huge BIM-based scenes",
             "team-size" : "1-5",

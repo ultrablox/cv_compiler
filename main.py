@@ -10,6 +10,7 @@ from enum import Enum, auto
 import bibtexparser
 from bibtexparser.bparser import BibTexParser
 from bibtexparser.customization import homogenize_latex_encoding
+import sys
 
 MAX_SCI_PUBS = 5
 MAX_NON_SCI_PUBS = 3
@@ -47,7 +48,6 @@ class TimePeriod:
             self.endDate = datetime.datetime.strptime(interval[1], '%d.%m.%Y')
             self.isOpen = False
 
-
 class DateIndexer:
     def __init__(self, min_date, max_date):
         self.minDate = min_date
@@ -58,32 +58,6 @@ class DateIndexer:
 
     def index(self, date):
         return (date.year - self.minDate.year) * 12 + (date.month - self.minDate.month)
-
-class SkillsArray:
-    def __init__(self, skills, months):
-        self.skillUsage = {}
-        for skill in skills:
-            self.skillUsage[skill] = [0] * months
-        
-    def fill(self, skill, first, last):
-        for idx in range(first, last):
-            # print(idx)
-            self.skillUsage[skill][idx] = 1
-    
-    def skill_size(self, skill):
-        skill_arr = self.skillUsage[skill]
-        return sum(1 for item in skill_arr if item==(1)) / 12.0
-
-    def skills_totals(self):
-        res = []
-        for key, usage in self.skillUsage.items():
-            res += [{"name" : key, "size" : self.skill_size(key)}]
-            # res[key] = 
-        return sorted(res, key=lambda rec: -self.skill_size(rec["name"]))
-
-    def best_skill(self):
-        skills = self.skills_totals()
-        return skills[0]['size']
 
 class SkillAttitude(Enum):
     FAVOURITE = auto()
@@ -128,6 +102,31 @@ class Skill:
         self.name = name
         self.attitude = SkillAttitude.NEUTRAL
         self.totalExperience = 0
+        self.periods = []
+
+    def add_period(self, new_period):
+        self.periods += [new_period]
+
+    def total_size(self):
+        if len(self.periods) == 0:
+            return 0.0
+        else:
+            min_date = self.periods[0].startDate
+            max_date = self.periods[0].endDate
+            
+            for period in self.periods:
+                min_date = min(min_date, period.startDate)
+                max_date = max(max_date, period.endDate)
+        
+            di = DateIndexer(min_date, max_date)
+
+            months = [0] * di.month_count()
+
+            for period in self.periods:
+                for idx in range(di.index(period.startDate), di.index(period.endDate)):
+                    months[idx] = 1
+
+            return sum(1 for item in months if item==(1)) / 12.0
 
 class Employment:
     def __init__(self, json_node, profile):
@@ -159,10 +158,31 @@ class EmployerProfile:
         self.traits = json_node['traits']
     
         self.specialSkillGroups = json_node['special_skills']
+        
+        self.skills = {}
 
-        for prj in json_node["projects"]:       
+        for skill in json_node['skills']:
+            new_skill = Skill(skill)
+            sd = json_node['skills'][skill]
+            if 'attitude' in sd:
+                switcher = {
+                    'favourite' : SkillAttitude.FAVOURITE,
+                    'neutral' : SkillAttitude.NEUTRAL,
+                    'negative' : SkillAttitude.NEGATIVE
+                }
+                new_skill.attitude = switcher.get(sd['attitude'], lambda: None)
+            self.skills[skill] = new_skill
+
+        for prj in json_node['projects']:
             new_prj = Project(prj)
             self.projects += [new_prj]
+
+            for prj_skill in prj['skills']:
+                self.add_period_for_skill(prj_skill, new_prj.period)
+
+            if 'secondary_skills' in prj:
+                for sec_skill in prj['secondary_skills']:
+                    self.add_period_for_skill(sec_skill, TimePeriod(prj['secondary_skills'][sec_skill]))
 
         for employment_node in json_node['employments']:
             self.employments += [Employment(employment_node, self)]
@@ -200,27 +220,23 @@ class EmployerProfile:
         self.popularPublications = json_node['pop_publications'][0:MAX_NON_SCI_PUBS]
 
         self.conferences = json_node['conferences'][0:MAX_CONFERENCES]
+    
+    def skills_totals(self):
+        res = []
+        for key, data in self.skills.items():
+            res += [{'name' : key, 'size' : data.total_size()}]
+        return sorted(res, key=lambda rec: rec['size'], reverse=True)
 
-
-    def init_skills(self, skills, skill_descriptions):
-        # print(skill_descriptions)
-        self.skills = {}
-
-        for skill in skills:
+    def add_period_for_skill(self, skill, period):
+        if not skill in self.skills:
             new_skill = Skill(skill)
-            if skill in skill_descriptions:
-                sd = skill_descriptions[skill]
-
-                if 'attitude' in sd:
-                    switcher = {
-                        'favourite' : SkillAttitude.FAVOURITE,
-                        'neutral' : SkillAttitude.NEUTRAL,
-                        'negative' : SkillAttitude.NEGATIVE
-                    }
-                    new_skill.attitude = switcher.get(sd['attitude'], lambda: None)            
             self.skills[skill] = new_skill
-                # print(sd)
-
+        cur_skill = self.skills[skill]
+        cur_skill.add_period(period)
+    
+    def best_skill(self):
+        skills = self.skills_totals()
+        return skills[0]['size']
 
     def generate_skill_matrix(self):
         surface = cairo.PDFSurface("skill_matrix.pdf", 600, 300)
@@ -235,10 +251,10 @@ class EmployerProfile:
         
         cr.set_font_size(14)
         
-        max_value = self.skillsArray.best_skill()
+        max_value = self.best_skill()
         # print(max_value)
 
-        totals = self.skillsArray.skills_totals()
+        totals = self.skills_totals()
         totals = totals[0:VISUAL_SKILL_COUNT]
         # print(totals)
         
@@ -294,17 +310,6 @@ class EmployerProfile:
 
             idx += 1
 
-        #Annotate years
-        # idx = 1
-        # while idx < max_value:
-        #     cr.save()
-        #     cr.move_to(PIVOT_X, PIVOT_Y - graph_height * idx / max_value)
-        #     cr.show_text(str(idx))
-        #     cr.restore()
-        #     idx += 1
-        #     # print(idx)
-
-
         cr.restore()
         cr.show_page()
         surface.finish()
@@ -316,12 +321,8 @@ class EmployerProfile:
             for prj in sorted_projects:
                 file.write("\project{%s}{%s}" % (latex_protect(prj.name), prj.icon))
                 file.write("{%d-%s}" % (prj.period.startDate.year, 'present' if prj.period.isOpen else str(prj.period.endDate.year)))
-
                 file.write("{}{%s}{" % (prj.description))
-
                 first_line_items = []
-                
-                
                 type_str = "$\\bullet$"
                 if prj.parent:
                     type_str += " in %s" % prj.parent.name
@@ -337,31 +338,16 @@ class EmployerProfile:
                         label += url.path
                     first_line_items += ['\weblink{%s}{%s}' % (latex_protect(prj.webLink), latex_protect(label))]
 
-                first_line_items += [type_str]
-                
+                first_line_items += [type_str] 
                 file.write("\item %s\n" % ' '.join(first_line_items))
-
                 file.write("\item \skills{%s}\n" % latex_protect(', '.join(prj.skills)))
-                
                 for achievement in prj.achievements:
                     file.write("\item \\achievement{%s}\n" % (latex_protect(achievement)))
-
                 if len(prj.notes) != 0:
                     file.write("\item %s\n" % latex_protect('; '.join(prj.notes)))
-
                 file.write("}{charon:project}\n" )
-    #     \item \weblink{http://ultraoutliner.com}{http://ultraoutliner.com}
-    #     \item skills: C++, QT, Ruby on Rails, Javascript, fullstack, Agile, marketing, CEO
-    #     \item achievement: alone with no investments implemented idea into software, promoted it, attracted audience, partners and contributors
-    #     \item effect: got 1000+ active users total, 150-200 unique site visitors/week
-    # }{outliner:project}")
-        # file.write("Your text goes here") 
-    #     \project{ultra\_outliner}{outliner_project.png}{2016-present}{hobby}{Card-based outlining software for screenwriters and storytellers}{
-    #     \item \weblink{http://ultraoutliner.com}{http://ultraoutliner.com}
-    #     \item skills: C++, QT, Ruby on Rails, Javascript, fullstack, Agile, marketing, CEO
-    #     \item achievement: alone with no investments implemented idea into software, promoted it, attracted audience, partners and contributors
-    #     \item effect: got 1000+ active users total, 150-200 unique site visitors/week
-    # }{outliner:project}
+
+
     def generate_employments(self):
         with open("generated_employments.tex", "w") as file:
             for employment in self.employments:
@@ -425,7 +411,7 @@ class EmployerProfile:
                 file.write('}')
     
     def generate_skills(self):
-        totals = self.skillsArray.skills_totals()
+        totals = self.skills_totals()
         totals = totals[VISUAL_SKILL_COUNT:]
 
         skill_groups = {}
@@ -487,6 +473,13 @@ def main():
     profile = EmployerProfile()
     profile.deserialize(data)
 
+    
+    for sk in profile.skills:
+        sk_ref = profile.skills[sk]
+        print('%s: %s (%0.1f years)\n' % (sk, sk_ref.periods, sk_ref.total_size()))
+
+    # sys.exit(1)
+
     #Initialize skills
     skills = []
 
@@ -510,38 +503,38 @@ def main():
             max_date = max(new_prj.period.startDate, new_prj.period.endDate)
     
     
-    print("Your employment history is {0} - {1}".format(min_date, max_date))
+    # print("Your employment history is {0} - {1}".format(min_date, max_date))
 
-    skills = list(set(skills))
-    profile.init_skills(skills, data['skills'])
+    # skills = list(set(skills))
+    # profile.init_skills(skills, data['skills'])
 
-    print("Total set of skills: {0}".format(skills))
+    # print("Total set of skills: {0}".format(skills))
     
-    di = DateIndexer(min_date, max_date)
+    # di = DateIndexer(min_date, max_date)
 
-    # Calculate the array size for the whole time periods
-    # Create the array and fill it with zeros
-    sa = SkillsArray(skills, di.month_count())
+    # # Calculate the array size for the whole time periods
+    # # Create the array and fill it with zeros
+    # sa = SkillsArray(skills, di.month_count())
 
-    # Iterate all the projects
-    for prj in data["projects"]:
-        # Find mim and max index for the time period
-        new_prj = Project(prj)
+    # # Iterate all the projects
+    # for prj in data["projects"]:
+    #     # Find mim and max index for the time period
+    #     new_prj = Project(prj)
 
-        # Foreach skill
-        for skill in prj["skills"]:
-            # Fill as 'used' along the time period
-            sa.fill(skill, di.index(new_prj.period.startDate), di.index(new_prj.period.endDate))
+    #     # Foreach skill
+    #     for skill in prj["skills"]:
+    #         # Fill as 'used' along the time period
+    #         sa.fill(skill, di.index(new_prj.period.startDate), di.index(new_prj.period.endDate))
 
-    # print("Your skills totals:")
-    skills = sorted(skills, key=lambda rec: sa.skill_size(rec))
+    # # print("Your skills totals:")
+    # skills = sorted(skills, key=lambda rec: sa.skill_size(rec))
 
 
-    for skill_name in profile.skills:
-        profile.skills[skill_name].totalExperience = sa.skill_size(skill)
-        # print("{0} - {1:0.1f} yrs.".format(skill, sa.skill_size(skill)))
+    # for skill_name in profile.skills:
+    #     profile.skills[skill_name].totalExperience = sa.skill_size(skill)
+    #     # print("{0} - {1:0.1f} yrs.".format(skill, sa.skill_size(skill)))
 
-    profile.skillsArray = sa
+    # profile.skillsArray = sa
     profile.generate_skill_matrix()
 
     profile.generate_projects()
