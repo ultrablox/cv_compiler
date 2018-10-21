@@ -261,13 +261,30 @@ class EmployerProfile:
         PIVOT_X = 0.0
         PIVOT_Y = 230.0
         graph_height = 200
-    
+        
+        #Annotate axis
         cr.select_font_face("Arial", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_BOLD)
         cr.save()
         cr.move_to(PIVOT_X + 20, PIVOT_Y - graph_height / 2 + 70)
         cr.rotate(-math.pi/2)
         cr.show_text("Experience, yrs.")
         cr.restore()
+
+        #Annotate attitudes
+        cr.select_font_face("Arial", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
+
+        labels = ['Like, want more', 'Neutral', 'Don\'t like']
+        colors = [cairo.SolidPattern(0.0, 1.0, 0.0), cairo.SolidPattern(0.8, 0.8, 0.8), cairo.SolidPattern(1.0, 0.0, 0.0)]
+        for i in range(0, 3):
+            cr.save()
+            cr.move_to(PIVOT_X + 400, 30 + 20*i)
+            cr.show_text(labels[i])
+
+            cr.rectangle(PIVOT_X + 400 - 25, 30 -15 + 20*i, 20, 20)
+            cr.set_source(colors[i])
+            cr.fill()
+
+            cr.restore()
         
         cr.select_font_face("Sans", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_BOLD)
         idx = 1
@@ -289,9 +306,9 @@ class EmployerProfile:
             cr.rectangle(PIVOT_X + idx * 25.0, PIVOT_Y - 10.0, 20.0, - value_h)
 
             switcher = {
-                SkillAttitude.FAVOURITE: cairo.SolidPattern(0.0, 1.0, 0.0),
-                SkillAttitude.NEUTRAL: cairo.SolidPattern(0.8, 0.8, 0.8),
-                SkillAttitude.NEGATIVE: cairo.SolidPattern(1.0, 0.0, 0.0)
+                SkillAttitude.FAVOURITE: colors[0],
+                SkillAttitude.NEUTRAL: colors[1],
+                SkillAttitude.NEGATIVE: colors[2]
             }
             
             color_func = switcher.get(self.skills[skill['name']].attitude, lambda: cairo.SolidPattern(1.0, 0.0, 0.0))
