@@ -17,7 +17,7 @@ MAX_NON_SCI_PUBS = 3
 MAX_CONFERENCES = 5
 VISUAL_SKILL_COUNT = 22
 
-INPUT_DIR = "../input"
+INPUT_DIR = "input"
 
 def first_true(iterable, default=False, pred=None):
     """Returns the first true value in the iterable.
