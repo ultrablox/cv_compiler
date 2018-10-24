@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 
 rm -rf test/ bundle.zip input
 ln -s $1 input
@@ -9,4 +10,16 @@ rm -f input
 mkdir test && unzip -q -d test/ bundle.zip
 cd test
 ./main.py || exit
-xelatex main.tex
+mkdir svg_img 
+svgs=$(ls img/*.svg)
+
+for fn in $(ls img/*.svg); do
+    fname=$(basename $fn)
+    fbname=${fname%.*}
+    svg2pdf $fn svg_img/$fbname.pdf
+done
+
+# exit 1
+ # 
+xelatex main.tex 
+cp main.pdf ../

@@ -471,10 +471,10 @@ class EmployerProfile:
         with open("personal_contacts.tex", "w") as file:
             file.write('Name: %s \splitter Sex: %s \splitter Date of birth: %s \splitter Nationality: %s \splitter %s \hfill \\break\n' % (self.personal['name'], self.personal['sex'], self.personal['birthdate'], self.personal['nationality'], self.personal['additional']))
             file.write('%s \hfill \\break\n' % self.contacts['residence'])
-            file.write('\\vcenteredinclude{img/mail_logo.png} \href{mailto:%s}{%s}\n' % (self.contacts['email'], self.contacts['email']))
-            file.write('\\vcenteredinclude{img/phone_logo.png} %s\n' % self.contacts['phone'])
-            file.write('\\vcenteredinclude{img/linkedin_logo.png} \href{%s}{%s}\n' % (self.contacts['linkedin'], self.contacts['linkedin']))
-            file.write('\\vcenteredinclude{img/skype_logo.png} %s \\\\\n' % self.contacts['skype'])
+            file.write('\\vcenteredinclude{svg_img/email.pdf} \href{mailto:%s}{%s}\n' % (self.contacts['email'], self.contacts['email']))
+            file.write('\\vcenteredinclude{svg_img/phone.pdf} %s\n' % self.contacts['phone'])
+            file.write('\\vcenteredinclude{svg_img/linkedin.pdf} \href{%s}{%s}\n' % (self.contacts['linkedin'], self.contacts['linkedin']))
+            file.write('\\vcenteredinclude{svg_img/skype.pdf} %s \\\\\n' % self.contacts['skype'])
             file.write('\\textbf{Languages:} %s\n' % ', '.join(self.contacts['languages']))
     
     def generate_traits(self):

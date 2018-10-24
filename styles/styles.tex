@@ -57,6 +57,8 @@
 \usepackage{sectsty} % Allows customization of titles
 \sectionfont{\color{slateblue}} % Color section titles
 
+\usepackage{pdfpages}
+
 %\fancypagestyle{plain}{\fancyhf{}\cfoot{\thepage\ of \pageref{LastPage}}} % Define a custom page style
 %\pagestyle{plain} % Use the custom page style through the document
 \renewcommand{\headrulewidth}{0pt} % Disable the default header rule
@@ -211,18 +213,22 @@
 \newcommand{\projectlink}[2]{\textbf{#2}}
 
 \newcommand{\weblink}[2]{
-	\vcenteredinclude{img/internet_image.png} \href{#1}{#2}
+	% \vcenteredinclude{img/internet_image.png} \href{#1}{#2}
+        \vcenteredinclude{svg_img/internet.pdf} \href{#1}{#2}
 }
 \newcommand{\teamsize}[1]{
-        \vcenteredinclude{img/man.png} #1
+        \vcenteredinclude{svg_img/man.pdf}  #1
+        % \includegraphics[height=32pt]{svg_img/man.pdf}
 }
 
 \newcommand{\achievement}[1]{
-        \vcenteredinclude{img/star.png} #1
+        % \vcenteredinclude{img/star.png} #1
+        \vcenteredinclude{svg_img/star.pdf} #1
 }
 
 \newcommand{\skills}[1]{
-        \vcenteredinclude{img/skill.png} #1
+        % \vcenteredinclude{img/skill.png} #1
+        \vcenteredinclude{svg_img/idea.pdf} #1
 }
 %1 - year
 %2 - name
