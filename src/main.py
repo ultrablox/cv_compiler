@@ -194,7 +194,7 @@ class EmployerProfile:
         non_sci_pubs = []
         
         self.publicationStats = {}
-        with open(os.path.join(INPUT_DIR, 'blohin.bib')) as bibtex_file:
+        with open(os.path.join(INPUT_DIR, 'publications.bib')) as bibtex_file:
             parser = BibTexParser()
             parser.customization = homogenize_latex_encoding
             bib_database = bibtexparser.load(bibtex_file, parser=parser)

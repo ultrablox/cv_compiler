@@ -9,4 +9,4 @@ mkdir test && unzip -q -d test/ bundle.zip
 cd test
 ./main.py || exit
 xelatex main.tex
-unlink input
+rm -f input
