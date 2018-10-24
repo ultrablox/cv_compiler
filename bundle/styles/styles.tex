@@ -1,0 +1,338 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Wilson Resume/CV
+% Structure Specification File
+% Version 1.0 (22/1/2015)
+%
+% This file has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\usepackage[a4paper, margin=25mm, vmargin=30mm, top=20mm, bottom=15mm, left=20mm, right=10mm]{geometry} % Use A4 paper and set margins
+
+\usepackage{fancyhdr} % Customize the header and footer
+
+%\usepackage{lastpage} % Required for calculating the number of pages in the document
+
+\usepackage{hyperref}
+\usepackage[all]{hypcap} 
+\usepackage{natbib}
+\usepackage{bibentry}
+\usepackage{csquotes}
+\usepackage{graphicx}
+
+\setcounter{secnumdepth}{0} % Suppress section numbering
+
+%\usepackage[proportional,scaled=1.064]{erewhon} % Use the Erewhon font
+%\usepackage[erewhon,vvarbb,bigdelims]{newtxmath} % Use the Erewhon font
+\usepackage[utf8]{inputenc} % Required for inputting international characters
+\usepackage[T1]{fontenc} % Output font encoding for international characters
+\usepackage{paracol}
+\usepackage{fontspec} % Required for specification of custom fonts
+% \setmainfont[Path = ./fonts/,
+% Extension = .otf,
+% BoldFont = Erewhon-Bold,
+% ItalicFont = Erewhon-Italic,
+% BoldItalicFont = Erewhon-BoldItalic,
+% SmallCapsFeatures = {Letters = SmallCaps}
+% ]{Erewhon-Regular}
+\setmainfont[]{Arial Narrow}
+
+
+\usepackage{ifmtarg}
+\usepackage[none]{hyphenat}
+\usepackage{multicol}
+
+\usepackage{color} % Required for custom colors
+\definecolor{slateblue}{rgb}{0.17,0.22,0.84}
+
+\usepackage{longtable}
+\usepackage{sectsty} % Allows customization of titles
+\sectionfont{\color{slateblue}} % Color section titles
+
+%\fancypagestyle{plain}{\fancyhf{}\cfoot{\thepage\ of \pageref{LastPage}}} % Define a custom page style
+%\pagestyle{plain} % Use the custom page style through the document
+\renewcommand{\headrulewidth}{0pt} % Disable the default header rule
+\renewcommand{\footrulewidth}{0pt} % Disable the default footer rule
+
+\setlength\parindent{0pt} % Stop paragraph indentation
+
+% Non-indenting itemize
+
+\newenvironment{itemize-noindent}
+{\setlength{\leftmargini}{0.5cm}\begin{itemize}[noitemsep,nolistsep]
+    \setlength{\itemsep}{0pt}
+    \setlength{\parskip}{0pt}
+    \setlength{\parsep}{0pt}  }
+{\end{itemize}}
+
+% Text width for tabbing environments
+\newlength{\smallertextwidth}
+\setlength{\smallertextwidth}{\textwidth}
+\addtolength{\smallertextwidth}{-2cm}
+
+\newcommand{\sqbullet}{~\vrule height 1ex width .8ex depth -.2ex} % Custom square bullet point definition
+
+\usepackage{enumitem}
+
+\newlist{enumlist}{enumerate}{10}
+\setlist[enumlist]{label*=[\arabic*],leftmargin=0.5cm,topsep=0pt,noitemsep}
+
+
+%\newlist{bulletitem}{itemize}
+%\setlist[bulletitem]{label*=[\arabic*],leftmargin=0.5cm,topsep=0pt,noitemsep}
+
+
+
+\newlength\Colsep
+\setlength\Colsep{10pt}
+
+
+\newlength\blocksep
+\setlength\blocksep{2mm}
+
+\usepackage{xcolor}
+\hypersetup{
+    colorlinks,
+    linkcolor={red!30!black},
+    citecolor={black!50!black},
+    urlcolor={black!80!black}
+}
+
+
+% \newcommand{\blocksection}[2]{
+% \noindent\begin{minipage}[t]{\textwidth}
+% \begin{minipage}[t]{0.23\textwidth}
+%     \textcolor{slateblue}{\textbf{\MakeUppercase{#1}}}
+% \end{minipage}\hfill
+% \begin{minipage}[t]{0.74\textwidth}
+% #2
+% \end{minipage}%
+% \end{minipage}
+% \vspace{5mm}
+% }
+
+\newcommand{\blocksection}[2]{
+    \columnratio{0.18}
+    \begin{paracol}{2}
+	% \fbox{
+	    % \vspace{-2mm}
+	    \parbox[t]{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{
+		\raggedleft \textcolor{slateblue}{\textbf{\MakeUppercase{#1}}}
+	    % \makebox[30pt][flushleft]{xxxxxx
+	    % \begin{flushleft}
+	    % \end{flushleft}
+	    }
+	    % \makebox[\dimexpr\linewidth-2\fboxsep-2\fboxrule][l]{#1}
+	% }
+    \switchcolumn
+	#2
+    \end{paracol}
+    % \vspace{2mm}
+}
+
+\newcommand{\splitter}{\space\textcolor{slateblue}{|}\space}
+
+
+%1 - university
+%2 - date
+%3 - qualification
+%4 - GPA
+%5 - others
+\newcommand{\education}[5]{
+    #2 --- \textbf{#3}, #1, #4
+    #5
+    \vspace{\blocksep}
+    % \hfill \break
+    % \newline
+}
+
+\newcommand{\scopus}{\textcolor{slateblue}{[Scopus]}}
+
+%1 - year
+%2 - place
+%3 - role
+%4 - project
+%5 - details
+\newcommand{\research}[5]{
+    #1 --- #2, \textbf{#3}\\
+    #4\\
+    #5
+    \vspace{5mm}
+}
+
+%1 - year
+%2 - type
+%3 - course
+\newcommand{\teaching}[3]{
+    #1 --- \textbf{#2:} #3
+}
+
+%1 - year
+%2 - name
+\newcommand{\member}[2]{
+    #1 --- #2
+}
+
+%1 - year
+\newcommand{\attendance}[2]{
+    #1 --- #2
+}
+
+%1 - name
+%2 - image
+%3 - years
+%4 - where
+%5 - description
+%6 - other
+%7 - label
+\newcommand{\project}[7]{
+    % \@ifmtarg{#2}{YES}{NO}
+    \def\temp{#2}\ifx\temp\empty
+	% <EMPTY>%
+    \else
+	\vcenteredinclude{img/#2}
+    \fi
+    #3 --- \textbf{\hypertarget{#7}{#1}}: #5
+    \begin{itemize-noindent}
+	#6
+    \end{itemize-noindent}
+    \vspace{\blocksep}   
+}
+
+% \newcommand{\projectlink}[2]{\textbf{\hyperlink{#1}{#2}}}
+\newcommand{\projectlink}[2]{\textbf{#2}}
+
+\newcommand{\weblink}[2]{
+	\vcenteredinclude{img/internet_image.png} \href{#1}{#2}
+}
+\newcommand{\teamsize}[1]{
+        \vcenteredinclude{img/man.png} #1
+}
+
+\newcommand{\achievement}[1]{
+        \vcenteredinclude{img/star.png} #1
+}
+
+\newcommand{\skills}[1]{
+        \vcenteredinclude{img/skill.png} #1
+}
+%1 - year
+%2 - name
+%3 - source
+%4 - href
+\newcommand{\ppublication}[4]{
+    #1 --- #2 // #3 \href{#4}{[link]}
+}
+
+\newcommand{\scopusbibentry}[1]{
+    \bibentry{#1} \scopus
+}
+
+%----------------------------------------------------------------------------------------
+%	MAIN HEADER COMMAND
+%----------------------------------------------------------------------------------------
+
+\renewcommand{\title}[1]{
+{\huge{\color{slateblue}\textbf{#1}}}\\ % Header section name and color
+\rule{\textwidth}{0.5mm}\\ % Rule under the header
+}
+
+%----------------------------------------------------------------------------------------
+%	JOB COMMAND
+%----------------------------------------------------------------------------------------
+
+%1 - started
+%2 - finished
+%3 - company
+%4 - href
+%5 - position
+%6 - details
+
+\newcommand{\job}[7]{
+#1 - #2 --- \textbf{#5}, \href{#4}{#3}: #6
+#7
+\vspace{\blocksep}
+}
+
+%----------------------------------------------------------------------------------------
+%	SKILL GROUP COMMAND
+%----------------------------------------------------------------------------------------
+
+\newcommand{\skillgroup}[3]{
+    \textbf{#1} #2
+    \begin{itemize-noindent}
+	#3
+    \end{itemize-noindent}
+}
+
+%----------------------------------------------------------------------------------------
+% PUBLICATIONS GROUP COMMAND
+%-----------------------------------------------------------------------------------------
+
+\newcommand{\publicationsgroup}[1]{
+\begin{itemize}
+#1
+  \item ...
+\end{itemize}
+}
+
+\newcommand{\publication}[3]{\item \textbf{#1}: #2 // #3}
+
+
+%----------------------------------------------------------------------------------------
+% CONFERENCES GROUP COMMAND
+%-----------------------------------------------------------------------------------------
+
+\newcommand{\conferencesgroup}[3]{
+#2:
+\begin{itemize}
+#1
+  \item #3
+\end{itemize}
+}
+
+\newcommand{\conference}[3]{\textbf{#1}: #2. #3}
+
+%----------------------------------------------------------------------------------------
+% LANGUAGES GROUP COMMAND
+%-----------------------------------------------------------------------------------------
+\newcommand{\languagesgroup}[1]{
+\begin{tabbing}
+\hspace{5mm} \= \kill
+#1
+\end{tabbing}
+\vspace{-10mm}
+}
+
+%----------------------------------------------------------------------------------------
+%	INTERESTS GROUP COMMAND
+%-----------------------------------------------------------------------------------------
+
+\newcommand{\interestsgroup}[1]{
+\begin{tabbing}
+\hspace{5mm} \= \kill
+#1
+\end{tabbing}
+\vspace{-10mm}
+}
+
+\newcommand{\interest}[1]{\sqbullet \> \textbf{#1}\\[3pt]} % Define a custom command for individual interests
+
+%----------------------------------------------------------------------------------------
+%	TABBED BLOCK COMMAND
+%----------------------------------------------------------------------------------------
+
+\newcommand{\tabbedblock}[1]{
+\begin{tabbing}
+\hspace{2cm} \= \hspace{4cm} \= \kill
+#1
+\end{tabbing}
+}
