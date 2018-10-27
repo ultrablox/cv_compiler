@@ -53,6 +53,12 @@
         "C++" : {
             "attitude" : "favourite"
         },
+        "OpenGL" : {
+            "attitude" : "favourite"
+        },
+        "Shaders (GLSL)" : {
+            "attitude" : "favourite"
+        },
         "AI" : {
             "name" : "Artificial Intelligence",
             "attitude" : "favourite"
@@ -111,7 +117,7 @@
         {
             "name" : "TomTom Demo",
             "period" : "01.09.2018-now",
-            "skills" : ["Python", "ansible", "SCRUM"],
+            "skills" : ["Embedded", "Python", "ansible", "SCRUM", "Linux"],
             "icon" : "tomtom.png",
             "description" : "Customer Systems for Demonstration",
             "team-size" : "8",
@@ -120,11 +126,30 @@
     	{
             "name" : "charon-hppa",
             "period" : "17.07.2017-27.08.2018",
-            "skills" : ["C++", "STL", "boost", "LLVM API", "GIT", "ASM", "Real-Time Programming", "TDD", "BDD", "Optimization", "Linux", "LLDB", "GDB", "Ruby", "Go", "Agile"],
-            "secondary_skills" : {
-                "Assembler" : "01.01.2018-27.08.2018",
-                "Ruby" : "17.07.2017-01.12.2017"
-            },
+            "skills" : ["C++", "STL", "boost", "GIT", "Linux", "LLDB", "GDB"],
+            "skillsX" : ["LLVM API", "ASM", "Real-Time Programming", "TDD", "BDD", "Optimization", "Go", "Agile"],
+            "secondary_skills" : [
+                {
+                    "name" : "Assembler",
+                    "period" : "01.01.2018-27.08.2018",
+                    "description" : "Translation of PA-RISC instructions, into x86 instructions"
+                },
+                {
+                    "name" : "Ruby",
+                    "period" : "17.07.2017-01.12.2017",
+                    "description" : "C++ code generation based on unified instruction description written in DSL"
+                },
+                {
+                    "name" : "Go",
+                    "period" : "01.11.2017-28.02.2018",
+                    "description" : "Utilities for automation of trace logs verification"
+                },
+                {
+                    "name" : "QT",
+                    "period" : "01.10.2017-31.12.2017",
+                    "description" : "GUI for VM management"
+                }
+            ],
             "icon" : "charon_project.png",
             "description" : "Emulator of HP-PARISC based computers",
             "web" : "https://www.stromasys.com/solutions/charon-hpa/",
@@ -137,7 +162,15 @@
     	{
     	    "name" : "ultra_outliner",
     	    "period" : "01.05.2016-01.10.2017",
-    	    "skills" : ["C++", "STL", "QT", "fullstack", "Ruby on Rails", "Javascript", "Agile", "marketing", "SEO"],
+            "skills" : ["C++", "STL", "QT", "Visual Studio"],
+            "secondary_skills" : [
+                {
+                    "name" : "Ruby on Rails",
+                    "period" : "01.09.2016-28.02.2017",
+                    "description" : "Web-portal development"
+                }
+            ],
+    	    "skillsX" : ["fullstack", "Javascript", "Agile", "marketing", "SEO"],
             "icon" : "outliner_project.png",
             "description" : "Card-based outlining software for screenwriters and storytellers",
             "web" : "http://ultraoutliner.com",
@@ -150,7 +183,15 @@
     	{
             "name" : "Tizerbank",
             "period" : "01.09.2014-28.02.2016",
-            "skills" : ["C++", "STL", "boost", "BigData", "Linux", "Expert Systems", "Ruby on Rails", "Javascript", "fullstack", "TDD", "BDD", "Agile"],
+            "skills" : ["C++", "STL", "GIT", "boost", "BigData", "Linux"],
+            "secondary_skills" : [
+                {
+                    "name" : "Ruby on Rails",
+                    "period" : "01.09.2014-31.12.2014",
+                    "description" : "Managemenet web-application support and new features development"
+                }
+            ],
+            "skillsX" : ["Expert Systems", "Javascript", "fullstack", "TDD", "BDD", "Agile"],
             "icon" : "tizerbank_project.png",
             "description" : "Automated Demand Side Platform",
             "web" : "http://tizerbank.com",
@@ -164,11 +205,25 @@
     	{
             "name" : "3dSurvey",
             "period" : "01.04.2012-14.07.2017",
-            "skills" : ["C++", "STL", "OpenGL", "Shaders", "GLSL", "RTR", "fullstack", "TDD", "MS Visual Studio"],
-            "secondary_skills" : {
-                "Vulkan" : "01.02.2017-30.05.2017",
-                "Ruby On Rails" : "01.05.2016-31.01.2017"
-            },
+            "skills" : ["C++", "STL", "GIT", "OpenGL", "Shaders (GLSL)", "Real-time Rendering", "Visual Studio"],
+            "secondary_skills" : [
+                {
+                    "name" : "Ruby on Rails",
+                    "period" : "01.05.2016-31.01.2017",
+                    "description" : "Development of service for streamed-based 3d-viewer for mobile portal"
+                },
+                {
+                    "name" : "Vulkan",
+                    "period" : "01.02.2017-30.05.2017",
+                    "description" : "Development of Vulkan-based 3d-renderer for Survey engine"
+                },
+                {
+                    "name" : "Objective-C (IOS)",
+                    "period" : "01.05.2016-31.01.2017",
+                    "description" : "Development of mobile 3d-viewer"
+                }
+            ],
+            "skillsX" : [ "fullstack", "TDD"],
             "icon" : "survey_project.png",
             "description" : "Real-Time Rendering engine for huge BIM-based scenes",
             "team-size" : "1-5",
@@ -180,7 +235,7 @@
     	{
             "name" : "Lement Pro",
             "period" : "01.05.2015-31.07.2016",
-            "skills" : ["C#", "ASP.NET", "MS Visual Studio", "AI Planning"],
+            "skills" : ["C#", "ASP.NET", "Visual Studio", "AI Planning", "GIT"],
             "icon" : "lementpro_project.png",
             "description" : "Collaborative software for small/middle-size business",
             "web" : "http://lement.pro",
@@ -193,7 +248,7 @@
     	{
             "name" : "BIM automation",
             "period" : "01.02.2015-30.05.2017",
-            "skills" : ["C#", "BIM", "C++", "3dsMax API", "Revit API", "AutoCAD API"],
+            "skills" : ["C#", "3dsMax API", "Revit API", "AutoCAD API"],
             "icon" : "sodislabs_project.png",
             "description" : "Plugins for BIM models development automation in Autodesk Revit, Max, Maya, AutoCAD",
             "team-size" : "1-2",
@@ -204,7 +259,24 @@
     	{
             "name" : "AT-TECHNOLOGY",
             "period" : "01.09.2011-14.02.2018",
-            "skills" : ["C++", "AI", "AI Planning", "QT", "Expert Systems"],
+            "skills" : ["AI", "AI Planning", "Expert Systems"],
+            "secondary_skills" : [
+                {
+                    "name" : "C++",
+                    "period" : "01.09.2016-30.03.2017",
+                    "description" : "Development of IDE"
+                },
+                {
+                    "name" : "QT",
+                    "period" : "01.09.2016-30.03.2017",
+                    "description" : "Development of GUI for IDE"
+                },
+                {
+                    "name" : "Mentoring",
+                    "period" : "01.01.2015-14.02.2018",
+                    "description" : "Development of GUI for IDE"
+                }
+            ],
             "icon" : "at_technology.png",
             "description" : "IDE for Expert Systems with AI-based automation",
             "team-size" : "5-10",
@@ -215,7 +287,19 @@
     	{
             "name" : "ultra_planner",
             "period" : "01.10.2014-30.09.2015",
-            "skills" : ["C++", "HPC", "STL", "CUDA", "AI Planning"],
+            "skills" : ["C++", "STL", "External Memory", "AI Planning"],
+            "secondary_skills" : [
+                {
+                    "name" : "HPC",
+                    "period" : "01.06.2015-30.09.2015",
+                    "description" : "Implementation of parallel planner"
+                },
+                {
+                    "name" : "CUDA",
+                    "period" : "01.02.2015-30.06.2015",
+                    "description" : "Implementation of parallel GPU planner"
+                }
+            ],
             "description" : "Heuristic search based planner with hybrid external/internal memory usage",
             "web" : "https://github.com/ultrablox/ultra_planner",
             "team-size" : "1-2",
@@ -226,7 +310,8 @@
         {
             "name" : "Vertibird",
             "period" : "01.06.2014-30.01.2016",
-            "skills" : ["C++", "Embedded", "Real-Time Programming", "Embedded", "ARM", "QNX", "FreeRTOS", "PCB development"],
+            "skills" : ["C++", "Embedded", "ARM", "QNX"],
+            "skillsX" : ["Real-Time Programming", "FreeRTOS", "PCB development"],
             "description" : "Hardware and sofware for multicopter based UAV for autonomous flights",
             "team-size" : "1-2",
             "achievements" : []
@@ -234,14 +319,14 @@
         {
             "name" : "iMotiw",
             "description" : "Mobile IOS client for Motiw collaborative software",
-            "skills" : ["Objective-C", "C++", "SQL", "IOS", "XCode"],
+            "skills" : ["Objective-C (IOS)", "SQL"],
             "period" : "01.09.2011-01.11.2012",
             "team-size" : "1",
             "achievements" : ["Reduced iMotiw employers reporting time"]
         },
         {
             "name" : "NocView",
-            "period" : "01.02.2008-30.08.2011",
+            "period" : "01.02.2009-30.08.2011",
             "skills" : ["C++", "QT"],
             "icon" : "nocview.png",
             "description" : "Maintenance monitoring utilty for remotely located hotel TV systems",
@@ -253,7 +338,7 @@
         {
             "name" : "GEN CRM",
             "period" : "01.07.2009-28.02.2011",
-            "skills" : ["Ruby on Rails", "CSS", "JS"],
+            "skills" : ["Ruby on Rails"],
             "description" : "CRM for communication with hotel TV customers",
             "team-size" : "1",
             "achievements" : []

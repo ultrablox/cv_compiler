@@ -90,9 +90,14 @@ class Project:
             self.achievements = prj_node['achievements']
 
         self.skills = []
+        
+        if 'skills' in prj_node:
+            for skill in prj_node['skills']:
+                self.skills += [skill]
 
-        for skill in prj_node['skills']:
-            self.skills += [skill]
+        if 'secondary_skills' in prj_node:
+            for skill in prj_node['secondary_skills']:
+                self.skills += [skill['name']]        
 
         self.notes =[]
         if 'notes' in prj_node:
@@ -178,13 +183,23 @@ class EmployerProfile:
         for prj in json_node['projects']:
             new_prj = Project(prj)
             self.projects += [new_prj]
-
-            for prj_skill in prj['skills']:
-                self.add_period_for_skill(prj_skill, new_prj.period)
+            
+            if 'skills' in prj:
+                for prj_skill in prj['skills']:
+                    self.add_period_for_skill(prj_skill, new_prj.period)
 
             if 'secondary_skills' in prj:
                 for sec_skill in prj['secondary_skills']:
-                    self.add_period_for_skill(sec_skill, TimePeriod(prj['secondary_skills'][sec_skill]))
+                    self.add_period_for_skill(sec_skill['name'], TimePeriod(sec_skill['period']))
+        
+        # Remove empty skills
+        empty_skills = []
+        for skill_name, skill_data in self.skills.items():
+            if skill_data.total_size() == 0.0:
+                empty_skills += [skill_name]
+
+        for empty_name in empty_skills:
+            del self.skills[empty_name]
 
         for employment_node in json_node['employments']:
             self.employments += [Employment(employment_node, self)]
@@ -263,6 +278,7 @@ class EmployerProfile:
         PIVOT_X = 0.0
         PIVOT_Y = 230.0
         graph_height = 200
+        graph_width = 570
         
         #Annotate axis
         cr.select_font_face("Arial", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_BOLD)
@@ -274,17 +290,22 @@ class EmployerProfile:
 
         #Annotate attitudes
         cr.select_font_face("Arial", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
+        
 
-        labels = ['Like, want more', 'Neutral', 'Don\'t like']
+        labels = ['Positive', 'Neutral', 'Negative']
         colors = [cairo.SolidPattern(0.0, 1.0, 0.0), cairo.SolidPattern(0.8, 0.8, 0.8), cairo.SolidPattern(1.0, 0.0, 0.0)]
         for i in range(0, 3):
             cr.save()
-            cr.move_to(PIVOT_X + 400, 30 + 20*i)
-            cr.show_text(labels[i])
 
-            cr.rectangle(PIVOT_X + 400 - 25, 30 -15 + 20*i, 20, 20)
+            cr.rectangle(PIVOT_X + graph_width - 25, 30 -15 + 25*i, 20, 20)
             cr.set_source(colors[i])
             cr.fill()
+
+            extents = cr.text_extents(labels[i]);
+            
+            cr.set_source_rgba(0, 0, 0, 1.0);
+            cr.move_to(PIVOT_X + graph_width - 30 - extents.width - extents.x_bearing, 30 + 25*i)
+            cr.show_text(labels[i])
 
             cr.restore()
         
@@ -321,7 +342,7 @@ class EmployerProfile:
 
             #Annotte value
             cr.save()
-            cr.move_to(PIVOT_X + idx * 25.0, PIVOT_Y - value_h)
+            cr.move_to(PIVOT_X + idx * 25.0, PIVOT_Y - value_h - 14)#
 
             fmt = '%.0f' if skill['size'] > 10.0 else '%.1f'
             cr.show_text(fmt % skill['size'])
@@ -340,13 +361,18 @@ class EmployerProfile:
             for prj in sorted_projects:
                 file.write("\project{%s}{%s}" % (latex_protect(prj.name), prj.icon))
                 file.write("{%d-%s}" % (prj.period.startDate.year, 'present' if prj.period.isOpen else str(prj.period.endDate.year)))
-                file.write("{}{%s}{" % (prj.description))
-                first_line_items = []
-                type_str = "$\\bullet$"
                 if prj.parent:
-                    type_str += " in %s" % prj.parent.name
+                    file.write('{in %s}' % prj.parent.name)
                 else:
-                    type_str += " hobby"
+                    file.write('{HOBBY}')
+
+                file.write("{%s}{" % (prj.description))
+                first_line_items = []
+                # type_str = "$\\bullet$"
+                # if prj.parent:
+                #     type_str += " in %s" % prj.parent.name
+                # else:
+                #     type_str += " hobby"
 
                 first_line_items += ["\\teamsize{%s}" % (prj.teamSize)]
 
@@ -357,9 +383,10 @@ class EmployerProfile:
                         label += url.path
                     first_line_items += ['\weblink{%s}{%s}' % (latex_protect(prj.webLink), latex_protect(label))]
 
-                first_line_items += [type_str] 
+                # first_line_items += [type_str] 
                 file.write("\item %s\n" % ' '.join(first_line_items))
-                file.write("\item \skills{%s}\n" % latex_protect(', '.join(prj.skills)))
+                if len(prj.skills) != 0:
+                    file.write("\item \skills{%s}\n" % latex_protect(', '.join(prj.skills)))
                 for achievement in prj.achievements:
                     file.write("\item \\achievement{%s}\n" % (latex_protect(achievement)))
                 if len(prj.notes) != 0:
@@ -450,14 +477,25 @@ class EmployerProfile:
                 else:
                     skill_groups[gr_val] = [skill]
 
+            first_non_empty = True
             for barrier in reversed(barriers):
                 if barrier in skill_groups:
                     barrier_idx = barriers.index(barrier)
-                    group_name = '<1 year' if barrier_idx == 0 else '%d-%d years' % (barriers[barrier_idx], barriers[barrier_idx+1])
-                    
+
                     skills = []
+                    max_size = 0
                     for sk in skill_groups[barrier]:
                         skills += [latex_protect(sk['name'])]
+                        max_size = max(max_size, sk['size'])
+
+                    max_val_name = str(barriers[barrier_idx+1])
+                    if first_non_empty:
+                        max_val_name = '%.1f' % max_size
+                        first_non_empty = False
+                    
+                    group_name = '<%s year' % max_val_name if barrier_idx == 0 else '%d-%s years' % (barriers[barrier_idx], max_val_name)
+                    
+                    
                     file.write('\\textbf{%s:} %s\n\n' % (group_name, ', '.join(skills)))
 
             for sgr in self.specialSkillGroups:
@@ -497,19 +535,11 @@ def main():
         sk_ref = profile.skills[sk]
         print('%s: %s (%0.1f years)\n' % (sk, sk_ref.periods, sk_ref.total_size()))
 
-    # sys.exit(1)
-
-    #Initialize skills
-    skills = []
 
     # Run along the projects and look for the minmal and maximum date
     min_date = None
     max_date = None
-    for prj in data["projects"]:
-        for skill in prj["skills"]:
-            skills.append(skill)
-        
-        new_prj = Project(prj)
+    for new_prj in profile.projects:
 
         if min_date:
             min_date = min(min_date, new_prj.period.startDate)
@@ -522,38 +552,6 @@ def main():
             max_date = max(new_prj.period.startDate, new_prj.period.endDate)
     
     
-    # print("Your employment history is {0} - {1}".format(min_date, max_date))
-
-    # skills = list(set(skills))
-    # profile.init_skills(skills, data['skills'])
-
-    # print("Total set of skills: {0}".format(skills))
-    
-    # di = DateIndexer(min_date, max_date)
-
-    # # Calculate the array size for the whole time periods
-    # # Create the array and fill it with zeros
-    # sa = SkillsArray(skills, di.month_count())
-
-    # # Iterate all the projects
-    # for prj in data["projects"]:
-    #     # Find mim and max index for the time period
-    #     new_prj = Project(prj)
-
-    #     # Foreach skill
-    #     for skill in prj["skills"]:
-    #         # Fill as 'used' along the time period
-    #         sa.fill(skill, di.index(new_prj.period.startDate), di.index(new_prj.period.endDate))
-
-    # # print("Your skills totals:")
-    # skills = sorted(skills, key=lambda rec: sa.skill_size(rec))
-
-
-    # for skill_name in profile.skills:
-    #     profile.skills[skill_name].totalExperience = sa.skill_size(skill)
-    #     # print("{0} - {1:0.1f} yrs.".format(skill, sa.skill_size(skill)))
-
-    # profile.skillsArray = sa
     profile.generate_skill_matrix()
 
     profile.generate_projects()
