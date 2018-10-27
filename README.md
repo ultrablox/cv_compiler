@@ -8,6 +8,19 @@ You are tired of constant updating your CV? Every time you get better idea how t
 
 Forget about that. Just add your new experience into JSON, and generator will highlight the most relevant and decrease attention absolete records.
 
+## Prerequistes
+
+You need to have following software in your environment:
+
+
+```
+
+latex (xelatex)
+svg2pdf
+python3.5+
+
+```
+
 ## Usage
 
 Create directory with following structure:
