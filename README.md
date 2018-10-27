@@ -24,8 +24,11 @@ python3.5+
 You might also need to install additional latex packages:
 
 ```
+tlmgr install 
 
 paracol
+sectsty
+enumitem
 
 ```
 
