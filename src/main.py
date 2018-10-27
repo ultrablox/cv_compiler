@@ -256,7 +256,7 @@ class EmployerProfile:
         return skills[0]['size']
 
     def generate_skill_matrix(self):
-        surface = cairo.PDFSurface("skill_matrix.pdf", 600, 300)
+        surface = cairo.PDFSurface("skill_matrix.pdf", 600, 325)
         cr = cairo.Context(surface)
         cr.save()
 
