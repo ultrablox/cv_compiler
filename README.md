@@ -21,6 +21,14 @@ python3.5+
 
 ```
 
+You might also need to install additional latex packages:
+
+```
+
+paracol
+
+```
+
 ## Usage
 
 Create directory with following structure:
