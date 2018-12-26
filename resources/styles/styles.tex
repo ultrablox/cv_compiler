@@ -43,7 +43,10 @@
 % BoldItalicFont = Erewhon-BoldItalic,
 % SmallCapsFeatures = {Letters = SmallCaps}
 % ]{Erewhon-Regular}
-\setmainfont[]{Arial Narrow}
+\setmainfont[Extension = .ttf,
+    BoldFont = Arial Narrow Bold,
+    ItalicFont = Arial Narrow Italic
+]{Arial Narrow}
 
 
 % \usepackage{ifmtarg}
@@ -200,7 +203,7 @@
     \def\temp{#2}\ifx\temp\empty
 	% <EMPTY>%
     \else
-	\vcenteredinclude{img/#2}
+	\vcenteredinclude{#2}
     \fi
     #3 --- \textbf{\hypertarget{#7}{#1}} [#4]: #5
     \begin{itemize-noindent}
@@ -209,27 +212,23 @@
     \vspace{\blocksep}   
 }
 
-% \newcommand{\projectlink}[2]{\textbf{\hyperlink{#1}{#2}}}
 \newcommand{\projectlink}[2]{\textbf{#2}}
 
-\newcommand{\weblink}[2]{
-	% \vcenteredinclude{img/internet_image.png} \href{#1}{#2}
-        \vcenteredinclude{svg_img/internet.pdf} \href{#1}{#2}
-}
-\newcommand{\teamsize}[1]{
-        \vcenteredinclude{svg_img/man.pdf}  #1
-        % \includegraphics[height=32pt]{svg_img/man.pdf}
-}
+% \newcommand{\weblink}[2]{
+%         \vcenteredinclude{svg_img/internet.pdf} \href{#1}{#2}
+% }
+% \newcommand{\teamsize}[1]{
+%         \vcenteredinclude{svg_img/man.pdf}  #1
+% }
 
-\newcommand{\achievement}[1]{
-        % \vcenteredinclude{img/star.png} #1
-        \vcenteredinclude{svg_img/star.pdf} #1
-}
+% \newcommand{\achievement}[1]{
+%         \vcenteredinclude{svg_img/star.pdf} #1
+% }
 
-\newcommand{\skills}[1]{
-        % \vcenteredinclude{img/skill.png} #1
-        \vcenteredinclude{svg_img/idea.pdf} #1
-}
+% \newcommand{\skills}[1]{
+%         \vcenteredinclude{svg_img/idea.pdf} #1
+% }
+
 %1 - year
 %2 - name
 %3 - source

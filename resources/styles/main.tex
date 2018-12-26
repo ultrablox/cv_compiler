@@ -4,6 +4,7 @@
 \usepackage[labelformat=empty,labelsep=none]{caption}
 
 \input{styles.tex} % Include the file specifying document layout
+\input{generated_styles.tex}
 
 \graphicspath{{svg_img/}{input/}{./}}
 
@@ -16,9 +17,6 @@
 
 \begin{document}
 
-% \bibliographystyle{plain}
-% \nobibliography{blohin}{}
-
 \pagenumbering{gobble}
 
 \blocksection{Personal and Contact Info}{
@@ -27,7 +25,7 @@
 }
 
 \blocksection{Objective and Summary}{
-    \input{input/lead.tex}
+    \input{lead.tex}
     \vspace{\blocksep}
 }
 
@@ -67,5 +65,7 @@
         \input{generated_traits.tex}
     \end{itemize-noindent}
 }
+
+\footnotetext{Created with cv\_generator project \href{https://github.com/ultrablox/cv\_generator}{github.com/ultrablox/cv\_generator}}
 
 \end{document}
