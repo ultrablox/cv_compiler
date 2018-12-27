@@ -9,8 +9,15 @@ LOCAL_DIR=$(realpath tmp_local)
 CACHE_DIR=$(realpath tmp_cache)
 TMP_DIR=$(realpath tmp_tmp)
 DOCKER_IMAGE="ultrablox/latex-python3.6"
-INPUT_DIR=$(realpath $ROOT_DIR/sample_input)
+
 OUT_DIR=$(realpath $ROOT_DIR/out)
+
+if [ -z $INPUT_DIR] ;
+then
+    INPUT_DIR=$(realpath $ROOT_DIR/sample_input)
+else
+    INPUT_DIR=$(realpath $INPUT_DIR)
+fi
 
 mkdir -p $LOCAL_DIR
 mkdir -p $CACHE_DIR
