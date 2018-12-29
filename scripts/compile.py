@@ -287,19 +287,19 @@ def main():
 
 
   # Run along the projects and look for the minmal and maximum date
-  min_date = None
-  max_date = None
-  for new_prj in profile.projects:
+  # min_date = None
+  # max_date = None
+  # for new_prj in profile.projects:
 
-      if min_date:
-          min_date = min(min_date, new_prj.period.startDate)
-      else:
-          min_date = min(new_prj.period.startDate, new_prj.period.endDate)
+  #     if min_date:
+  #         min_date = min(min_date, new_prj.period.startDate)
+  #     else:
+  #         min_date = min(new_prj.period.startDate, new_prj.period.endDate)
 
-      if max_date:
-          max_date = max(max_date, new_prj.period.endDate)
-      else:
-          max_date = max(new_prj.period.startDate, new_prj.period.endDate)
+  #     if max_date:
+  #         max_date = max(max_date, new_prj.period.endDate)
+  #     else:
+  #         max_date = max(new_prj.period.startDate, new_prj.period.endDate)
   
   # Generate skill matrix
   skill_matrix_path = os.path.join(args.tmp_dir, 'skill_matrix.pdf')
