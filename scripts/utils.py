@@ -2,6 +2,8 @@ from check import *
 import os
 import pathlib
 import urllib.parse
+from transliterate import translit, get_available_language_codes
+import re
 
 def first_true(iterable, default=False, pred=None):
   """Returns the first true value in the iterable.
@@ -34,3 +36,10 @@ def ensure_dir_exists(file_path):
 def svg_to_pdf(svg_path, pdf_path):
   ensure_dir_exists(pdf_path)
   call_system('inkscape --without-gui --export-pdf=%s %s 2> /dev/null' % (pdf_path, os.path.abspath(svg_path)))
+
+def to_file_name(source_name):
+  # trans_name = translit(source_name, 'en', reversed=True)
+  trans_word = source_name
+  # trans_word = re.sub(r'\W+', '', trans_word)
+  trans_word = re.sub(r' ', '_', trans_word.lower())
+  return trans_word

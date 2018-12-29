@@ -352,7 +352,8 @@ def main():
   call_system('cd %s && xelatex %s main.tex %s' % (args.tmp_dir, ' '.join(LATEX_PARAMS), LATEX_OUTPUT))
 
   # Move result to output
-  shutil.copy(os.path.join(args.tmp_dir, 'main.pdf'), os.path.join(args.out_dir, 'cv.pdf'))
+
+  shutil.copy(os.path.join(args.tmp_dir, 'main.pdf'), os.path.join(args.out_dir, '%s_CV.pdf' % to_file_name(profile.personal['name'])))
 
 if __name__ == "__main__":
     main()
