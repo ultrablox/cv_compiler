@@ -132,26 +132,7 @@ class EmployerProfile:
     def best_skill(self):
         skills = self.skills_totals()
         return skills[0]['size']
-
-    def generate_employments(self, path):
-        with open(path, "w") as file:
-            for employment in self.employments:
-                file.write("\job{%s}{%s}{%s}{%s}{%s}{%s}{\n" % (employment.period.startDate.strftime('%b %Y'), 'Present' if employment.period.isOpen else employment.period.endDate.strftime('%b %Y'), employment.name, employment.web, employment.role, employment.description))
-                file.write("\t\\begin{itemize-noindent}\n")
-                
-                prj_names = []
-                for prj in employment.projects:
-                    prj_names += ['\projectlink{%s:project}{%s}' % ('xx', latex_escape(prj.name))]
-
-                notes_arr = ['\t\t\item{ worked in %s project%s}' % (', '.join(prj_names), 's' if len(prj_names) > 1 else '')]
-
-                for note in employment.notes:
-                    notes_arr += ['\t\t\item{%s}' % note]
-
-                file.write("\n".join(notes_arr))
-                file.write("\n")
-                file.write("\t\end{itemize-noindent}\n")
-                file.write("}\n")
+        
 
     def generate_publications(self, path):
         with open(path, "w") as file:
@@ -317,8 +298,11 @@ def main():
   projects_printer = ProjectsPrinter(args.tmp_dir, rc_dirs)
   projects_printer.print(profile, 'generated_projects.tex')
 
-  employments_path = os.path.join(args.tmp_dir, "generated_employments.tex")
-  profile.generate_employments(employments_path)
+  # employments_path = os.path.join(args.tmp_dir, "generated_employments.tex")
+  # profile.generate_employments(employments_path)
+  employments_printer = EmploymentsPrinter(args.tmp_dir, rc_dirs)
+  employments_printer.print(profile, 'generated_employments.tex')
+  
 
   publications_path = os.path.join(args.tmp_dir, "generated_scientific_publications.tex")
   profile.generate_publications(publications_path)

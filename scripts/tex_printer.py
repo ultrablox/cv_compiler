@@ -116,3 +116,23 @@ class ProjectsPrinter(TexPrinter):
       if len(prj.notes) != 0:
           file.write("\item %s\n" % latex_escape('; '.join(prj.notes)))
       file.write("}{charon:project}\n" )
+
+class EmploymentsPrinter(TexPrinter):
+  def print_data(self, profile, file):
+    for employment in profile.employments:
+      file.write("\job{%s}{%s}{%s}{%s}{%s}{%s}{\n" % (employment.period.startDate.strftime('%b %Y'), 'Present' if employment.period.isOpen else employment.period.endDate.strftime('%b %Y'), employment.name, employment.web, employment.role, employment.description))
+      file.write("\t\\begin{itemize-noindent}\n")
+      
+      prj_names = []
+      for prj in employment.projects:
+          prj_names += ['\projectlink{%s:project}{%s}' % ('xx', latex_escape(prj.name))]
+
+      notes_arr = ['\t\t\item{ worked in %s project%s}' % (', '.join(prj_names), 's' if len(prj_names) > 1 else '')]
+
+      for note in employment.notes:
+          notes_arr += ['\t\t\item{%s}' % note]
+
+      file.write("\n".join(notes_arr))
+      file.write("\n")
+      file.write("\t\end{itemize-noindent}\n")
+      file.write("}\n")
