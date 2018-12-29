@@ -24,6 +24,12 @@ mkdir -p $CACHE_DIR
 mkdir -p $TMP_DIR
 mkdir -p $OUT_DIR
 
+build_docker_image () {
+  docker build -t $DOCKER_IMAGE ../docker
+}
+
+docker pull $DOCKER_IMAGE || build_docker_image
+
 docker run -u $DOCKER_USER --rm -v $ROOT_DIR:/repo -v $LOCAL_DIR:/.local -v $CACHE_DIR:/.cache -v $TMP_DIR:/.tmp -v $INPUT_DIR:/input -v $OUT_DIR:/out -w /repo $DOCKER_IMAGE bash -c "\
     pip3 install --user -r requirements.txt ;
     cd scripts;
