@@ -2,56 +2,23 @@
 
 ## Aims
 
-This is automatic generator of typical Software Engineer CV.
-
-You are tired of constant updating your CV? Every time you get better idea how to do it and you have to recall all your past experience?
-
-Forget about that. Just add your new experience into JSON, and generator will highlight the most relevant and decrease attention absolete records.
+This is automatic generator of typical Software Engineer CV. Read more at pages.
 
 ## Prerequistes
 
-You need to have following software in your environment:
-
-
-```
-
-latex (xelatex)
-svg2pdf
-python3.5+
-
-```
-
-You might also need to install additional latex packages:
-
-```
-tlmgr install 
-
-paracol
-sectsty
-enumitem
-
-```
+Install docker, compilation is performed inside the container.
 
 ## Usage
 
-Create directory with following structure:
+Create directory with like in example (sample_input).
 
-data.json - your information and history
-publications.bib - your scientific publications
-lead.tex - your CV headline
-img/ - your custom images
-
-Refer for sample_input as an example.
-
-Call 
+```
+cd scripts
+./generate.sh
 
 ```
 
-./generate sample_input/
-
-```
-
-After that you will find main.pdf with compiled CV.
+After that you will find compiled CV at out/your_name_cv.pdf.
 
 ## For developers
 

@@ -1,9 +1,9 @@
 # Site settings
-title: cv_generator
+title: cv_compiler
 email: your-email@domain.com
 description: > # this means to ignore newlines until "baseurl:"
   typical CV compiler for software engineer
-baseurl: "/cv_generator" # the subpath of your site, e.g. /blog/
+baseurl: "/cv_compiler" # the subpath of your site, e.g. /blog/
 url: "http://jekyll.github.io" # the base hostname & protocol for your site
 twitter_username: jekyllrb
 github_username:  jekyll

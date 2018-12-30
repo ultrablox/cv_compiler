@@ -341,3 +341,7 @@
 #1
 \end{tabbing}
 }
+
+\newcommand{\vcenteredinclude}[1]{\begingroup
+\setbox0=\hbox{\includegraphics[width=12pt]{#1}}%
+\parbox{\wd0}{\box0}\endgroup}
