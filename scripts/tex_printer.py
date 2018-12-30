@@ -2,6 +2,8 @@
 import os
 from check import *
 from utils import *
+from basic_entities import *
+from skill_matrix import *
 
 class TexPrinter:
   def __init__(self, root_dir, resources_paths = []):
@@ -136,3 +138,98 @@ class EmploymentsPrinter(TexPrinter):
       file.write("\n")
       file.write("\t\end{itemize-noindent}\n")
       file.write("}\n")
+
+class EducationsPrinter(TexPrinter):
+  def print_data(self, profile, file):
+    for edu in profile.education:
+      tp = TimePeriod(edu['period'])
+      file.write('\education{%s}{%d-%d}{%s}{%s}{' % (edu['place'], tp.startDate.year, tp.endDate.year, edu['name'], latex_escape(edu['gpa'])))
+      if ('notes' in edu) and (len(edu['notes']) > 0):
+          file.write('\\begin{itemize-noindent}')
+          notes_arr = []
+          for note in edu['notes']:
+              notes_arr += ['\item %s' % note]
+          file.write('\n'.join(notes_arr))
+          file.write('\end{itemize-noindent}')
+      file.write('}')
+
+
+class ConferencesPrinter(TexPrinter):
+  def print_data(self, profile, file):
+    conf_strs = []
+    for conf in profile.conferences:
+      conf_strs += ['%s (%s, %d)' % (conf['name'], conf['location'], conf['year'])]
+    file.write("%s, etc.\n" % ' '.join(conf_strs))
+
+class PopPublicationsPrinter(TexPrinter):
+  def print_data(self, profile, file):
+    file.write('\\begin{itemize-noindent}\n')
+    for publication in profile.popularPublications:
+        file.write('\item \ppublication{%d}{%s}{%s}{%s}' % (publication['year'], publication['name'], publication['source'], latex_escape(publication['url'])))
+    file.write('\end{itemize-noindent}\n')
+
+class PublicationsPrinter(TexPrinter):
+  def print_data(self, profile, file):
+    file.write('(%d total, incl. %d Scopus)\n' % (profile.publicationStats['sci_total'], profile.publicationStats['scopus']))
+    file.write('\\begin{itemize-noindent}\n')
+    for publication in profile.scientificPublications:
+        file.write('\item %d --- %s // %s' % (int(publication['year']), publication['title'], publication['journal']))
+        if ('source' in publication) and (publication['source'] == 'Scopus'):
+            file.write(' \scopus')
+        file.write('\n')
+
+    file.write('\end{itemize-noindent}\n')
+
+class TraitsPrinter(TexPrinter):
+  def print_data(self, profile, file):
+    for trait in profile.traits:
+      file.write('\item \\textbf{%s:} %s\n' % (trait['name'], trait['details']))
+
+class SkillsPrinter(TexPrinter):
+  def print_data(self, profile, file):
+    totals = profile.skills_totals()
+    totals = totals[VISUAL_SKILL_COUNT:]
+
+    skill_groups = {}
+    #0, <1yr, 1-2yr, 2-5, 5-7, 7-10, 10+
+    barriers = [0, 1, 2, 5, 7, 10, 1000]
+    cur_gr_idx = 0
+    
+    for skill in totals:
+        gr_val = 0
+        for idx in range(0, len(barriers)):
+            if (barriers[idx] <= skill['size']) and (skill['size'] < barriers[idx+1]):
+                gr_val = barriers[idx]
+                break
+
+        if gr_val in skill_groups:
+            skill_groups[gr_val] += [skill]
+        else:
+            skill_groups[gr_val] = [skill]
+
+    first_non_empty = True
+    for barrier in reversed(barriers):
+        if barrier in skill_groups:
+            barrier_idx = barriers.index(barrier)
+
+            skills = []
+            max_size = 0
+            for sk in skill_groups[barrier]:
+                skills += [latex_escape(sk['name'])]
+                max_size = max(max_size, sk['size'])
+
+            max_val_name = str(barriers[barrier_idx+1])
+            if first_non_empty:
+                max_val_name = '%.1f' % max_size
+                first_non_empty = False
+            
+            group_name = '<%s year' % max_val_name if barrier_idx == 0 else '%d-%s years' % (barriers[barrier_idx], max_val_name)
+            
+            
+            file.write('\\textbf{%s:} %s\n\n' % (group_name, ', '.join(skills)))
+
+    for sgr in profile.specialSkillGroups:
+        file.write('\skillgroup{%s:}{%s}{\n' % (sgr['name'], sgr['details']))
+        for adv in sgr['advantages']:
+            file.write('\item %s\n' % adv)
+        file.write('}\n')
