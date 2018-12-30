@@ -14,9 +14,9 @@ Forget about that. Just add your new experience into JSON, and generator will hi
 
 The structure is based on my own experience (PhD in AI, Computer Science, 10+ years in industial software development) and also influenced by collegues, friends and other people among software engineers, HRs and technical directors.
 
-## Employer profile
+## Employee profile
 
-This project is primarilly aimed for 'worker' roles, for the men who really does the development job. That's why there is additional emphasis for technology and languages related skills.
+This project is primarilly aimed for 'worker' roles, for the developers who really does the development job. That's why there is additional emphasis for technology and languages related skills.
 
 # Structure
 
