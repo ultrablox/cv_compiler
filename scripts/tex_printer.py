@@ -161,24 +161,69 @@ class ConferencesPrinter(TexPrinter):
       conf_strs += ['%s (%s, %d)' % (conf['name'], conf['location'], conf['year'])]
     file.write("%s, etc.\n" % ' '.join(conf_strs))
 
-class PopPublicationsPrinter(TexPrinter):
-  def print_data(self, profile, file):
-    file.write('\\begin{itemize-noindent}\n')
-    for publication in profile.popularPublications:
-        file.write('\item \ppublication{%d}{%s}{%s}{%s}' % (publication['year'], publication['name'], publication['source'], latex_escape(publication['url'])))
-    file.write('\end{itemize-noindent}\n')
+# class PopPublicationsPrinter(TexPrinter):
+#   def print_data(self, profile, file):
+#     file.write('\\begin{itemize-noindent}\n')
+#     for publication in profile.popularPublications:
+#         file.write('\item \ppublication{%d}{%s}{%s}{%s}' % (publication['year'], publication['name'], publication['source'], latex_escape(publication['url'])))
+#     file.write('\end{itemize-noindent}\n')
 
-class PublicationsPrinter(TexPrinter):
-  def print_data(self, profile, file):
-    file.write('(%d total, incl. %d Scopus)\n' % (profile.publicationStats['sci_total'], profile.publicationStats['scopus']))
-    file.write('\\begin{itemize-noindent}\n')
-    for publication in profile.scientificPublications:
-        file.write('\item %d --- %s // %s' % (int(publication['year']), publication['title'], publication['journal']))
-        if ('source' in publication) and (publication['source'] == 'Scopus'):
-            file.write(' \scopus')
-        file.write('\n')
+# class PublicationsPrinter(TexPrinter):
+#   def print_data(self, profile, file):
+#     file.write('(%d total, incl. %d Scopus)\n' % (profile.publicationStats['sci_total'], profile.publicationStats['scopus']))
+#     file.write('\\begin{itemize-noindent}\n')
+#     for publication in profile.scientificPublications:
+#         file.write('\item %d --- %s // %s' % (int(publication['year']), publication['title'], publication['journal']))
+#         if ('source' in publication) and (publication['source'] == 'Scopus'):
+#             file.write(' \scopus')
+#         file.write('\n')
 
-    file.write('\end{itemize-noindent}\n')
+#     file.write('\end{itemize-noindent}\n')
+
+class ActivitiesPrinter(TexPrinter):
+  def print_data(self, profile, file):
+    if not profile.has_activities():
+      return
+    file.write('\\blocksection{Professional Activities}{\n')
+
+    # Scientific are most valuable
+    if profile.scientificPubs:
+      summary_str = '%d total' % len(profile.scientificPubs)
+      if profile.scopus_publication_count():
+        summary_str += ', incl. %d Scopus' % profile.scopus_publication_count()
+      file.writelines(['\t\\textbf{Recent Scientific Publications} (%s)\n' % summary_str,
+        '\t\\begin{itemize-noindent}\n'])
+      for pub in profile.scientificPubs:
+        if pub['visible']:
+          is_scopus = '\scopus' if (('source' in pub) and (pub['source'] == 'Scopus')) else ''
+          file.write('\item %d --- %s // %s %s\n' % (int(pub['year']), pub['title'], pub['journal'], is_scopus))
+
+      file.write('\t\end{itemize-noindent}\n')
+
+    # Popular publications are less important
+    if profile.popularPubs:
+      years = int(profile.popularPubs[0]['year']) - int(profile.popularPubs[-1]['year']) + 1
+      summary_str = '%d total, avg. %.1f publicatons / year' % (len(profile.popularPubs), float(len(profile.popularPubs))/years)
+      file.writelines(['\t\\textbf{Recent Popular Publications} (%s):\n' % summary_str])
+      file.write('\\begin{itemize-noindent}\n')
+      for pub in profile.popularPubs:
+          file.write('\item \ppublication{%d}{%s}{%s}{%s}' % (int(pub['year']), pub['title'], pub['source'], pub['url']))
+      file.write('\end{itemize-noindent}\n')
+
+    # Conferences are the least important
+    if profile.conferences:
+      years = int(profile.conferences[0]['year']) - int(profile.conferences[-1]['year']) + 1
+      summary_str = '%d total, avg. %.1f presentations / year' % (len(profile.conferences), float(len(profile.popularPubs))/years)
+      file.write('\t\\textbf{Speaker of} (%s): ' % summary_str)
+      conf_strs = []
+      for conf in profile.conferences:
+        conf_strs += ['%s (%s, %d)' % (conf['name'], conf['location'], conf['year'])]
+      file.write("%s, etc.\n" % ' '.join(conf_strs))
+
+    file.writelines(['\\vspace{\\blocksep}',
+      '}'])
+
+
 
 class TraitsPrinter(TexPrinter):
   def print_data(self, profile, file):
@@ -233,3 +278,5 @@ class SkillsPrinter(TexPrinter):
         for adv in sgr['advantages']:
             file.write('\item %s\n' % adv)
         file.write('}\n')
+
+

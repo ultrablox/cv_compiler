@@ -60,40 +60,35 @@ class EmployeeProfile:
           self.employments += [Employment(employment_node, self)]
       
       # non_sci_pubs = []
-      
 
-      self.popularPublications = json_node['pop_publications'][0:MAX_NON_SCI_PUBS]
+      # self.popularPublications = json_node['pop_publications'][0:MAX_NON_SCI_PUBS]
 
       self.conferences = json_node['conferences'][0:MAX_CONFERENCES]
 
-  def deserialize_publications(self, pubs_path):
-    scopus_pubs = []
-    other_pubs = []
+  def deserialize_publications(self, base_path):
     
-    with open(pubs_path, encoding='utf-8') as bibtex_file:
+
+    # Scientific publications
+    sci_pubs_file = os.path.join(base_path, 'sci_publications.bib')
+    if os.path.exists(sci_pubs_file):
       parser = BibTexParser()
       parser.customization = homogenize_latex_encoding
-      bib_database = bibtexparser.load(bibtex_file, parser=parser)
+      with open(sci_pubs_file, encoding='utf-8') as bibtex_file:
+        bib_database = bibtexparser.load(bibtex_file, parser=parser)
+        self.scientificPubs = bib_database.entries
+    else:
+      self.scientificPubs = None
 
-      sorted_pubs = sorted(bib_database.entries, key=lambda pub: int(pub['year']), reverse=True)
-      for publication in sorted_pubs:
-        skip = False
-        skip = skip or (('language' in publication) and (publication['language'] == 'russian'))
-        skip = skip or (publication['ENTRYTYPE'] != 'article')
-
-        if not skip:
-            if ('source' in publication) and (publication['source'] == 'Scopus'):
-                scopus_pubs += [publication]
-            else:
-                other_pubs += [publication]
-      
-      self.publicationStats['sci_total'] = len(bib_database.entries)
-      self.publicationStats['scopus'] = len(scopus_pubs)
-
-      if len(scopus_pubs) > MAX_SCI_PUBS:
-        self.scientificPublications = scopus_pubs[0:MAX_SCI_PUBS]
-      else:
-        raise Exception('Not implemented')
+    # Popular publications
+    pop_pubs_file = os.path.join(base_path, 'pop_publications.bib')
+    if os.path.exists(pop_pubs_file):
+      parser = BibTexParser()
+      parser.customization = homogenize_latex_encoding
+      with open(pop_pubs_file, encoding='utf-8') as bibtex_file:
+        bib_database = bibtexparser.load(bibtex_file, parser=parser)
+        self.popularPubs = bib_database.entries
+    else:
+      self.popularPubs = None
 
   
   def skills_totals(self):
@@ -112,3 +107,53 @@ class EmployeeProfile:
   def best_skill(self):
       skills = self.skills_totals()
       return skills[0]['size']
+
+  def has_activities(self):
+    return self.popularPubs or self.scientificPubs or self.conferences
+
+  def scopus_publication_count(self):
+    return sum(is_scopus(pub) for pub in self.scientificPubs)
+
+  # Marks most important publication as visible
+  def compress(self):
+    ###
+    ### Scientific publications
+    ###
+    # Only articles are printed
+    # Scopus have priority over simple publication
+  
+    good_count = 0
+    for pub in self.scientificPubs:
+      skip = False
+      skip = skip or (('language' in pub) and (pub['language'] == 'russian'))
+      skip = skip or (pub['ENTRYTYPE'] != 'article')
+      pub['visible'] = not skip
+
+      if not skip:
+        good_count += 1
+      
+    # Check if we can print all of them 
+    if good_count > MAX_SCI_PUBS:
+      # Sort so good are first
+      self.scientificPubs = sorted(self.scientificPubs, key=lambda pub: pub['visible'], reverse=True)
+
+      # Sort leftmost by scopus
+      self.scientificPubs[0:good_count] = sorted(self.scientificPubs[0:good_count], key=lambda pub: is_scopus(pub), reverse=True)
+
+      # Mark invisible all that exceed the number
+      for i in range(MAX_SCI_PUBS, good_count):
+        self.scientificPubs[i]['visible'] = False
+
+    # After all manipulation sort in year order for further printing
+    self.scientificPubs = sorted(self.scientificPubs, key=lambda pub: int(pub['year']), reverse=True)
+
+    ###
+    ### Popular publications
+    ###
+    # They have the same priority - simply cut off tail
+    self.popularPubs = sorted(self.popularPubs, key=lambda pub: int(pub['year']), reverse=True)
+
+    self.popularPubs
+    for i in range(0, len(self.popularPubs)):
+      pub['visible'] = (i < MAX_NON_SCI_PUBS)
+      

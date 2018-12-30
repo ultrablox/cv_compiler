@@ -17,7 +17,7 @@ from employee_profile import *
 
 
 
-DEBUG_LATEX = False
+DEBUG_LATEX = True
 
 LATEX_OUTPUT = '' if DEBUG_LATEX else '1>/dev/null'
 LATEX_PARAMS = [] if DEBUG_LATEX else ['-halt-on-error', '--interaction=batchmode']
@@ -42,8 +42,8 @@ def main():
   lead_path = os.path.join(args.input_dir, 'lead.txt')
   check_always(os.path.exists(lead_path), 'Lead text "%s" does not exist' % lead_path)
 
-  publications_path = os.path.join(args.input_dir, 'publications.bib')
-  enable_pubs = os.path.exists(publications_path)
+  # publications_path = os.path.join(args.input_dir, 'publications.bib')
+  # enable_pubs = os.path.exists(publications_path)
 
   # Load input data
   
@@ -52,8 +52,8 @@ def main():
       data = json.load(json_data)
       profile.deserialize(data)
 
-  if enable_pubs:
-    profile.deserialize_publications(publications_path)
+  profile.deserialize_publications(args.input_dir)
+  profile.compress()
   
   # Generate skill matrix
   skill_matrix_path = os.path.join(args.tmp_dir, 'skill_matrix.pdf')
@@ -72,14 +72,17 @@ def main():
   employments_printer = EmploymentsPrinter(args.tmp_dir, rc_dirs)
   employments_printer.print(profile, 'generated_employments.tex')
 
-  pub_printer = PublicationsPrinter(args.tmp_dir, rc_dirs)
-  pub_printer.print(profile, 'generated_scientific_publications.tex')
+  activities_printer = ActivitiesPrinter(args.tmp_dir, rc_dirs)
+  activities_printer.print(profile, 'generated_activities.tex')
 
-  conf_printer = ConferencesPrinter(args.tmp_dir, rc_dirs)
-  conf_printer.print(profile, 'generated_conferences.tex')
+  # pub_printer = PublicationsPrinter(args.tmp_dir, rc_dirs)
+  # pub_printer.print(profile, 'generated_scientific_publications.tex')
+
+  # conf_printer = ConferencesPrinter(args.tmp_dir, rc_dirs)
+  # conf_printer.print(profile, 'generated_conferences.tex')
   
-  ppub_printer = PopPublicationsPrinter(args.tmp_dir, rc_dirs)
-  ppub_printer.print(profile, 'generated_popular_publications.tex')
+  # ppub_printer = PopPublicationsPrinter(args.tmp_dir, rc_dirs)
+  # ppub_printer.print(profile, 'generated_popular_publications.tex')
 
   edu_printer = EducationsPrinter(args.tmp_dir, rc_dirs)
   edu_printer.print(profile, 'generated_educations.tex')

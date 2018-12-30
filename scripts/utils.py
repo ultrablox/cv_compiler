@@ -43,3 +43,6 @@ def to_file_name(source_name):
   # trans_word = re.sub(r'\W+', '', trans_word)
   trans_word = re.sub(r' ', '_', trans_word.lower())
   return trans_word
+
+def is_scopus(pub):
+  return ('source' in pub) and (pub['source'] == 'Scopus')
