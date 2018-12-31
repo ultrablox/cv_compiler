@@ -4,6 +4,7 @@ from check import *
 from utils import *
 from basic_entities import *
 from skill_matrix import *
+from urllib.parse import urlparse
 
 class TexPrinter:
   def __init__(self, root_dir, resources_paths = []):
@@ -76,8 +77,17 @@ class ContactsPrinter(TexPrinter):
     file.write('Name: %s \splitter Sex: %s \splitter Date of birth: %s \splitter Nationality: %s \splitter %s \hfill \\break\n' % (profile.personal['name'], profile.personal['sex'], profile.personal['birthdate'], profile.personal['nationality'], profile.personal['additional']))
     file.write('%s \hfill \\break\n' % profile.contacts['residence'])
     file.write('\\vcenteredinclude{%s} \href{mailto:%s}{%s}\n' % (self.image_path('img/email.svg'), profile.contacts['email'], profile.contacts['email']))
+
+    # Phone
     file.write('\\vcenteredinclude{%s} %s\n' % (self.image_path('img/phone.svg'), profile.contacts['phone']))
-    file.write('\\vcenteredinclude{%s} \href{%s}{%s}\n' % (self.image_path('img/linkedin.svg'), profile.contacts['linkedin'], profile.contacts['linkedin']))
+
+    # Linked in
+    linkedin_url = urlparse(profile.contacts['linkedin'])
+    print(linkedin_url)
+    # exit(1)
+    file.write('\\vcenteredinclude{%s} \href{%s}{%s%s}\n' % (self.image_path('img/linkedin.svg'), linkedin_url.geturl(), linkedin_url.netloc, linkedin_url.path))
+
+    # Skype
     file.write('\\vcenteredinclude{%s} %s \\\\\n' % (self.image_path('img/skype.svg'), profile.contacts['skype']))
     file.write('\\textbf{Languages:} %s\n' % ', '.join(profile.contacts['languages']))
 

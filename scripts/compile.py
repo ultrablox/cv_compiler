@@ -15,9 +15,7 @@ import shutil
 from tex_printer import *
 from employee_profile import *
 
-
-
-DEBUG_LATEX = True
+DEBUG_LATEX = False
 
 LATEX_OUTPUT = '' if DEBUG_LATEX else '1>/dev/null'
 LATEX_PARAMS = [] if DEBUG_LATEX else ['-halt-on-error', '--interaction=batchmode']
@@ -42,11 +40,8 @@ def main():
   lead_path = os.path.join(args.input_dir, 'lead.txt')
   check_always(os.path.exists(lead_path), 'Lead text "%s" does not exist' % lead_path)
 
-  # publications_path = os.path.join(args.input_dir, 'publications.bib')
-  # enable_pubs = os.path.exists(publications_path)
 
   # Load input data
-  
   profile = EmployeeProfile()
   with open(data_path, 'r') as json_data:
       data = json.load(json_data)
@@ -54,8 +49,6 @@ def main():
 
   profile.deserialize_publications(args.input_dir)
   profile.compress()
-  
-  
   
   # Generate tex files
   rc_dirs = [os.path.join('..', 'resources'), os.path.join(args.input_dir)]
@@ -71,15 +64,6 @@ def main():
 
   activities_printer = ActivitiesPrinter(args.tmp_dir, rc_dirs)
   activities_printer.print(profile, 'generated_activities.tex')
-
-  # pub_printer = PublicationsPrinter(args.tmp_dir, rc_dirs)
-  # pub_printer.print(profile, 'generated_scientific_publications.tex')
-
-  # conf_printer = ConferencesPrinter(args.tmp_dir, rc_dirs)
-  # conf_printer.print(profile, 'generated_conferences.tex')
-  
-  # ppub_printer = PopPublicationsPrinter(args.tmp_dir, rc_dirs)
-  # ppub_printer.print(profile, 'generated_popular_publications.tex')
 
   edu_printer = EducationsPrinter(args.tmp_dir, rc_dirs)
   edu_printer.print(profile, 'generated_educations.tex')
@@ -99,11 +83,9 @@ def main():
   shutil.copy(lead_path, os.path.join(args.tmp_dir, 'lead.tex'))
 
   # Compile PDF
-
   call_system('cd %s && xelatex %s main.tex %s' % (args.tmp_dir, ' '.join(LATEX_PARAMS), LATEX_OUTPUT))
 
   # Move result to output
-
   shutil.copy(os.path.join(args.tmp_dir, 'main.pdf'), os.path.join(args.out_dir, '%s_CV.pdf' % to_file_name(profile.personal['name'])))
 
 if __name__ == "__main__":
