@@ -55,10 +55,7 @@ def main():
   profile.deserialize_publications(args.input_dir)
   profile.compress()
   
-  # Generate skill matrix
-  skill_matrix_path = os.path.join(args.tmp_dir, 'skill_matrix.pdf')
-  skill_matrix = SkillMatrix(profile)
-  skill_matrix.compile(skill_matrix_path)
+  
   
   # Generate tex files
   rc_dirs = [os.path.join('..', 'resources'), os.path.join(args.input_dir)]

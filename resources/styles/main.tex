@@ -2,6 +2,7 @@
 \documentclass[10pt]{article} % Default font size
 
 \usepackage[labelformat=empty,labelsep=none]{caption}
+\usepackage{pgfplots}
 
 \input{styles.tex} % Include the file specifying document layout
 \input{generated_styles.tex}
@@ -29,11 +30,13 @@
     \input{generated_educations.tex}
 }
 
-\blocksection{Professional Skills}{
-    \includegraphics[width=0.75\textwidth]{skill_matrix.pdf}\newline
-    \input{generated_skills.tex}
-    \vspace{\blocksep}
-}
+% \blocksection{Professional Skills}{
+%     \includegraphics[width=0.75\textwidth]{skill_matrix.pdf}\newline
+%     \input{generated_skills.tex}
+%     \vspace{\blocksep}
+% }
+
+\input{generated_skills.tex}
 
 \blocksection{Main Projects}{
     \input{generated_projects.tex}

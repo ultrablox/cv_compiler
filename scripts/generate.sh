@@ -35,4 +35,4 @@ docker run -u $DOCKER_USER --rm -v $ROOT_DIR:/repo -v $LOCAL_DIR:/.local -v $CAC
     ./compile.py --tmp_dir=/.tmp --input_dir=/input --out_dir=/out
     "
 
-rm -rf $TMP_ROOT
+# rm -rf $TMP_ROOT

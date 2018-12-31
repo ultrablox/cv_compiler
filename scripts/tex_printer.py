@@ -154,32 +154,6 @@ class EducationsPrinter(TexPrinter):
       file.write('}')
 
 
-class ConferencesPrinter(TexPrinter):
-  def print_data(self, profile, file):
-    conf_strs = []
-    for conf in profile.conferences:
-      conf_strs += ['%s (%s, %d)' % (conf['name'], conf['location'], conf['year'])]
-    file.write("%s, etc.\n" % ' '.join(conf_strs))
-
-# class PopPublicationsPrinter(TexPrinter):
-#   def print_data(self, profile, file):
-#     file.write('\\begin{itemize-noindent}\n')
-#     for publication in profile.popularPublications:
-#         file.write('\item \ppublication{%d}{%s}{%s}{%s}' % (publication['year'], publication['name'], publication['source'], latex_escape(publication['url'])))
-#     file.write('\end{itemize-noindent}\n')
-
-# class PublicationsPrinter(TexPrinter):
-#   def print_data(self, profile, file):
-#     file.write('(%d total, incl. %d Scopus)\n' % (profile.publicationStats['sci_total'], profile.publicationStats['scopus']))
-#     file.write('\\begin{itemize-noindent}\n')
-#     for publication in profile.scientificPublications:
-#         file.write('\item %d --- %s // %s' % (int(publication['year']), publication['title'], publication['journal']))
-#         if ('source' in publication) and (publication['source'] == 'Scopus'):
-#             file.write(' \scopus')
-#         file.write('\n')
-
-#     file.write('\end{itemize-noindent}\n')
-
 class ActivitiesPrinter(TexPrinter):
   def print_data(self, profile, file):
     if not profile.has_activities():
@@ -232,6 +206,11 @@ class TraitsPrinter(TexPrinter):
 
 class SkillsPrinter(TexPrinter):
   def print_data(self, profile, file):
+    file.write('\\blocksection{Professional Skills}{\n')
+
+    skill_matrix = SkillMatrix(profile)
+    skill_matrix.generate(file)
+
     totals = profile.skills_totals()
     totals = totals[VISUAL_SKILL_COUNT:]
 
@@ -241,42 +220,43 @@ class SkillsPrinter(TexPrinter):
     cur_gr_idx = 0
     
     for skill in totals:
-        gr_val = 0
-        for idx in range(0, len(barriers)):
-            if (barriers[idx] <= skill['size']) and (skill['size'] < barriers[idx+1]):
-                gr_val = barriers[idx]
-                break
+      gr_val = 0
+      for idx in range(0, len(barriers)):
+        if (barriers[idx] <= skill['size']) and (skill['size'] < barriers[idx+1]):
+            gr_val = barriers[idx]
+            break
 
-        if gr_val in skill_groups:
-            skill_groups[gr_val] += [skill]
-        else:
-            skill_groups[gr_val] = [skill]
+      if gr_val in skill_groups:
+          skill_groups[gr_val] += [skill]
+      else:
+          skill_groups[gr_val] = [skill]
 
     first_non_empty = True
     for barrier in reversed(barriers):
-        if barrier in skill_groups:
-            barrier_idx = barriers.index(barrier)
+      if barrier in skill_groups:
+        barrier_idx = barriers.index(barrier)
 
-            skills = []
-            max_size = 0
-            for sk in skill_groups[barrier]:
-                skills += [latex_escape(sk['name'])]
-                max_size = max(max_size, sk['size'])
+        skills = []
+        max_size = 0
+        for sk in skill_groups[barrier]:
+            skills += [latex_escape(sk['name'])]
+            max_size = max(max_size, sk['size'])
 
-            max_val_name = str(barriers[barrier_idx+1])
-            if first_non_empty:
-                max_val_name = '%.1f' % max_size
-                first_non_empty = False
-            
-            group_name = '<%s year' % max_val_name if barrier_idx == 0 else '%d-%s years' % (barriers[barrier_idx], max_val_name)
-            
-            
-            file.write('\\textbf{%s:} %s\n\n' % (group_name, ', '.join(skills)))
+        max_val_name = str(barriers[barrier_idx+1])
+        if first_non_empty:
+            max_val_name = '%.1f' % max_size
+            first_non_empty = False
+        
+        group_name = '<%s year' % max_val_name if barrier_idx == 0 else '%d-%s years' % (barriers[barrier_idx], max_val_name)
+        
+        
+        file.write('\\textbf{%s:} %s\n\n' % (group_name, ', '.join(skills)))
 
     for sgr in profile.specialSkillGroups:
-        file.write('\skillgroup{%s:}{%s}{\n' % (sgr['name'], sgr['details']))
-        for adv in sgr['advantages']:
-            file.write('\item %s\n' % adv)
-        file.write('}\n')
+      file.write('\skillgroup{%s:}{%s}{\n' % (sgr['name'], sgr['details']))
+      for adv in sgr['advantages']:
+          file.write('\item %s\n' % adv)
+      file.write('}\n')
 
-
+    file.write('\t\\vspace{\\blocksep}\n')
+    file.write('}\n\n')
