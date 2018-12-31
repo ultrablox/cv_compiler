@@ -3,18 +3,23 @@
 
 \usepackage[labelformat=empty,labelsep=none]{caption}
 \usepackage{pgfplots}
-
 \input{styles.tex} % Include the file specifying document layout
 \input{generated_styles.tex}
 
-% \graphicspath{{svg_img/}{input/}{./}}
-
-
 %----------------------------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+% \fancyhead[LE,RO]{\thepage}
+% \fancyhead[RE,LO]{Guides and tutorials}
+\fancyfoot[CE,CO]{\thepage}
+\fancyfoot[LE,RO]{// printed with \textbf{\href{https://github.com/ultrablox/cv\_generator}{cv\_generator [github]}}}
 
 \begin{document}
 
-\pagenumbering{gobble}
+% \pagestyle{headings}
+% \setcounter{page}{1}
+
+% \pagenumbering{gobble}
 
 \blocksection{Personal and Contact Info}{
     \input{personal_contacts.tex}
@@ -29,12 +34,6 @@
 \blocksection{Education}{
     \input{generated_educations.tex}
 }
-
-% \blocksection{Professional Skills}{
-%     \includegraphics[width=0.75\textwidth]{skill_matrix.pdf}\newline
-%     \input{generated_skills.tex}
-%     \vspace{\blocksep}
-% }
 
 \input{generated_skills.tex}
 
@@ -54,6 +53,6 @@
     \end{itemize-noindent}
 }
 
-\footnotetext{Created with cv\_generator project \href{https://github.com/ultrablox/cv\_generator}{github.com/ultrablox/cv\_generator}}
+% \footnotetext{}
 
 \end{document}
