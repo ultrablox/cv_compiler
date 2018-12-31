@@ -199,11 +199,9 @@
 %6 - other
 %7 - label
 \newcommand{\project}[7]{
-    % \@ifmtarg{#2}{YES}{NO}
     \def\temp{#2}\ifx\temp\empty
-	% <EMPTY>%
     \else
-	\vcenteredinclude{#2}
+      \vcenteredinclude{#2}
     \fi
     #3 --- \textbf{\hypertarget{#7}{#1}} [#4]: #5
     \begin{itemize-noindent}
@@ -261,7 +259,11 @@
 %5 - position
 %6 - details
 
-\newcommand{\job}[7]{
+\newcommand{\job}[8]{
+\def\temp{#8}\ifx\temp\empty
+\else
+  \vcenteredinclude{#8}
+\fi
 #1 - #2 --- \textbf{#5}, \href{#4}{#3}: #6
 #7
 \vspace{\blocksep}

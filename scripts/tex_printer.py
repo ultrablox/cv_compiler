@@ -137,7 +137,7 @@ class EmploymentsPrinter(TexPrinter):
       file.write("\n".join(notes_arr))
       file.write("\n")
       file.write("\t\end{itemize-noindent}\n")
-      file.write("}\n")
+      file.write("}{%s}\n" % self.image_path(employment.logo))
 
 class EducationsPrinter(TexPrinter):
   def print_data(self, profile, file):

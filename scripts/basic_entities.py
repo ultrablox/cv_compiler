@@ -104,7 +104,8 @@ class Employment:
     self.web = json_node['web']
     self.role = json_node['role']
     self.description = json_node['description']
-    self.notes = json_node['notes'] if 'notes' in json_node else [] 
+    self.notes = json_node['notes'] if 'notes' in json_node else []
+    self.logo = json_node['logo']
     
     self.projects = []
     for prj in json_node['projects']:
