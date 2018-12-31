@@ -150,4 +150,4 @@ cd scripts
 ./generate.sh
 ```
 
-You will find comopiled CV in cv_generator/out/.
+You will find comopiled CV in cv_generator/out/. See compiled sample [here](https://raw.githubusercontent.com/ultrablox/cv_compiler/master/out/bruce_wayne_CV.pdf).

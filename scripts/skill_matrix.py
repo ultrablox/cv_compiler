@@ -13,7 +13,8 @@ class SkillMatrix:
 
   def generate(self, file):
     # They are already sorted
-    top_skills = self.totals[0:VISUAL_SKILL_COUNT]
+    visual_count = min(len(self.totals), VISUAL_SKILL_COUNT)
+    top_skills = self.totals[0:visual_count]
     
     coords = [x['name'] for x in top_skills]
     
@@ -41,7 +42,7 @@ class SkillMatrix:
     labels = ['Positive', 'Neutral', 'Negative']
     colors = ['green', 'gray', 'orange']
 
-    vals = [[0] * VISUAL_SKILL_COUNT, [0] * VISUAL_SKILL_COUNT, [0] * VISUAL_SKILL_COUNT]
+    vals = [[0] * visual_count, [0] * visual_count, [0] * visual_count]
   
     switcher = {
         SkillAttitude.FAVOURITE: 0,
@@ -49,15 +50,15 @@ class SkillMatrix:
         SkillAttitude.NEGATIVE: 2
     }
 
-    for i in range(0, VISUAL_SKILL_COUNT):
+    for i in range(0, visual_count):
       cur_skill = top_skills[i]
       att = self.skills[cur_skill['name']].attitude
       idx = switcher.get(att, 0)
       vals[idx][i] = cur_skill['size']
 
     for i in range(0, 3):
-      x_coords = [''] * VISUAL_SKILL_COUNT
-      for j in range(0, VISUAL_SKILL_COUNT):
+      x_coords = [''] * visual_count
+      for j in range(0, visual_count):
         x_coords[j] = '(%s,%.1f)' % (top_skills[j]['name'], vals[i][j])
       # vals = []
       format_str = ', nodes near coords*' if (i == 2) else ''
