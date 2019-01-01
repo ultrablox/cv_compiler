@@ -46,63 +46,60 @@ class TexPrinter:
   def inner_file_path(self, path):
     return os.path.join(self.rootDir, path)
 
-  def print(self, profile, path):
+  def print_to(self, profile, path):
     with open(self.inner_file_path(path), 'w+') as file:
+      self.file = file
       self.print_data(profile, file)
+      self.file = None
 
-class StylesPrinter(TexPrinter):
-  def print_data(self, profile, file):
-    file.writelines([
-      '\\newcommand{\weblink}[2]{',
-         '\\vcenteredinclude{%s} \href{#1}{#2}' % self.image_path('img/internet.svg'),
-        '}\n\n'])
+  def print(self, profile, file_ref):
+    self.file = file_ref
+    self.print_data(profile)
+    self.file = None
 
-    file.writelines([
-      '\\newcommand{\\teamsize}[1]{',
-        '\\vcenteredinclude{%s}  #1' % self.image_path('img/man.svg'),
-      '}\n\n'])
+  def writeln(self, data):
+    self.file.write(data + '\n')
 
-    file.writelines([
-      '\\newcommand{\\achievement}[1]{',
-        '\\vcenteredinclude{%s} #1' % self.image_path('img/star.svg'),
-      '}\n\n'])
-  
-    file.writelines([
-      '\\newcommand{\skills}[1]{',
-        '\\vcenteredinclude{%s} #1' % self.image_path('img/idea.svg'),
-      '}\n\n'])
+  def write(self, lines = []):
+    for line in lines:
+      self.writeln(line)
 
 class ContactsPrinter(TexPrinter):
-  def print_data(self, profile, file):
-    file.write('Name: %s \splitter Sex: %s \splitter Date of birth: %s \splitter Nationality: %s \splitter %s \hfill \\break\n' % (profile.personal['name'], profile.personal['sex'], profile.personal['birthdate'], profile.personal['nationality'], profile.personal['additional']))
-    file.write('%s \hfill \\break\n' % profile.contacts['residence'])
-    file.write('\\vcenteredinclude{%s} \href{mailto:%s}{%s}\n' % (self.image_path('img/email.svg'), profile.contacts['email'], profile.contacts['email']))
+  def print_data(self, profile):
+    self.write(['\\blocksection{Personal and Contact Info}{'])
+    self.writeln('Name: %s \splitter Sex: %s \splitter Date of birth: %s \splitter Nationality: %s \splitter %s \hfill \\break' % (profile.personal['name'], profile.personal['sex'], profile.personal['birthdate'], profile.personal['nationality'], profile.personal['additional']))
+    self.writeln('%s \hfill \\break' % profile.contacts['residence'])
+
+    contacts_str = '\\vcenteredinclude{%s} \href{mailto:%s}{%s}\n' % (self.image_path('img/email.svg'), profile.contacts['email'], profile.contacts['email'])
 
     # Phone
-    file.write('\\vcenteredinclude{%s} %s\n' % (self.image_path('img/phone.svg'), profile.contacts['phone']))
+    contacts_str += '\\vcenteredinclude{%s} %s\n' % (self.image_path('img/phone.svg'), profile.contacts['phone'])
 
     # Linked in
     linkedin_url = urlparse(profile.contacts['linkedin'])
-    print(linkedin_url)
-    # exit(1)
-    file.write('\\vcenteredinclude{%s} \href{%s}{%s%s}\n' % (self.image_path('img/linkedin.svg'), linkedin_url.geturl(), linkedin_url.netloc, linkedin_url.path))
+    contacts_str += '\\vcenteredinclude{%s} \href{%s}{%s%s}\n' % (self.image_path('img/linkedin.svg'), linkedin_url.geturl(), linkedin_url.netloc, linkedin_url.path)
 
     # Skype
-    file.write('\\vcenteredinclude{%s} %s \\\\\n' % (self.image_path('img/skype.svg'), profile.contacts['skype']))
-    file.write('\\textbf{Languages:} %s\n' % ', '.join(profile.contacts['languages']))
+    contacts_str += '\\vcenteredinclude{%s} %s \\\\' % (self.image_path('img/skype.svg'), profile.contacts['skype'])
+    self.writeln(contacts_str)
+
+    self.writeln('\\textbf{Languages:} %s\n' % ', '.join(profile.contacts['languages']))
+    self.write(['\\vspace{\\blocksep}',
+      '}'])
 
 class ProjectsPrinter(TexPrinter):
-  def print_data(self, profile, file):
+  def print_data(self, profile):
+    self.write(['\\blocksection{Main Projects}{'])
     sorted_projects = sorted(profile.projects, key=lambda prj: prj.period.startDate, reverse=True)
     for prj in sorted_projects:
-      file.write("\project{%s}{%s}" % (latex_escape(prj.name), self.image_path(os.path.join('img', prj.icon))))
-      file.write("{%d-%s}" % (prj.period.startDate.year, 'present' if prj.period.isOpen else str(prj.period.endDate.year)))
+      self.writeln("\project{%s}{%s}" % (latex_escape(prj.name), self.image_path(os.path.join('img', prj.icon))))
+      self.writeln("{%d-%s}" % (prj.period.startDate.year, 'present' if prj.period.isOpen else str(prj.period.endDate.year)))
       if prj.parent:
-          file.write('{in %s}' % prj.parent.name)
+          self.writeln('{in %s}' % prj.parent.name)
       else:
-          file.write('{HOBBY}')
+          self.writeln('{HOBBY}')
 
-      file.write("{%s}{" % (prj.description))
+      self.writeln("{%s}{" % (prj.description))
       first_line_items = []
       # type_str = "$\\bullet$"
       # if prj.parent:
@@ -120,20 +117,22 @@ class ProjectsPrinter(TexPrinter):
           first_line_items += ['\weblink{%s}{%s}' % (latex_escape(prj.webLink), latex_escape(label))]
 
       # first_line_items += [type_str] 
-      file.write("\item %s\n" % ' '.join(first_line_items))
+      self.writeln("\item %s\n" % ' '.join(first_line_items))
       if len(prj.skills) != 0:
-          file.write("\item \skills{%s}\n" % latex_escape(', '.join(prj.skills)))
+          self.writeln("\item \skills{%s}\n" % latex_escape(', '.join(prj.skills)))
       for achievement in prj.achievements:
-          file.write("\item \\achievement{%s}\n" % (latex_escape(achievement)))
+          self.writeln("\item \\achievement{%s}\n" % (latex_escape(achievement)))
       if len(prj.notes) != 0:
-          file.write("\item %s\n" % latex_escape('; '.join(prj.notes)))
-      file.write("}{charon:project}\n" )
+          self.writeln("\item %s\n" % latex_escape('; '.join(prj.notes)))
+      self.writeln("}{charon:project}\n" )
+    self.write(['}'])
 
 class EmploymentsPrinter(TexPrinter):
-  def print_data(self, profile, file):
+  def print_data(self, profile):
+    self.writeln('\\blocksection{Employment History}{')
     for employment in profile.employments:
-      file.write("\job{%s}{%s}{%s}{%s}{%s}{%s}{\n" % (employment.period.startDate.strftime('%b %Y'), 'Present' if employment.period.isOpen else employment.period.endDate.strftime('%b %Y'), employment.name, employment.web, employment.role, employment.description))
-      file.write("\t\\begin{itemize-noindent}\n")
+      self.writeln("\job{%s}{%s}{%s}{%s}{%s}{%s}{\n" % (employment.period.startDate.strftime('%b %Y'), 'Present' if employment.period.isOpen else employment.period.endDate.strftime('%b %Y'), employment.name, employment.web, employment.role, employment.description))
+      self.writeln("\t\\begin{itemize-noindent}")
       
       prj_names = []
       for prj in employment.projects:
@@ -144,82 +143,98 @@ class EmploymentsPrinter(TexPrinter):
       for note in employment.notes:
           notes_arr += ['\t\t\item{%s}' % note]
 
-      file.write("\n".join(notes_arr))
-      file.write("\n")
-      file.write("\t\end{itemize-noindent}\n")
-      file.write("}{%s}\n" % self.image_path(employment.logo))
+      self.write(notes_arr)
+      # self.writeln("")
+      self.writeln("\t\end{itemize-noindent}")
+      self.writeln("}{%s}" % self.image_path(employment.logo))
+    self.write(['}'])
 
 class EducationsPrinter(TexPrinter):
-  def print_data(self, profile, file):
+  def print_data(self, profile):
+    self.write(['\\blocksection{Education}{'])
     for edu in profile.education:
       tp = TimePeriod(edu['period'])
-      file.write('\education{%s}{%d-%d}{%s}{%s}{' % (edu['place'], tp.startDate.year, tp.endDate.year, edu['name'], latex_escape(edu['gpa'])))
+      self.write(['\education{%s}{%d-%d}{%s}{%s}{' % (edu['place'], tp.startDate.year, tp.endDate.year, edu['name'], latex_escape(edu['gpa']))])
       if ('notes' in edu) and (len(edu['notes']) > 0):
-          file.write('\\begin{itemize-noindent}')
+          self.write(['\\begin{itemize-noindent}'])
           notes_arr = []
           for note in edu['notes']:
               notes_arr += ['\item %s' % note]
-          file.write('\n'.join(notes_arr))
-          file.write('\end{itemize-noindent}')
-      file.write('}')
+          self.write(notes_arr)
+          self.write(['\end{itemize-noindent}'])
+      self.write(['}'])
+    self.write(['}'])
 
 
 class ActivitiesPrinter(TexPrinter):
-  def print_data(self, profile, file):
+  def print_data(self, profile):
     if not profile.has_activities():
       return
-    file.write('\\blocksection{Professional Activities}{\n')
+    self.writeln('\\blocksection{Professional Activities}{')
 
     # Scientific are most valuable
     if profile.scientificPubs:
       summary_str = '%d total' % len(profile.scientificPubs)
       if profile.scopus_publication_count():
         summary_str += ', incl. %d Scopus' % profile.scopus_publication_count()
-      file.writelines(['\t\\textbf{Recent Scientific Publications} (%s)\n' % summary_str,
-        '\t\\begin{itemize-noindent}\n'])
+      self.write(['\t\\textbf{Recent Scientific Publications} (%s)' % summary_str,
+        '\t\\begin{itemize-noindent}'])
       for pub in profile.scientificPubs:
         if pub['visible']:
           is_scopus = '\scopus' if (('source' in pub) and (pub['source'] == 'Scopus')) else ''
-          file.write('\item %d --- %s // %s %s\n' % (int(pub['year']), pub['title'], pub['journal'], is_scopus))
+          self.writeln('\item %d --- %s // %s %s' % (int(pub['year']), pub['title'], pub['journal'], is_scopus))
 
-      file.write('\t\end{itemize-noindent}\n')
+      self.writeln('\t\end{itemize-noindent}')
 
     # Popular publications are less important
     if profile.popularPubs:
       years = int(profile.popularPubs[0]['year']) - int(profile.popularPubs[-1]['year']) + 1
       summary_str = '%d total, avg. %.1f publicatons / year' % (len(profile.popularPubs), float(len(profile.popularPubs))/years)
-      file.writelines(['\t\\textbf{Recent Popular Publications} (%s):\n' % summary_str])
-      file.write('\\begin{itemize-noindent}\n')
+      self.write(['\t\\textbf{Recent Popular Publications} (%s):' % summary_str,
+        '\\begin{itemize-noindent}'
+      ])
       for pub in profile.popularPubs:
-          file.write('\item \ppublication{%d}{%s}{%s}{%s}' % (int(pub['year']), pub['title'], pub['source'], pub['url']))
-      file.write('\end{itemize-noindent}\n')
+        self.writeln('\item \ppublication{%d}{%s}{%s}{%s}' % (int(pub['year']), pub['title'], pub['source'], pub['url']))
+      self.writeln('\end{itemize-noindent}')
 
     # Conferences are the least important
     if profile.conferences:
       years = int(profile.conferences[0]['year']) - int(profile.conferences[-1]['year']) + 1
       summary_str = '%d total, avg. %.1f presentations / year' % (len(profile.conferences), float(len(profile.popularPubs))/years)
-      file.write('\t\\textbf{Speaker of} (%s): ' % summary_str)
       conf_strs = []
       for conf in profile.conferences:
         conf_strs += ['%s (%s, %d)' % (conf['name'], conf['location'], conf['year'])]
-      file.write("%s, etc.\n" % ' '.join(conf_strs))
+      self.writeln("\t\\textbf{Speaker of} (%s): %s, etc." % (summary_str, ' '.join(conf_strs)))
 
-    file.writelines(['\\vspace{\\blocksep}',
+    self.write(['\\vspace{\\blocksep}',
       '}'])
 
-
+class LeadPrinter(TexPrinter):
+  def print_data(self, profile):
+    self.write(['\\blocksection{Objective and Summary}{',
+      '\t%s' % profile.lead,
+      '\t\\vspace{\\blocksep}',
+      '}'
+    ])
 
 class TraitsPrinter(TexPrinter):
-  def print_data(self, profile, file):
+  def print_data(self, profile):
+    self.write(['\\blocksection{Interests and Personal Traits}{',
+      '\t\\begin{itemize-noindent}'])
+
     for trait in profile.traits:
-      file.write('\item \\textbf{%s:} %s\n' % (trait['name'], trait['details']))
+      self.write(['\item \\textbf{%s:} %s' % (trait['name'], trait['details'])])
+
+    self.write(['\\end{itemize-noindent}',
+      '}'
+    ])
 
 class SkillsPrinter(TexPrinter):
-  def print_data(self, profile, file):
-    file.write('\\blocksection{Professional Skills}{\n')
+  def print_data(self, profile):
+    self.write(['\\blocksection{Professional Skills}{'])
 
     skill_matrix = SkillMatrix(profile)
-    skill_matrix.generate(file)
+    skill_matrix.generate(self.file)
 
     totals = profile.skills_totals()
     totals = totals[VISUAL_SKILL_COUNT:]
@@ -259,14 +274,46 @@ class SkillsPrinter(TexPrinter):
         
         group_name = '<%s year' % max_val_name if barrier_idx == 0 else '%d-%s years' % (barriers[barrier_idx], max_val_name)
         
-        
-        file.write('\\textbf{%s:} %s\n\n' % (group_name, ', '.join(skills)))
+        self.writeln('\\textbf{%s:} %s \\newline' % (group_name, ', '.join(skills)))
 
     for sgr in profile.specialSkillGroups:
-      file.write('\skillgroup{%s:}{%s}{\n' % (sgr['name'], sgr['details']))
+      self.write(['\skillgroup{%s:}{%s}{' % (sgr['name'], sgr['details'])])
       for adv in sgr['advantages']:
-          file.write('\item %s\n' % adv)
-      file.write('}\n')
+          self.write(['\item %s' % adv])
+      self.write(['}'])
 
-    file.write('\t\\vspace{\\blocksep}\n')
-    file.write('}\n\n')
+    self.write(['\\vspace{\\blocksep}',
+      '}'])
+
+class TexCVPrinter(TexPrinter):
+  def print_styles(self):
+    self.write([
+      '\\newcommand{\weblink}[2]{',
+         '\\vcenteredinclude{%s} \href{#1}{#2}' % self.image_path('img/internet.svg'),
+        '}',
+      '\\newcommand{\\teamsize}[1]{',
+        '\\vcenteredinclude{%s}  #1' % self.image_path('img/man.svg'),
+      '}',
+      '\\newcommand{\\achievement}[1]{',
+        '\\vcenteredinclude{%s} #1' % self.image_path('img/star.svg'),
+      '}',
+      '\\newcommand{\skills}[1]{',
+        '\\vcenteredinclude{%s} #1' % self.image_path('img/idea.svg'),
+      '}'])
+
+  def print_data(self, profile, file):
+    self.write([
+      '\documentclass[10pt]{article}',
+      '\input{styles.tex}'
+    ])
+    self.print_styles()
+    self.write([
+      '\\begin{document}'
+      ])
+
+    printers = [ContactsPrinter, LeadPrinter, EducationsPrinter, SkillsPrinter, ProjectsPrinter, EmploymentsPrinter, ActivitiesPrinter, TraitsPrinter]
+    for printer in printers:
+      printer(self.rootDir, self.rcPaths).print(profile, self.file)
+
+    self.write(['\end{document}'])
+      

@@ -16,7 +16,7 @@
 %----------------------------------------------------------------------------------------
 
 \usepackage[a4paper, margin=25mm, vmargin=30mm, top=20mm, bottom=15mm, left=20mm, right=10mm]{geometry} % Use A4 paper and set margins
-
+\usepackage[labelformat=empty,labelsep=none]{caption}
 \usepackage{fancyhdr} % Customize the header and footer
 
 %\usepackage{lastpage} % Required for calculating the number of pages in the document
@@ -61,6 +61,7 @@
 \sectionfont{\color{slateblue}} % Color section titles
 
 \usepackage{pdfpages}
+\usepackage{pgfplots}
 
 %\fancypagestyle{plain}{\fancyhf{}\cfoot{\thepage\ of \pageref{LastPage}}} % Define a custom page style
 %\pagestyle{plain} % Use the custom page style through the document
@@ -347,3 +348,11 @@
 \newcommand{\vcenteredinclude}[1]{\begingroup
 \setbox0=\hbox{\includegraphics[width=12pt]{#1}}%
 \parbox{\wd0}{\box0}\endgroup}
+
+% Page number and footer
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[CE,CO]{\thepage}
+\fancyfoot[LE,RO]{// printed with \textbf{\href{https://github.com/ultrablox/cv\_generator}{cv\_generator [github]}}}
+

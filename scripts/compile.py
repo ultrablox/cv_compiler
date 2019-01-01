@@ -39,7 +39,8 @@ def main():
 
   lead_path = os.path.join(args.input_dir, 'lead.txt')
   check_always(os.path.exists(lead_path), 'Lead text "%s" does not exist' % lead_path)
-
+  # shutil.copy(lead_path, os.path.join(args.tmp_dir, 'lead.tex'))
+  
 
   # Load input data
   profile = EmployeeProfile()
@@ -47,40 +48,32 @@ def main():
       data = json.load(json_data)
       profile.deserialize(data)
 
+  with open(lead_path, 'r') as file:
+    profile.lead = file.read()
+
   profile.deserialize_publications(args.input_dir)
   profile.compress()
   
   # Generate tex files
   rc_dirs = [os.path.join('..', 'resources'), os.path.join(args.input_dir)]
   
-  styles_printer = StylesPrinter(args.tmp_dir, rc_dirs)
-  styles_printer.print(None, 'generated_styles.tex')
+  tex_printer = TexCVPrinter(args.tmp_dir, rc_dirs)
+  tex_printer.print_to(profile, 'main.tex')
 
-  projects_printer = ProjectsPrinter(args.tmp_dir, rc_dirs)
-  projects_printer.print(profile, 'generated_projects.tex')
-
-  employments_printer = EmploymentsPrinter(args.tmp_dir, rc_dirs)
-  employments_printer.print(profile, 'generated_employments.tex')
-
-  activities_printer = ActivitiesPrinter(args.tmp_dir, rc_dirs)
-  activities_printer.print(profile, 'generated_activities.tex')
-
-  edu_printer = EducationsPrinter(args.tmp_dir, rc_dirs)
-  edu_printer.print(profile, 'generated_educations.tex')
-
-  skills_printer = SkillsPrinter(args.tmp_dir, rc_dirs)
-  skills_printer.print(profile, 'generated_skills.tex')
-  
-  contacts_printer = ContactsPrinter(args.tmp_dir, rc_dirs)
-  contacts_printer.print(profile, 'personal_contacts.tex')
-
-  traits_printer = TraitsPrinter(args.tmp_dir, rc_dirs)
-  traits_printer.print(profile, 'generated_traits.tex')
+  # LeadPrinter(args.tmp_dir, rc_dirs).print_to(profile, 'generated_lead.tex')
+  # StylesPrinter(args.tmp_dir, rc_dirs).print_to(profile, 'generated_styles.tex')
+  # ProjectsPrinter(args.tmp_dir, rc_dirs).print_to(profile, 'generated_projects.tex')
+  # EmploymentsPrinter(args.tmp_dir, rc_dirs).print_to(profile, 'generated_employments.tex')
+  # ActivitiesPrinter(args.tmp_dir, rc_dirs).print_to(profile, 'generated_activities.tex')
+  # EducationsPrinter(args.tmp_dir, rc_dirs).print_to(profile, 'generated_educations.tex')
+  # SkillsPrinter(args.tmp_dir, rc_dirs).print_to(profile, 'generated_skills.tex')
+  # ContactsPrinter(args.tmp_dir, rc_dirs).print_to(profile, 'personal_contacts.tex')
+  # TraitsPrinter(args.tmp_dir, rc_dirs).print_to(profile, 'generated_traits.tex')
 
   # Copy static resources
   for file in glob.glob(r'../resources/styles/*.*') + glob.glob(r'../resources/fonts/*.*'):
     shutil.copy(file, args.tmp_dir)
-  shutil.copy(lead_path, os.path.join(args.tmp_dir, 'lead.tex'))
+  
 
   # Compile PDF
   call_system('cd %s && xelatex %s main.tex %s' % (args.tmp_dir, ' '.join(LATEX_PARAMS), LATEX_OUTPUT))
