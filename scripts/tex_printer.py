@@ -194,7 +194,8 @@ class ActivitiesPrinter(TexPrinter):
         '\\begin{itemize-noindent}'
       ])
       for pub in profile.popularPubs:
-        self.writeln('\item \ppublication{%d}{%s}{%s}{%s}' % (int(pub['year']), pub['title'], pub['source'], pub['url']))
+        if pub['visible']:
+          self.writeln('\item \ppublication{%d}{%s}{%s}{%s}' % (int(pub['year']), pub['title'], pub['source'], pub['url']))
       self.writeln('\end{itemize-noindent}')
 
     # Conferences are the least important

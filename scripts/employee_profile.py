@@ -153,7 +153,7 @@ class EmployeeProfile:
     # They have the same priority - simply cut off tail
     self.popularPubs = sorted(self.popularPubs, key=lambda pub: int(pub['year']), reverse=True)
 
-    self.popularPubs
     for i in range(0, len(self.popularPubs)):
+      pub = self.popularPubs[i]
       pub['visible'] = (i < MAX_NON_SCI_PUBS)
       
