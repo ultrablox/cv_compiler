@@ -60,16 +60,6 @@ def main():
   tex_printer = TexCVPrinter(args.tmp_dir, rc_dirs)
   tex_printer.print_to(profile, 'main.tex')
 
-  # LeadPrinter(args.tmp_dir, rc_dirs).print_to(profile, 'generated_lead.tex')
-  # StylesPrinter(args.tmp_dir, rc_dirs).print_to(profile, 'generated_styles.tex')
-  # ProjectsPrinter(args.tmp_dir, rc_dirs).print_to(profile, 'generated_projects.tex')
-  # EmploymentsPrinter(args.tmp_dir, rc_dirs).print_to(profile, 'generated_employments.tex')
-  # ActivitiesPrinter(args.tmp_dir, rc_dirs).print_to(profile, 'generated_activities.tex')
-  # EducationsPrinter(args.tmp_dir, rc_dirs).print_to(profile, 'generated_educations.tex')
-  # SkillsPrinter(args.tmp_dir, rc_dirs).print_to(profile, 'generated_skills.tex')
-  # ContactsPrinter(args.tmp_dir, rc_dirs).print_to(profile, 'personal_contacts.tex')
-  # TraitsPrinter(args.tmp_dir, rc_dirs).print_to(profile, 'generated_traits.tex')
-
   # Copy static resources
   for file in glob.glob(r'../resources/styles/*.*') + glob.glob(r'../resources/fonts/*.*'):
     shutil.copy(file, args.tmp_dir)

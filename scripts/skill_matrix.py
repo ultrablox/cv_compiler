@@ -18,9 +18,19 @@ class SkillMatrix:
     
     coords = [x['name'] for x in top_skills]
     
+    file.writelines(['\pgfplotsset{\n',
+      'compat=1.8,\n',
+      # 'tick label style = {font=Arial Narrow},\n',
+      # 'every axis label = {font=Arial Narrow},\n',
+      # 'legend style = {font=Arial Narrow},\n',
+      # 'label style = {font=Arial Narrow}\n',
+      # 'node style = {}\n',
+      'every non boxed x axis/.append style={x axis line style=-},',
+      'every non boxed y axis/.append style={y axis line style=-}',
+      '}\n'
+    ])
 
-    file.writelines(['\pgfplotsset{compat=1.8}\n',
-      '\\begin{tikzpicture}\n',
+    file.writelines(['\\begin{tikzpicture}\n',
       '\\begin{axis}[\n',
       '\tybar stacked,\n',
       '\tbar width=12pt,\n',
@@ -34,9 +44,11 @@ class SkillMatrix:
       '\taxis x line=bottom,\n',
       '\taxis y line=left,\n',
       '\tenlargelimits=false,\n',
+      # 'enlarge y limits=0.03,\n',
       '\tclip=false,\n'
       '\twidth=0.75\\textwidth,\n'
-      '\theight=8cm\n'
+      '\theight=6cm,\n',
+      'every node near coord/.append style={font=\\bfseries, /pgf/number format/.cd, fixed, fixed zerofill, precision=1},\n'
       ']\n'])
   
     labels = ['Positive', 'Neutral', 'Negative']
@@ -59,10 +71,10 @@ class SkillMatrix:
     for i in range(0, 3):
       x_coords = [''] * visual_count
       for j in range(0, visual_count):
-        x_coords[j] = '(%s,%.1f)' % (top_skills[j]['name'], vals[i][j])
+        x_coords[j] = '(%s,%f)' % (top_skills[j]['name'], vals[i][j])
       # vals = []
       format_str = ', nodes near coords*' if (i == 2) else ''
-      file.write('\\addplot[fill=%s%s] coordinates {%s};\n' % (colors[i], format_str, latex_escape(' '.join(x_coords))))
+      file.write('\\addplot[fill=%s%s, draw=none] coordinates {%s};\n' % (colors[i], format_str, latex_escape(' '.join(x_coords))))
       file.write('\\addlegendentry{%s}\n' % labels[i])
     
     file.writelines(['\end{axis}\n',
