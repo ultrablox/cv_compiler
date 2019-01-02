@@ -58,6 +58,7 @@ def main():
   rc_dirs = [os.path.join('..', 'resources'), os.path.join(args.input_dir)]
   
   tex_printer = TexCVPrinter(args.tmp_dir, rc_dirs)
+  tex_printer.paperSize = 'a5'
   tex_printer.print_to(profile, 'main.tex')
 
   # Copy static resources

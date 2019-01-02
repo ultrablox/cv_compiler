@@ -287,6 +287,15 @@ class SkillsPrinter(TexPrinter):
       '}'])
 
 class TexCVPrinter(TexPrinter):
+  PAGE_PROFILES = {
+    'a4' : {
+      'margins' : [20, 15, 20, 10]
+    },
+    'a5' : {
+      'margins' : [10, 5, 10, 5]
+    }
+  }
+
   def print_styles(self):
     self.write([
       '\\newcommand{\weblink}[2]{',
@@ -303,8 +312,11 @@ class TexCVPrinter(TexPrinter):
       '}'])
 
   def print_data(self, profile, file):
+    page_profile = self.PAGE_PROFILES[self.paperSize]
+    margins = page_profile['margins']
     self.write([
       '\documentclass[10pt]{article}',
+      '\\usepackage[%spaper, top=%dmm, bottom=%dmm, left=%dmm, right=%dmm]{geometry}' % (self.paperSize, margins[0], margins[1], margins[2], margins[3]),
       '\input{styles.tex}'
     ])
     self.print_styles()
