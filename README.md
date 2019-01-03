@@ -1,18 +1,18 @@
 # [<img src="docs/assets/img/logo.png?raw=true" height="64"/>]() cv_generator
 
 ![Price](https://img.shields.io/badge/price-FREE-0098f7.svg)
-![suitable](https://img.shields.io/badge/software_engineer-green.svg)
-![suitable](https://img.shields.io/badge/software_developer-green.svg)
+![suitable](https://img.shields.io/badge/CV-software_engineer-green.svg)
+![suitable](https://img.shields.io/badge/CV-software_developer-green.svg)
 
 ## Table of contents
 
-<details>
-<summary>Click to expand</summary>
+<!-- <details>
+<summary>Click to expand</summary> -->
 
 - [Quick start](#quick-start)
 - [Technologies](#technologies)
 
-</details>
+<!-- </details> -->
 
 ## Demo
 

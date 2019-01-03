@@ -32,7 +32,7 @@ docker pull $DOCKER_IMAGE || docker build -t $DOCKER_IMAGE ../docker
 docker run -u $DOCKER_USER --rm -v $ROOT_DIR:/repo -v $LOCAL_DIR:/.local -v $CACHE_DIR:/.cache -v $TMP_DIR:/.tmp -v $INPUT_DIR:/input -v $OUT_DIR:/out -w /repo $DOCKER_IMAGE bash -c "\
     pip3 install --user -r requirements.txt ;
     cd scripts;
-    ./compile.py --tmp_dir=/.tmp --input_dir=/input --out_dir=/out
+    ./compile.py --paper_size=a5 --tmp_dir=/.tmp --input_dir=/input --out_dir=/out
     "
 
 rm -rf $TMP_ROOT

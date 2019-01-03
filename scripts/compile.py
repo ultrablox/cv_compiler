@@ -26,6 +26,7 @@ def main():
   parser.add_argument('--input_dir', type=str, default='/input', help='Input directory')
   parser.add_argument('--tmp_dir', type=str, default='/tmp', help='Temporary directory')
   parser.add_argument('--out_dir', type=str, default='/out', help='Output directory')
+  parser.add_argument('--paper_size', type=str, default='a4', choices=['a4', 'a5'], help='Paper size')
   args = parser.parse_args()
 
   # Check necessary paths exist 
@@ -41,7 +42,6 @@ def main():
   check_always(os.path.exists(lead_path), 'Lead text "%s" does not exist' % lead_path)
   # shutil.copy(lead_path, os.path.join(args.tmp_dir, 'lead.tex'))
   
-
   # Load input data
   profile = EmployeeProfile()
   with open(data_path, 'r') as json_data:
@@ -58,13 +58,12 @@ def main():
   rc_dirs = [os.path.join('..', 'resources'), os.path.join(args.input_dir)]
   
   tex_printer = TexCVPrinter(args.tmp_dir, rc_dirs)
-  tex_printer.paperSize = 'a5'
+  tex_printer.paperSize = args.paper_size
   tex_printer.print_to(profile, 'main.tex')
 
   # Copy static resources
   for file in glob.glob(r'../resources/styles/*.*') + glob.glob(r'../resources/fonts/*.*'):
     shutil.copy(file, args.tmp_dir)
-  
 
   # Compile PDF
   call_system('cd %s && xelatex %s main.tex %s' % (args.tmp_dir, ' '.join(LATEX_PARAMS), LATEX_OUTPUT))

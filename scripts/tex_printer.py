@@ -64,10 +64,24 @@ class TexPrinter:
     for line in lines:
       self.writeln(line)
 
+  def get_href(self, url, force_short = False):
+    parsed_url = urlparse(url)
+    label = '%s%s' % (parsed_url.netloc, parsed_url.path)
+    if force_short:
+      label = parsed_url.path
+    return '\href{%s}{%s}' % (parsed_url.geturl(), label)
+
 class ContactsPrinter(TexPrinter):
   def print_data(self, profile):
     self.write(['\\blocksection{Personal and Contact Info}{'])
-    self.writeln('Name: %s \splitter Sex: %s \splitter Date of birth: %s \splitter Nationality: %s \splitter %s \hfill \\break' % (profile.personal['name'], profile.personal['sex'], profile.personal['birthdate'], profile.personal['nationality'], profile.personal['additional']))
+
+    head_line = 'Name: %s \splitter Sex: %s \splitter Date of birth: %s \splitter Nationality: %s' % (profile.personal['name'], profile.personal['sex'], profile.personal['birthdate'], profile.personal['nationality'])
+
+    if profile.personal['additional']:
+      head_line += '\splitter %s' % profile.personal['additional']
+    head_line += '\hfill \\break'
+
+    self.writeln(head_line)
     self.writeln('%s \hfill \\break' % profile.contacts['residence'])
 
     contacts_str = '\\vcenteredinclude{%s} \href{mailto:%s}{%s}\n' % (self.image_path('img/email.svg'), profile.contacts['email'], profile.contacts['email'])
@@ -76,8 +90,7 @@ class ContactsPrinter(TexPrinter):
     contacts_str += '\\vcenteredinclude{%s} %s\n' % (self.image_path('img/phone.svg'), profile.contacts['phone'])
 
     # Linked in
-    linkedin_url = urlparse(profile.contacts['linkedin'])
-    contacts_str += '\\vcenteredinclude{%s} \href{%s}{%s%s}\n' % (self.image_path('img/linkedin.svg'), linkedin_url.geturl(), linkedin_url.netloc, linkedin_url.path)
+    contacts_str += '\\vcenteredinclude{%s} %s\n' % (self.image_path('img/linkedin.svg'), self.get_href(profile.contacts['linkedin'], True))
 
     # Skype
     contacts_str += '\\vcenteredinclude{%s} %s \\\\' % (self.image_path('img/skype.svg'), profile.contacts['skype'])
@@ -150,19 +163,32 @@ class EmploymentsPrinter(TexPrinter):
     self.write(['}'])
 
 class EducationsPrinter(TexPrinter):
+  def print_facility_data(self, degree, facility, period, gpa, web = None, notes = []):
+    head_line = '%d-%d --- \\textbf{%s}, %s' % (period.startDate.year, period.endDate.year, degree, facility)
+    if web:
+      head_line += ' (%s)' % self.get_href(web)
+    head_line += ', %s' % latex_escape(gpa)
+    self.write([head_line])
+
+    self.write(['\\begin{itemize-noindent}'])
+    for note in notes:
+      self.write(['\item %s' % note])
+    self.write(['\end{itemize-noindent}'])
+
+  def print_facility(self, facility):
+    self.print_facility_data(facility['degree'],
+        facility['facility'], 
+        TimePeriod(facility['period']),
+        facility['gpa'],
+        facility['web'],
+        facility['notes']
+      )
+    self.write(['\\vspace{\\blocksep}'])
+
   def print_data(self, profile):
     self.write(['\\blocksection{Education}{'])
     for edu in profile.education:
-      tp = TimePeriod(edu['period'])
-      self.write(['\education{%s}{%d-%d}{%s}{%s}{' % (edu['place'], tp.startDate.year, tp.endDate.year, edu['name'], latex_escape(edu['gpa']))])
-      if ('notes' in edu) and (len(edu['notes']) > 0):
-          self.write(['\\begin{itemize-noindent}'])
-          notes_arr = []
-          for note in edu['notes']:
-              notes_arr += ['\item %s' % note]
-          self.write(notes_arr)
-          self.write(['\end{itemize-noindent}'])
-      self.write(['}'])
+      self.print_facility(edu)
     self.write(['}'])
 
 
@@ -292,7 +318,7 @@ class TexCVPrinter(TexPrinter):
       'margins' : [20, 15, 20, 10]
     },
     'a5' : {
-      'margins' : [10, 5, 10, 5]
+      'margins' : [10, 7, 10, 5]
     }
   }
 
