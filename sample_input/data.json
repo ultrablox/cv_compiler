@@ -84,28 +84,86 @@
         "icon" : "fb_messenger_project.png",
         "period" : "01.09.2017-now",
         "description" : "An internet messenger software",
-        "team-size" : "13"
+        "team-size" : "13",
+        "tasks" : [
+          {
+            "description" : "Development exchange of large media files",
+            "period" : "01.09.2016-30.08.2017",
+            "skills" : "C++, boost, PHP",
+            "achievements" : [
+              "improved compression ratio for bzip2 algorithm up to 130% for media content",
+              "reduced latency for sending large videos (300+MB) down to 25%"
+            ]
+          }
+        ]
       },
       {
         "name" : "Google Drive",
         "icon" : "gdrive_project.png",
         "period" : "01.09.2016-30.08.2017",
         "description" : "Automated version control system for desktop users",
-        "team-size" : "6"
+        "team-size" : "6",
+        "tasks" : [
+          {
+            "description" : "Development of synchronization mechanism for multi-user document editing",
+            "period" : "01.09.2016-30.08.2017",
+            "skills" : "C++, Javascript, HTML, boost",
+            "achievements" : [
+              "synchronization support with <0.01 latency whith 10 users concurrency"
+            ]
+          },
+          {
+            "description" : "Development of automatic updating for desktop client",
+            "period" : "01.11.2016-31.01.2017",
+            "skills" : "C++, Python",
+            "achievements" : [
+              "decreased potentially-insecure outdated version usage time down to 15%"
+            ]
+          }
+        ]
       },
       {
         "name" : "Photoshop",
         "icon" : "photoshop_project.png",
         "period" : "01.09.2015-30.08.2016",
         "description" : "Raster graphics editor",
-        "team-size" : "9"
+        "team-size" : "9",
+        "tasks" : [
+          {
+            "description" : "Development of text-recognition filter from raw image",
+            "period" : "01.09.2015-28.02.2016",
+            "skills" : "Machine Learning, C++",
+            "achievements" : [
+              "achievied recognition accuracy up to 85%"
+            ]
+          },
+          {
+            "description" : "Reworking of plugin writing API",
+            "period" : "01.01.2016-30.08.2016",
+            "skills" : "C++, C#, Python",
+            "achievements" : [
+              "expanded API with Python and C# languages, which increased plugin audience by 70%"
+            ]
+          }
+        ]
       },
       {
         "name" : "Core i7",
         "icon" : "i7_project.png",
         "period" : "01.09.2014-30.08.2013",
         "description" : "Intel i7 Core CPU series",
-        "team-size" : "5"
+        "team-size" : "5",
+        "tasks" : [
+          {
+            "description" : "Development synchronization mechanism between cores for i7 generation",
+            "period" : "01.09.2014-30.08.2013",
+            "skills" : "Assembler",
+            "achievements" : [
+              "increased performance for multithreaded tasks up to 185%",
+              "overperformed AMD similar model line by 30%"
+            ]
+          }
+        ]
       }
     ],
     "employments" :[
@@ -161,6 +219,10 @@
         {
             "name" : "Interests",
             "details" : "AI, Computers, Alcohol"
+        },
+        {
+            "name" : "Interesting facts",
+            "details" : "Was on the Noon twice, have a wombat-pet"
         }
     ],
     "special_skills" : [

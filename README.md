@@ -1,4 +1,4 @@
-# [<img src="docs/assets/img/logo.png?raw=true" height="64"/>]() cv_generator
+# [<img src="docs/assets/img/logo.png?raw=true" height="64"/>]() cv_compiler
 
 ![Price](https://img.shields.io/badge/price-FREE-0098f7.svg)
 ![suitable](https://img.shields.io/badge/CV-software_engineer-green.svg)
@@ -6,27 +6,43 @@
 
 ## Table of contents
 
-<!-- <details>
-<summary>Click to expand</summary> -->
-
+- [Demo](#demo)
 - [Quick start](#quick-start)
+- [Writing Custom Journal](#writing-custom-journal)
 - [Technologies](#technologies)
-
-<!-- </details> -->
 
 ## Demo
 
-[![](out/bruce_wayne_CV.pdf?raw=true)](out/bruce_wayne_CV.pdf?raw=true)
+[<img src="docs/assets/img/cv_preview_0.png?raw=true" width="384" />](out/bruce_wayne_CV.pdf)
+[<img src="docs/assets/img/cv_preview_1.png?raw=true" width="384" />](out/bruce_wayne_CV.pdf)
 
 ## Quick Start
 
-1. **Clone** current repository.
+1. **Install** [GIT LFS](https://help.github.com/articles/installing-git-large-file-storage/) or make sure it is already installed.
+
+2. **Clone** current repository.
 
 ```bash
 git clone https://github.com/ultrablox/cv_compiler.git
 ```
 
-2. **Write Exprience Journal** with following structure: 
+3. **Install docker** according to [official instruction](https://docs.docker.com/install) and make sure service is running.
+
+4. **Compile Sample CV**, which journal is in *cv_compiler/sample_input*.
+
+```bash
+cd cv_compiler/scripts
+./generate.sh
+```
+5. **Find** compiled CV in pdf at:
+```bash
+> ls cv_compiler/out
+bruce_wayne_CV.pdf
+```
+
+## Writing Custom Journal
+
+**Write Exprience Journal** with following structure: 
 
 ```
 journal_dir
@@ -43,18 +59,11 @@ journal_dir
 
 For the reference look to the [default example](sample_input).
 
-3. **Install docker** according to [official instruction](https://docs.docker.com/install) and make sure service is running.
-
-4. **Compile CV**, providing it path to the *journal_dir* folder.
+**Compile Sample CV**, providing it path to the *journal_dir* folder:
 
 ```bash
 cd cv_compiler/scripts
 INPUT_DIR=$HOME/Documents/journal_dir ./generate.sh
-```
-
-5. **Find** compiled CV in pdf at:
-```bash
-ls cv_compiler/out
 ```
 
 ## Technologies
