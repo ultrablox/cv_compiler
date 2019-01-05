@@ -64,7 +64,7 @@ class SkillMatrix:
 
     for i in range(0, visual_count):
       cur_skill = top_skills[i]
-      att = self.skills[cur_skill['name']].attitude
+      att = cur_skill['attitude']
       idx = switcher.get(att, 0)
       vals[idx][i] = cur_skill['size']
 

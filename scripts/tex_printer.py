@@ -101,43 +101,60 @@ class ContactsPrinter(TexPrinter):
       '}'])
 
 class ProjectsPrinter(TexPrinter):
+  def skills_line(self, prj):
+    all_skills = prj.get_total_skill_list()
+    if all_skills:
+      return '\skills{%s}' % latex_escape(', '.join(all_skills))
+    else:
+      return ''
+
+  def print_project_data(self, prj):
+    self.writeln("\project{%s}{%s}" % (latex_escape(prj.name), self.image_path(os.path.join('img', prj.icon))))
+    self.writeln("{%d-%s}" % (prj.period.startDate.year, 'present' if prj.period.isOpen else str(prj.period.endDate.year)))
+    if prj.parent:
+        self.writeln('{in %s}' % prj.parent.name)
+    else:
+        self.writeln('{HOBBY}')
+
+    self.writeln("{%s}{" % (prj.description))
+    first_line_items = []
+
+    first_line_items += ["\\teamsize{%s}" % (prj.teamSize)]
+
+    if prj.webLink:
+        url = urllib.parse.urlparse(prj.webLink)
+        label = url.netloc
+        if url.path:
+            label += url.path
+        first_line_items += ['\weblink{%s}{%s}' % (latex_escape(prj.webLink), latex_escape(label))]
+
+    # first_line_items += [type_str] 
+    self.writeln("\item %s" % ' '.join(first_line_items))
+    skills = self.skills_line(prj)
+    if skills:
+      self.writeln('\item %s' % skills)
+    self.writeln("}{charon:project}" )
+
+    # Tasks
+    for task in prj.tasks:
+      self.writeln("%s" % latex_escape(task.description))
+      self.writeln('\\begin{itemize-noindent}')
+      for ach in task.achievements:
+        self.writeln("\item[] \\achievement{%s}" % latex_escape(ach))
+      self.writeln('\\end{itemize-noindent}')
+
+    # for achievement in prj.achievements:
+    #     self.writeln("\item \\achievement{%s}\n" % (latex_escape(achievement)))
+    # if len(prj.notes) != 0:
+    #     self.writeln("\item %s\n" % latex_escape('; '.join(prj.notes)))
+    
+
   def print_data(self, profile):
     self.write(['\\blocksection{Main Projects}{'])
     sorted_projects = sorted(profile.projects, key=lambda prj: prj.period.startDate, reverse=True)
     for prj in sorted_projects:
-      self.writeln("\project{%s}{%s}" % (latex_escape(prj.name), self.image_path(os.path.join('img', prj.icon))))
-      self.writeln("{%d-%s}" % (prj.period.startDate.year, 'present' if prj.period.isOpen else str(prj.period.endDate.year)))
-      if prj.parent:
-          self.writeln('{in %s}' % prj.parent.name)
-      else:
-          self.writeln('{HOBBY}')
-
-      self.writeln("{%s}{" % (prj.description))
-      first_line_items = []
-      # type_str = "$\\bullet$"
-      # if prj.parent:
-      #     type_str += " in %s" % prj.parent.name
-      # else:
-      #     type_str += " hobby"
-
-      first_line_items += ["\\teamsize{%s}" % (prj.teamSize)]
-
-      if prj.webLink:
-          url = urllib.parse.urlparse(prj.webLink)
-          label = url.netloc
-          if url.path:
-              label += url.path
-          first_line_items += ['\weblink{%s}{%s}' % (latex_escape(prj.webLink), latex_escape(label))]
-
-      # first_line_items += [type_str] 
-      self.writeln("\item %s\n" % ' '.join(first_line_items))
-      if len(prj.skills) != 0:
-          self.writeln("\item \skills{%s}\n" % latex_escape(', '.join(prj.skills)))
-      for achievement in prj.achievements:
-          self.writeln("\item \\achievement{%s}\n" % (latex_escape(achievement)))
-      if len(prj.notes) != 0:
-          self.writeln("\item %s\n" % latex_escape('; '.join(prj.notes)))
-      self.writeln("}{charon:project}\n" )
+      self.print_project_data(prj)
+      self.writeln('\\vspace{\\blocksep}')
     self.write(['}'])
 
 class EmploymentsPrinter(TexPrinter):

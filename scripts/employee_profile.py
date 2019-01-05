@@ -9,61 +9,61 @@ MAX_CONFERENCES = 5
 
 class EmployeeProfile:
   def __init__(self):
-      self.projects = []
-      self.employments = []
-      self.publicationStats = {}
+    self.projects = []
+    self.employments = []
+    self.publicationStats = {}
   
   def deserialize(self, json_node):
-      self.contacts = json_node['contacts']
-      self.personal = json_node['personal']
-      self.education = json_node['education']
-      self.traits = json_node['traits']
-  
-      self.specialSkillGroups = json_node['special_skills']
-      
-      self.skills = {}
+    self.contacts = json_node['contacts']
+    self.personal = json_node['personal']
+    self.education = json_node['education']
+    self.traits = json_node['traits']
 
-      for skill in json_node['skills']:
-          new_skill = Skill(skill)
-          sd = json_node['skills'][skill]
-          if 'attitude' in sd:
-              switcher = {
-                  'favourite' : SkillAttitude.FAVOURITE,
-                  'neutral' : SkillAttitude.NEUTRAL,
-                  'negative' : SkillAttitude.NEGATIVE
-              }
-              new_skill.attitude = switcher.get(sd['attitude'], lambda: None)
-          self.skills[skill] = new_skill
+    self.specialSkillGroups = json_node['special_skills']
+    
+    # Deserialize projects
+    for prj in json_node['projects']:
+      self.projects += [Project(prj)]
 
-      for prj in json_node['projects']:
-          new_prj = Project(prj)
-          self.projects += [new_prj]
-          
-          if 'skills' in prj:
-              for prj_skill in prj['skills']:
-                  self.add_period_for_skill(prj_skill, new_prj.period)
+    # Initialize full skill list
+    self.skills = {}
+    for name, data in json_node['skills'].items():
+        self.skills[name] = Skill(name, data)
+    
+    for prj in self.projects:
+      for skill_name in prj.get_total_skill_list():
+        if skill_name not in self.skills:
+          self.skills[skill_name] = Skill(skill_name)
 
-          if 'secondary_skills' in prj:
-              for sec_skill in prj['secondary_skills']:
-                  self.add_period_for_skill(sec_skill['name'], TimePeriod(sec_skill['period']))
-      
-      # Remove empty skills
-      empty_skills = []
-      for skill_name, skill_data in self.skills.items():
-          if skill_data.total_size() == 0.0:
-              empty_skills += [skill_name]
+    # Fill skill periods
+    for prj in self.projects:
+      log_print(LOG_LEVEL_DEBUG, 'Adding skill periods from project: %s' % prj.name)
+      for prj_skill in prj.skills:
+        self.skills[prj_skill].add_period(prj.period)
 
-      for empty_name in empty_skills:
-          del self.skills[empty_name]
+      for task in prj.tasks:
+        for skill in task.skills:
+          self.skills[skill].add_period(task.period)
 
-      for employment_node in json_node['employments']:
-          self.employments += [Employment(employment_node, self)]
-      
-      # non_sci_pubs = []
 
-      # self.popularPublications = json_node['pop_publications'][0:MAX_NON_SCI_PUBS]
+    
+    # Remove empty skills
+    # empty_skills = []
+    # for skill_name, skill_data in self.skills.items():
+    #     if skill_data.total_size() == 0.0:
+    #         empty_skills += [skill_name]
 
-      self.conferences = json_node['conferences'][0:MAX_CONFERENCES]
+    # for empty_name in empty_skills:
+    #     del self.skills[empty_name]
+
+    for employment_node in json_node['employments']:
+        self.employments += [Employment(employment_node, self)]
+    
+    # non_sci_pubs = []
+
+    # self.popularPublications = json_node['pop_publications'][0:MAX_NON_SCI_PUBS]
+
+    self.conferences = json_node['conferences'][0:MAX_CONFERENCES]
 
   def deserialize_publications(self, base_path):
     
@@ -90,19 +90,25 @@ class EmployeeProfile:
     else:
       self.popularPubs = None
 
-  
+  # Returns array [{'name' : 'skill_name', 'size' : .f_years}]
   def skills_totals(self):
-      res = []
-      for key, data in self.skills.items():
-          res += [{'name' : key, 'size' : data.total_size()}]
-      return sorted(res, key=lambda rec: rec['size'], reverse=True)
+    res = []
+    for key, data in self.skills.items():
+        res += [{'name' : data.name_with_abbr(), 'size' : data.total_size(), 'attitude' : data.attitude}]
 
-  def add_period_for_skill(self, skill, period):
-      if not skill in self.skills:
-          new_skill = Skill(skill)
-          self.skills[skill] = new_skill
-      cur_skill = self.skills[skill]
-      cur_skill.add_period(period)
+    # print(res)
+    # exit(1)
+
+    res = (item for item in res if item['size'] > 0.0)
+
+    return sorted(res, key=lambda rec: rec['size'], reverse=True)
+
+  # def add_period_for_skill(self, skill, period):
+  #     if not skill in self.skills:
+  #         new_skill = Skill(skill)
+  #         self.skills[skill] = new_skill
+  #     cur_skill = self.skills[skill]
+  #     cur_skill.add_period(period)
   
   def best_skill(self):
       skills = self.skills_totals()

@@ -23,7 +23,7 @@
             "degree" : "Master in CV Writing",
             "period" : "01.09.2006-30.07.2011",
             "facility" : "Massachusetts Institute of Technology MIT",
-            "web" : "https://eng.mephi.ru",
+            "web" : "http://www.mit.edu",
             "gpa" : "GPA: 99%",
             "notes" : [
                 "Thesis: Development of CV for getting Dream Job"
@@ -48,14 +48,31 @@
         },
         "Linux" : {
             "attitude" : "negative"
+        },
+        "Latex" : {
+            "attitude" : "favourite"
+        },
+        "Python" : {
+            "attitude" : "favourite"
+        },
+        "boost" : {
+            "attitude" : "favourite"
+        },
+        "ML" : {
+            "attitude" : "negative",
+            "full_name" : "Machine Learning"
+        },
+        "JS" : {
+            "attitude" : "negative",
+            "full_name" : "Java Script"
         }
     },
     "projects" : [
     	{
         "name" : "cv-compiler",
-        "period" : "17.07.2017-27.08.2018",
+        "period" : "17.07.2017-now",
         "skills" : ["C++"],
-        "icon" : "cv_compiler_project.png",
+        "icon" : "cv_compiler_project.svg",
         "description" : "A typical CV compiler for software engineer",
         "web" : "https://ultrablox.github.io/cv_compiler/",
         "team-size" : "1",
@@ -63,7 +80,7 @@
           {
             "description" : "Development of a template including structure and form for technical CV",
             "period" : "01.03.2017-31.08.2017",
-            "skills" : "Latex",
+            "skills" : ["Latex"],
             "achievements" : [
               "reduced timecost for writing CV down to 40%",
               "increased positive response up to 300%"
@@ -72,7 +89,7 @@
           {
             "description" : "Automating of CV printing",
             "period" : "01.07.2017-now",
-            "skills" : "Python, Latex, Linux, CI",
+            "skills" : ["Python", "Latex", "Linux", "CI"],
             "achievements" : [
               "reduced timecost for adding new records into CV down to 15%"
             ]
@@ -85,11 +102,13 @@
         "period" : "01.09.2017-now",
         "description" : "An internet messenger software",
         "team-size" : "13",
+        "web" : "https://www.messenger.com",
+        "skills" : ["Scrum", "Agile"],
         "tasks" : [
           {
             "description" : "Development exchange of large media files",
             "period" : "01.09.2016-30.08.2017",
-            "skills" : "C++, boost, PHP",
+            "skills" : ["C++", "boost", "PHP"],
             "achievements" : [
               "improved compression ratio for bzip2 algorithm up to 130% for media content",
               "reduced latency for sending large videos (300+MB) down to 25%"
@@ -103,19 +122,21 @@
         "period" : "01.09.2016-30.08.2017",
         "description" : "Automated version control system for desktop users",
         "team-size" : "6",
+        "web" : "https://www.google.com/drive/",
+        "skills" : ["Scrum"],
         "tasks" : [
           {
             "description" : "Development of synchronization mechanism for multi-user document editing",
             "period" : "01.09.2016-30.08.2017",
-            "skills" : "C++, Javascript, HTML, boost",
+            "skills" : ["C++", "JS", "HTML", "boost"],
             "achievements" : [
               "synchronization support with <0.01 latency whith 10 users concurrency"
             ]
           },
           {
             "description" : "Development of automatic updating for desktop client",
-            "period" : "01.11.2016-31.01.2017",
-            "skills" : "C++, Python",
+            "period" : "01.11.2016-31.03.2017",
+            "skills" : ["C++", "Python"],
             "achievements" : [
               "decreased potentially-insecure outdated version usage time down to 15%"
             ]
@@ -128,11 +149,12 @@
         "period" : "01.09.2015-30.08.2016",
         "description" : "Raster graphics editor",
         "team-size" : "9",
+        "web" : "https://www.adobe.com/products/photoshop.html",
         "tasks" : [
           {
             "description" : "Development of text-recognition filter from raw image",
             "period" : "01.09.2015-28.02.2016",
-            "skills" : "Machine Learning, C++",
+            "skills" : ["ML", "C++"],
             "achievements" : [
               "achievied recognition accuracy up to 85%"
             ]
@@ -140,9 +162,9 @@
           {
             "description" : "Reworking of plugin writing API",
             "period" : "01.01.2016-30.08.2016",
-            "skills" : "C++, C#, Python",
+            "skills" : ["C++", "C#", "Python"],
             "achievements" : [
-              "expanded API with Python and C# languages, which increased plugin audience by 70%"
+              "expanded API with Python and C#, increased plugin developers by 70%"
             ]
           }
         ]
@@ -150,14 +172,15 @@
       {
         "name" : "Core i7",
         "icon" : "i7_project.png",
-        "period" : "01.09.2014-30.08.2013",
+        "period" : "01.09.2014-30.07.2015",
         "description" : "Intel i7 Core CPU series",
         "team-size" : "5",
+        "web" : "https://en.wikipedia.org/wiki/Intel_Core#Core_i7",
         "tasks" : [
           {
             "description" : "Development synchronization mechanism between cores for i7 generation",
-            "period" : "01.09.2014-30.08.2013",
-            "skills" : "Assembler",
+            "period" : "01.09.2014-30.08.2015",
+            "skills" : ["Assembler"],
             "achievements" : [
               "increased performance for multithreaded tasks up to 185%",
               "overperformed AMD similar model line by 30%"
@@ -203,7 +226,7 @@
             "description" : "various processors development",
             "role" : "Software Engineer",
             "location" : "Los Angeles, CA",
-            "period" : "01.09.2014-30.08.2013",
+            "period" : "01.09.2014-30.08.2015",
             "web" : "https://www.intel.com",
             "projects" : ["Core i7"]
         }
