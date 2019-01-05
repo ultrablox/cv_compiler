@@ -65,6 +65,9 @@
         "JS" : {
             "attitude" : "negative",
             "full_name" : "Java Script"
+        },
+        "CI" : {
+            "full_name" : "Cont. Integration"
         }
     },
     "projects" : [
@@ -154,7 +157,7 @@
           {
             "description" : "Development of text-recognition filter from raw image",
             "period" : "01.09.2015-28.02.2016",
-            "skills" : ["ML", "C++"],
+            "skills" : ["CI", "C++", "ML"],
             "achievements" : [
               "achievied recognition accuracy up to 85%"
             ]
