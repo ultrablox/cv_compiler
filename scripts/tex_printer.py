@@ -100,6 +100,14 @@ class ContactsPrinter(TexPrinter):
     self.write(['\\vspace{\\blocksep}',
       '}'])
 
+def human_code_size(n):
+  if n < 1000:
+    return '%d' % n
+  elif n < 1000000:
+    return '%.0fK' % (float(n) / 1000)
+  else:
+    return '%.1fM' % (float(n) / 1000000)
+
 class ProjectsPrinter(TexPrinter):
   def skills_line(self, prj):
     all_skills = prj.get_total_skill_list()
@@ -120,6 +128,8 @@ class ProjectsPrinter(TexPrinter):
     first_line_items = []
 
     first_line_items += ["\\teamsize{%s}" % (prj.teamSize)]
+
+    first_line_items += ["\\codesize{%s}" % human_code_size(prj.linesOfCode)]
 
     if prj.webLink:
         url = urllib.parse.urlparse(prj.webLink)
@@ -329,6 +339,7 @@ class SkillsPrinter(TexPrinter):
     self.write(['\\vspace{\\blocksep}',
       '}'])
 
+
 class TexCVPrinter(TexPrinter):
   PAGE_PROFILES = {
     'a4' : {
@@ -347,6 +358,9 @@ class TexCVPrinter(TexPrinter):
       '\\newcommand{\\teamsize}[1]{',
         '\\vcenteredinclude{%s}  #1' % self.image_path('img/man.svg'),
       '}',
+      '\\newcommand{\\codesize}[1]{',
+        '\\vcenteredinclude{%s}  #1' % self.image_path('img/code.svg'),
+      '}',
       '\\newcommand{\\achievement}[1]{',
         '\\vcenteredinclude{%s} #1' % self.image_path('img/star.svg'),
       '}',
@@ -360,7 +374,13 @@ class TexCVPrinter(TexPrinter):
     self.write([
       '\documentclass[10pt]{article}',
       '\\usepackage[%spaper, top=%dmm, bottom=%dmm, left=%dmm, right=%dmm]{geometry}' % (self.paperSize, margins[0], margins[1], margins[2], margins[3]),
+      '\\usepackage{fancyhdr}',
+      '\\pagestyle{fancy}',
+      # '\\rfoot{\\thepage}'
+      # '\\fancyhf{}',
+      '\\fancyfoot[CE,CO]{\\thepage}',
       '\input{styles.tex}'
+# '\fancyfoot[LE,RO]{// printed with \textbf{\href{https://github.com/ultrablox/cv\_generator}{cv\_generator [github]}}}'
     ])
     self.print_styles()
     self.write([

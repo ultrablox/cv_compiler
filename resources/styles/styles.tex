@@ -16,15 +16,10 @@
 %----------------------------------------------------------------------------------------
 
 \usepackage[labelformat=empty,labelsep=none]{caption}
-\usepackage{fancyhdr} % Customize the header and footer
-
-%\usepackage{lastpage} % Required for calculating the number of pages in the document
 
 \usepackage{hyperref}
 \usepackage[all]{hypcap} 
-% \usepackage{natbib}
-% \usepackage{bibentry}
-% \usepackage{csquotes}
+
 \usepackage{graphicx}
 
 \setcounter{secnumdepth}{0} % Suppress section numbering
@@ -83,7 +78,7 @@
 \setlength{\smallertextwidth}{\textwidth}
 \addtolength{\smallertextwidth}{-2cm}
 
-\newcommand{\sqbullet}{~\vrule height 1ex width .8ex depth -.2ex} % Custom square bullet point definition
+% \newcommand{\sqbullet}{~\vrule height 1ex width .8ex depth -.2ex} % Custom square bullet point definition
 
 \usepackage{enumitem}
 
@@ -91,14 +86,8 @@
 \setlist[enumlist]{label*=[\arabic*],leftmargin=0.5cm,topsep=0pt,noitemsep}
 
 
-%\newlist{bulletitem}{itemize}
-%\setlist[bulletitem]{label*=[\arabic*],leftmargin=0.5cm,topsep=0pt,noitemsep}
-
-
-
 \newlength\Colsep
 \setlength\Colsep{10pt}
-
 
 \newlength\blocksep
 \setlength\blocksep{2mm}
@@ -111,19 +100,6 @@
     urlcolor={black!80!black}
 }
 
-
-% \newcommand{\blocksection}[2]{
-% \noindent\begin{minipage}[t]{\textwidth}
-% \begin{minipage}[t]{0.23\textwidth}
-%     \textcolor{slateblue}{\textbf{\MakeUppercase{#1}}}
-% \end{minipage}\hfill
-% \begin{minipage}[t]{0.74\textwidth}
-% #2
-% \end{minipage}%
-% \end{minipage}
-% \vspace{5mm}
-% }
-
 \newcommand{\blocksection}[2]{
     \columnratio{0.18}
     \begin{paracol}{2}
@@ -131,12 +107,9 @@
 	    % \vspace{-2mm}
 	    \parbox[t]{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{
 		\raggedleft \textcolor{slateblue}{\textbf{\MakeUppercase{#1}}}
-	    % \makebox[30pt][flushleft]{xxxxxx
-	    % \begin{flushleft}
-	    % \end{flushleft}
+
 	    }
-	    % \makebox[\dimexpr\linewidth-2\fboxsep-2\fboxrule][l]{#1}
-	% }
+
     \switchcolumn
 	#2
     \end{paracol}
@@ -208,21 +181,6 @@
 }
 
 \newcommand{\projectlink}[2]{\textbf{#2}}
-
-% \newcommand{\weblink}[2]{
-%         \vcenteredinclude{svg_img/internet.pdf} \href{#1}{#2}
-% }
-% \newcommand{\teamsize}[1]{
-%         \vcenteredinclude{svg_img/man.pdf}  #1
-% }
-
-% \newcommand{\achievement}[1]{
-%         \vcenteredinclude{svg_img/star.pdf} #1
-% }
-
-% \newcommand{\skills}[1]{
-%         \vcenteredinclude{svg_img/idea.pdf} #1
-% }
 
 %1 - year
 %2 - name
@@ -347,8 +305,8 @@
 
 % Page number and footer
 
-\pagestyle{fancy}
-\fancyhf{}
-\fancyfoot[CE,CO]{\thepage}
-\fancyfoot[LE,RO]{// printed with \textbf{\href{https://github.com/ultrablox/cv\_generator}{cv\_generator [github]}}}
+% \pagestyle{fancy}
+% \fancyhf{}
+% \fancyfoot[CE,CO]{\thepage}
+% \fancyfoot[LE,RO]{// printed with \textbf{\href{https://github.com/ultrablox/cv\_generator}{cv\_generator [github]}}}
 

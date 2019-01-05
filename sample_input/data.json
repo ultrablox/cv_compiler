@@ -79,6 +79,7 @@
         "description" : "A typical CV compiler for software engineer",
         "web" : "https://ultrablox.github.io/cv_compiler/",
         "team-size" : "1",
+        "code_size" : "3000",
         "tasks" : [
           {
             "description" : "Development of a template including structure and form for technical CV",
@@ -107,6 +108,7 @@
         "team-size" : "13",
         "web" : "https://www.messenger.com",
         "skills" : ["Scrum", "Agile"],
+        "code_size" : "85000",
         "tasks" : [
           {
             "description" : "Development exchange of large media files",
@@ -127,6 +129,7 @@
         "team-size" : "6",
         "web" : "https://www.google.com/drive/",
         "skills" : ["Scrum"],
+        "code_size" : "260000",
         "tasks" : [
           {
             "description" : "Development of synchronization mechanism for multi-user document editing",
@@ -153,6 +156,7 @@
         "description" : "Raster graphics editor",
         "team-size" : "9",
         "web" : "https://www.adobe.com/products/photoshop.html",
+        "code_size" : "1560000",
         "tasks" : [
           {
             "description" : "Development of text-recognition filter from raw image",
@@ -179,6 +183,7 @@
         "description" : "Intel i7 Core CPU series",
         "team-size" : "5",
         "web" : "https://en.wikipedia.org/wiki/Intel_Core#Core_i7",
+        "code_size" : "870000",
         "tasks" : [
           {
             "description" : "Development synchronization mechanism between cores for i7 generation",

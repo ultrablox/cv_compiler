@@ -54,6 +54,7 @@ class Project:
     
     self.period = TimePeriod(prj_node['period'])
     self.name = prj_node['name']
+    self.linesOfCode = int(prj_node['code_size'])
 
     self.icon = ''
     if 'icon' in prj_node:
