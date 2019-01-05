@@ -1,15 +1,25 @@
 # [<img src="docs/assets/img/logo.png?raw=true" height="64"/>]() cv_compiler
 
+![Price](https://img.shields.io/badge/code-opensource-green.svg)
 ![Price](https://img.shields.io/badge/price-FREE-0098f7.svg)
 ![suitable](https://img.shields.io/badge/CV-software_engineer-green.svg)
 ![suitable](https://img.shields.io/badge/CV-software_developer-green.svg)
 
 ## Table of contents
 
+- [Aims](#aims)
 - [Demo](#demo)
 - [Quick start](#quick-start)
-- [Writing Custom Journal](#writing-custom-journal)
+- [Writing Your Journal](#writing-your-journal)
+  - [Directory Structure](#directory-Structure)
+  - [Structure](#structure)
+  - [Compiling](#compiling)
 - [Technologies](#technologies)
+- [Feedback](#feedback)
+
+## Aims
+
+This is automatic compiler of your **working experience journal** into standardized CV for Software Engineer and related positions. 
 
 ## Demo
 
@@ -40,7 +50,9 @@ cd cv_compiler/scripts
 bruce_wayne_CV.pdf
 ```
 
-## Writing Custom Journal
+## Writing Your Journal
+
+### Directory Structure
 
 **Write Exprience Journal** with following structure: 
 
@@ -59,6 +71,123 @@ journal_dir
 
 For the reference look to the [default example](sample_input).
 
+### Structure
+
+Journal (*journal_dir/data.json'*) is written in JSON with a few sections:
+
+```json
+{
+  "personal" : {
+      "..."
+  },
+  "contacts" : {
+      "..."
+  },
+  "education" : [
+      "..."
+  ],
+  "skills" : {
+    "..."
+  },
+  "special_skills" : [
+      "..."
+  ],
+  "projects" : [
+    "..."
+  ],
+  "employments" :[
+      "..."
+  ],
+  "conferences" : [
+      "..."
+  ],
+  "traits" : [
+      "..."
+  ]   
+}
+```
+
+#### Contacts
+
+```json
+{
+  "email" : "bruce@gmail.com",
+  "skype" : "bruce",
+  "phone" : "06-12345678",
+  "residence" : "Endhoven, Netherlands",
+  "linkedin" : "https://www.linkedin.com/in/yuri-blokhin-01688a78/",
+  "languages" : [
+      "English (advanced)",
+      "Chineese (native)",
+      "German (basic)"
+  ]
+}
+```
+
+
+#### Skills
+
+Here you can add special data about referencing further skills - it's full name and your attitude (when you like mentioned technology, or don't want to use it anymore). 
+
+```json
+"ML" : {
+    "attitude" : "negative",
+    "full_name" : "Machine Learning"
+}
+```
+
+#### Projects
+
+This is basic unit of your experience. State here the projects you weere involved in, skills that you gained and tasks with your achievments. Show that you really did something.
+
+```json
+{
+  "name" : "Photoshop",
+  "icon" : "photoshop_project.png",
+  "period" : "01.09.2015-30.08.2016",
+  "description" : "Raster graphics editor",
+  "team-size" : "9",
+  "web" : "https://www.adobe.com/products/photoshop.html",
+  "tasks" : [
+    "..."
+  ]
+}
+```
+
+I strongly recomment to include project logo into each project. Tasks that you did within the project must contain period, skills and achievments.
+
+```json
+{
+  "description" : "Development of text-recognition filter from raw image",
+  "period" : "01.09.2015-28.02.2016",
+  "skills" : ["CI", "C++", "ML"],
+  "achievements" : [
+    "achievied recognition accuracy up to 85%"
+  ]
+}
+```
+
+#### Employments
+
+This is a list of your work history. If you worked in well-reccognised company - I strongly recomment to include company logo into the records.
+
+```json
+{
+    "name" : "Google Inc",
+    "logo" : "img/logo_google.png",
+    "description" : "search engine",
+    "role" : "Software Engineer",
+    "location" : "Zurich, SZ",
+    "period" : "01.09.2016-30.08.2017",
+    "web" : "https://www.google.com",
+    "projects" : ["Google Drive"]
+}
+```
+
+Make also references to the projects that you worked on in this company.
+
+### Compiling
+
 **Compile Sample CV**, providing it path to the *journal_dir* folder:
 
 ```bash
@@ -72,21 +201,6 @@ INPUT_DIR=$HOME/Documents/journal_dir ./generate.sh
 [<img src="docs/assets/img/python.png?raw=true" height="64" />](https://www.python.org)
 [<img src="docs/assets/img/docker.png?raw=true" height="64" />](https://www.docker.com)
 
-## Aims
+## Feedback
 
-This is automatic generator of typical Software Engineer CV. Read more at pages.
-
-## Prerequistes
-
-Install docker, compilation is performed inside the container.
-
-## Usage
-
-Create directory with like in example (sample_input).
-
-
-After that you will find compiled CV at out/your_name_cv.pdf.
-
-## For developers
-
-If you want to improve it, create pull request with appropriate description - I will approve it. 
+I appreciate any form of feedback, that helps me improve the project. You can do it in form of **Pull Requests** or **Issues**.

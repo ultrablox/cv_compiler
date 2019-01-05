@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+# set -x
 
 mkdir tmp
 TMP_ROOT=$(realpath tmp)
