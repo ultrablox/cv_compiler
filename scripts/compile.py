@@ -17,7 +17,7 @@ from employee_profile import *
 import qrcode
 import qrcode.image.svg
 
-DEBUG_LATEX = True
+DEBUG_LATEX = False
 
 LATEX_OUTPUT = '' if DEBUG_LATEX else '1>/dev/null'
 LATEX_PARAMS = [] if DEBUG_LATEX else ['-halt-on-error', '--interaction=batchmode']
