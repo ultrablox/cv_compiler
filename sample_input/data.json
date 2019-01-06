@@ -102,7 +102,7 @@
     	},
       {
         "name" : "Messenger",
-        "icon" : "fb_messenger_project.png",
+        "icon" : "fb_messenger_project.svg",
         "period" : "01.09.2017-now",
         "description" : "An internet messenger software",
         "team-size" : "13",
@@ -123,7 +123,7 @@
       },
       {
         "name" : "Google Drive",
-        "icon" : "gdrive_project.png",
+        "icon" : "gdrive_project.svg",
         "period" : "01.09.2016-30.08.2017",
         "description" : "Automated version control system for desktop users",
         "team-size" : "6",
@@ -151,7 +151,7 @@
       },
       {
         "name" : "Photoshop",
-        "icon" : "photoshop_project.png",
+        "icon" : "photoshop_project.svg",
         "period" : "01.09.2015-30.08.2016",
         "description" : "Raster graphics editor",
         "team-size" : "9",
@@ -200,7 +200,7 @@
     "employments" :[
         {
             "name" : "Facebook Inc",
-            "logo" : "img/logo_fb.png",
+            "logo" : "img/logo_fb.svg",
             "description" : "social network",
             "role" : "Software Engineer",
             "location" : "London, EN",
@@ -210,7 +210,7 @@
         },
         {
             "name" : "Google Inc",
-            "logo" : "img/logo_google.png",
+            "logo" : "img/logo_google.svg",
             "description" : "search engine",
             "role" : "Software Engineer",
             "location" : "Zurich, SZ",
@@ -220,7 +220,7 @@
         },
         {
             "name" : "Adobe Inc",
-            "logo" : "img/logo_adobe.png",
+            "logo" : "img/logo_adobe.svg",
             "description" : "pdf editing software",
             "role" : "Software Engineer",
             "location" : "Los Angeles, CA",
@@ -230,7 +230,7 @@
         },
         {
             "name" : "Intel Inc",
-            "logo" : "img/logo_intel.png",
+            "logo" : "img/logo_intel.svg",
             "description" : "various processors development",
             "role" : "Software Engineer",
             "location" : "Los Angeles, CA",

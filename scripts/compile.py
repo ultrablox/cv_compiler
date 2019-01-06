@@ -73,6 +73,7 @@ def main():
   profile.compress()
   
   with tempfile.TemporaryDirectory() as tmp_dir:
+    # tmp_dir = os.path.join('..', 'tmp')
     # Generate watermark qr_code
     qr_path = os.path.join(tmp_dir, 'watermark.svg')
     print_qr_code(qr_path)

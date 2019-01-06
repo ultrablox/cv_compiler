@@ -9,6 +9,7 @@ from utils import *
 from basic_entities import *
 from skill_matrix import *
 from urllib.parse import urlparse
+import sys
 from log import *
 
 class TexPrinter:
@@ -25,25 +26,30 @@ class TexPrinter:
     log_print(LOG_LEVEL_DEBUG, 'Resource not found: %s' % base_path)
     return None
 
-  def image_path(self, base_path):
+  def image_path(self, base_path, size = None):
     path = self.find_resouce(base_path)
     if path:
-    # check_always(path, 'Referencing non-existing image: "%s"' % base_path)
-
-      # Get extension
-      filename, file_extension = os.path.splitext(path)
+      filename, extension = os.path.splitext(path)
 
       # If svg - convert to pdf into cached and return it
-      if file_extension == '.svg':
+      if extension == '.svg':
         converted_fname = '%s.pdf' % filename[1:]
-
-        converted_file_path = os.path.join(self.rootDir, '.converted', converted_fname)#, 
-        # print(converted_file_path)
+        converted_file_path = os.path.join(self.rootDir, '.converted', converted_fname) 
         svg_to_pdf(path, converted_file_path)
-        # print(converted_file_path)
-        # exit(1)
-
         return converted_file_path
+      elif extension == '.png':
+        if size:
+          size = [size[0] * 2, size[1] * 2]
+          print(size)
+          resized_fname = '%s_%dx%d%s' % (filename[1:], size[0], size[1], extension)
+          converted_file_path = os.path.join(self.rootDir, '.converted', resized_fname)
+          dest_dir = os.path.dirname(converted_file_path)
+          print(dest_dir)
+          pathlib.Path(dest_dir).mkdir(parents=True, exist_ok=True)
+          call_system('convert %s -resize %dx%d %s' % (os.path.abspath(path), size[0], size[1], os.path.abspath(converted_file_path)))
+          return converted_file_path
+        else:
+          return path
       else:
         return path
     else:
@@ -124,7 +130,7 @@ class ProjectsPrinter(TexPrinter):
       return ''
 
   def print_project_data(self, prj):
-    self.writeln("\project{%s}{%s}" % (latex_escape(prj.name), self.image_path(os.path.join('img', prj.icon))))
+    self.writeln("\project{%s}{%s}" % (latex_escape(prj.name), self.image_path(os.path.join('img', prj.icon), [12, 12])))
     self.writeln("{%d-%s}" % (prj.period.startDate.year, 'present' if prj.period.isOpen else str(prj.period.endDate.year)))
     if prj.parent:
         self.writeln('{in %s}' % prj.parent.name)
