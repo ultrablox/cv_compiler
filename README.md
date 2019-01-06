@@ -4,6 +4,7 @@
 ![Price](https://img.shields.io/badge/price-FREE-0098f7.svg)
 ![suitable](https://img.shields.io/badge/CV-software_engineer-green.svg)
 ![suitable](https://img.shields.io/badge/CV-software_developer-green.svg)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 ## Table of contents
 
