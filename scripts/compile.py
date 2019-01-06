@@ -14,12 +14,28 @@ import glob
 import shutil
 from tex_printer import *
 from employee_profile import *
+import qrcode
+import qrcode.image.svg
 
 DEBUG_LATEX = False
 
 LATEX_OUTPUT = '' if DEBUG_LATEX else '1>/dev/null'
 LATEX_PARAMS = [] if DEBUG_LATEX else ['-halt-on-error', '--interaction=batchmode']
         
+
+def print_qr_code(file_name):
+  qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=128,
+        border=0,
+    )
+  qr.add_data('https://github.com/ultrablox/cv_compiler')
+  qr.make(fit=True)
+
+  img = qr.make_image(fill_color="black", back_color="white", image_factory=qrcode.image.svg.SvgImage)
+  img.save(file_name)
+
 
 def main():
   parser = argparse.ArgumentParser(description='Compile CV into PDF file.')
@@ -54,8 +70,12 @@ def main():
   profile.deserialize_publications(args.input_dir)
   profile.compress()
   
+  # Generate watermark qr_code
+  qr_path = os.path.join(args.tmp_dir, 'watermark.svg')
+  print_qr_code(qr_path)
+
   # Generate tex files
-  rc_dirs = [os.path.join('..', 'resources'), os.path.join(args.input_dir)]
+  rc_dirs = [os.path.join('..', 'resources'), os.path.join(args.input_dir), args.tmp_dir]
   
   tex_printer = TexCVPrinter(args.tmp_dir, rc_dirs)
   tex_printer.paperSize = args.paper_size

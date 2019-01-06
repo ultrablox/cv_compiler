@@ -3,13 +3,16 @@
 
 ADDITIONAL_PARAMS=${@:1}
 
+mkdir -p docker_local
+LOCAL_DIR=$(realpath docker_local)
+
 mkdir tmp
 TMP_ROOT=$(realpath tmp)
 
 SCRIPTPATH=${BASH_SOURCE%/*}
 ROOT_DIR=$(realpath $SCRIPTPATH/../)
 DOCKER_USER="$(id -u):$(id -g)"
-LOCAL_DIR=$TMP_ROOT/tmp_local
+
 CACHE_DIR=$TMP_ROOT/tmp_cache
 TMP_DIR=$TMP_ROOT/tmp_tmp
 DOCKER_IMAGE="ultrablox/latex-python3.6"
@@ -24,7 +27,7 @@ else
     INPUT_DIR=$(realpath $INPUT_DIR)
 fi
 
-mkdir -p $LOCAL_DIR
+# mkdir -p $LOCAL_DIR
 mkdir -p $CACHE_DIR
 mkdir -p $TMP_DIR
 mkdir -p $OUT_DIR
@@ -37,4 +40,4 @@ docker run -u $DOCKER_USER --rm -v $ROOT_DIR:/repo -v $LOCAL_DIR:/.local -v $CAC
     ./compile.py --tmp_dir=/.tmp --input_dir=/input --out_dir=/out $ADDITIONAL_PARAMS
     "
 
-rm -rf $TMP_ROOT
+# rm -rf $TMP_ROOT

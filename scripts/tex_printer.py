@@ -5,6 +5,7 @@ from utils import *
 from basic_entities import *
 from skill_matrix import *
 from urllib.parse import urlparse
+from log import *
 
 class TexPrinter:
   def __init__(self, root_dir, resources_paths = []):
@@ -17,6 +18,7 @@ class TexPrinter:
       if os.path.exists(cur_path) and os.path.isfile(cur_path):
         # print(cur_path)
         return os.path.abspath(cur_path)
+    log_print(LOG_LEVEL_DEBUG, 'Resource not found: %s' % base_path)
     return None
 
   def image_path(self, base_path):
@@ -41,6 +43,7 @@ class TexPrinter:
       else:
         return path
     else:
+      log_print(LOG_LEVEL_DEBUG, 'Image not found: %s' % base_path)
       return ''
 
   def inner_file_path(self, path):
@@ -377,8 +380,9 @@ class TexCVPrinter(TexPrinter):
       '\\usepackage{fancyhdr}',
       '\\pagestyle{fancy}',
       # '\\rfoot{\\thepage}'
-      # '\\fancyhf{}',
-      '\\fancyfoot[CE,CO]{\\thepage}',
+      # '\\fancyhf{}'
+      '\\fancyfoot[C]{\\thepage}',
+      '\\fancyhead[R]{\includegraphics[width=32pt]{%s}}' % self.image_path('watermark.svg'),
       '\input{styles.tex}'
 # '\fancyfoot[LE,RO]{// printed with \textbf{\href{https://github.com/ultrablox/cv\_generator}{cv\_generator [github]}}}'
     ])
