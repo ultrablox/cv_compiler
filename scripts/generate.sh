@@ -3,45 +3,23 @@
 # Copyright: (c) 2018, Yury Blokhin ultrablox@gmail.com
 # GNU General Public License v3.0+ (see https://www.gnu.org/licenses/gpl-3.0.txt)
 #
-# set -x
 
-ADDITIONAL_PARAMS=${@:1}
+DOCKER_IMAGE="ultrablox/latex-python3.6"
+docker pull $DOCKER_IMAGE || docker build -t $DOCKER_IMAGE ../docker
 
-mkdir -p docker_local
-LOCAL_DIR=$(realpath docker_local)
-
-mkdir tmp
-TMP_ROOT=$(realpath tmp)
+mkdir -p .local .cache
 
 SCRIPTPATH=${BASH_SOURCE%/*}
 ROOT_DIR=$(realpath $SCRIPTPATH/../)
-DOCKER_USER="$(id -u):$(id -g)"
-
-CACHE_DIR=$TMP_ROOT/tmp_cache
-TMP_DIR=$TMP_ROOT/tmp_tmp
-DOCKER_IMAGE="ultrablox/latex-python3.6"
-
-mkdir -p $ROOT_DIR/out
-OUT_DIR=$(realpath $ROOT_DIR/out)
 
 if [ -z $INPUT_DIR ] ;
 then
-    INPUT_DIR=$(realpath $ROOT_DIR/sample_input)
-else
-    INPUT_DIR=$(realpath $INPUT_DIR)
+    INPUT_DIR=$ROOT_DIR/sample_input
 fi
 
-# mkdir -p $LOCAL_DIR
-mkdir -p $CACHE_DIR
-mkdir -p $TMP_DIR
-mkdir -p $OUT_DIR
-
-docker pull $DOCKER_IMAGE || docker build -t $DOCKER_IMAGE ../docker
-
-docker run -u $DOCKER_USER --rm -v $ROOT_DIR:/repo -v $LOCAL_DIR:/.local -v $CACHE_DIR:/.cache -v $TMP_DIR:/.tmp -v $INPUT_DIR:/input -v $OUT_DIR:/out -w /repo $DOCKER_IMAGE bash -c "\
+DOCKER_USER="$(id -u):$(id -g)"
+docker run -u $DOCKER_USER --rm -v $ROOT_DIR:/repo -v $(realpath .local):/.local -v $(realpath .cache):/.cache -v $(realpath $INPUT_DIR):/input -w /repo $DOCKER_IMAGE bash -c "\
     pip3 install --user -r requirements.txt ;
     cd scripts;
-    ./compile.py --tmp_dir=/.tmp --input_dir=/input --out_dir=/out $ADDITIONAL_PARAMS
+    ./compile.py --input_dir=/input ${@:1}
     "
-
-rm -rf $TMP_ROOT
