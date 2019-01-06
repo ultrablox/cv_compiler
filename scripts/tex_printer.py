@@ -377,14 +377,18 @@ class TexCVPrinter(TexPrinter):
     self.write([
       '\documentclass[10pt]{article}',
       '\\usepackage[%spaper, top=%dmm, bottom=%dmm, left=%dmm, right=%dmm]{geometry}' % (self.paperSize, margins[0], margins[1], margins[2], margins[3]),
+      # '\\usepackage[a5paper, top=10mm, bottom=7mm, includehead, includefoot]{geometry}',
       '\\usepackage{fancyhdr}',
-      '\\pagestyle{fancy}',
-      # '\\rfoot{\\thepage}'
-      # '\\fancyhf{}'
-      '\\fancyfoot[C]{\\thepage}',
-      '\\fancyhead[R]{\includegraphics[width=32pt]{%s}}' % self.image_path('watermark.svg'),
-      '\input{styles.tex}'
-# '\fancyfoot[LE,RO]{// printed with \textbf{\href{https://github.com/ultrablox/cv\_generator}{cv\_generator [github]}}}'
+      '' if self.paperSize == 'a5' else '\\pagestyle{fancy}',
+      '\\fancyhf{}',
+      '\\fancyhead[R]{%s}' % profile.personal['name'],
+      '\\fancyhead[C]{\\thepage}',
+      '\\lhead{\setlength{\\unitlength}{1pt}',
+      '\\begin{picture}(0,0)',
+      '\put(-36,-10){\includegraphics[width=28pt]{%s}}' % self.image_path('watermark.svg'),
+      '\end{picture}}',
+      '\input{styles.tex}',
+      '\\renewcommand{\headrulewidth}{0.4pt}'
     ])
     self.print_styles()
     self.write([
