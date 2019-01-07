@@ -52,10 +52,11 @@ class SkillMatrix:
       '\tclip=false,\n'
       '\twidth=0.75\\textwidth,\n'
       '\theight=6cm,\n',
-      'every node near coord/.append style={font=\\bfseries, /pgf/number format/.cd, fixed, fixed zerofill, precision=1},\n'
+      'every node near coord/.append style={font=\\bfseries, /pgf/number format/.cd, fixed, fixed zerofill, precision=1},\n',
+      'legend cell align={left},\n',
       ']\n'])
   
-    labels = ['Positive', 'Neutral', 'Negative']
+    labels = ['Favourite, passionate about it', 'Neutral', 'Prefferably avoid in future']
     colors = ['green', 'gray', 'orange']
 
     vals = [[0] * visual_count, [0] * visual_count, [0] * visual_count]
