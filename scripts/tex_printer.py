@@ -16,7 +16,7 @@ class TexPrinter:
   def __init__(self, root_dir, resources_paths = []):
     self.rootDir = root_dir
     self.rcPaths = resources_paths
-  
+
   def find_resouce(self, base_path):
     for rc_dir in self.rcPaths:
       cur_path = os.path.join(rc_dir, base_path)
@@ -40,7 +40,6 @@ class TexPrinter:
       elif extension == '.png':
         if size:
           size = [size[0] * 2, size[1] * 2]
-          print(size)
           resized_fname = '%s_%dx%d%s' % (filename[1:], size[0], size[1], extension)
           converted_file_path = os.path.join(self.rootDir, '.converted', resized_fname)
           dest_dir = os.path.dirname(converted_file_path)
@@ -170,7 +169,7 @@ class ProjectsPrinter(TexPrinter):
     #     self.writeln("\item \\achievement{%s}\n" % (latex_escape(achievement)))
     # if len(prj.notes) != 0:
     #     self.writeln("\item %s\n" % latex_escape('; '.join(prj.notes)))
-    
+
 
   def print_data(self, profile):
     self.write(['\\blocksection{Main Projects}{'])
@@ -186,7 +185,7 @@ class EmploymentsPrinter(TexPrinter):
     for employment in profile.employments:
       self.writeln("\job{%s}{%s}{%s}{%s}{%s}{%s}{\n" % (employment.period.startDate.strftime('%b %Y'), 'Present' if employment.period.isOpen else employment.period.endDate.strftime('%b %Y'), employment.name, employment.web, employment.role, employment.description))
       self.writeln("\t\\begin{itemize-noindent}")
-      
+
       prj_names = []
       for prj in employment.projects:
           prj_names += ['\projectlink{%s:project}{%s}' % ('xx', latex_escape(prj.name))]
@@ -199,7 +198,7 @@ class EmploymentsPrinter(TexPrinter):
       self.write(notes_arr)
       # self.writeln("")
       self.writeln("\t\end{itemize-noindent}")
-      self.writeln("}{%s}" % self.image_path(employment.logo))
+      self.writeln("}{%s}" % self.image_path(employment.logo, [12, 12]))
     self.write(['}'])
 
 class EducationsPrinter(TexPrinter):
@@ -310,7 +309,7 @@ class SkillsPrinter(TexPrinter):
     #0, <1yr, 1-2yr, 2-5, 5-7, 7-10, 10+
     barriers = [0, 1, 2, 5, 7, 10, 1000]
     cur_gr_idx = 0
-    
+
     for skill in totals:
       gr_val = 0
       for idx in range(0, len(barriers)):
@@ -338,9 +337,9 @@ class SkillsPrinter(TexPrinter):
         if first_non_empty:
             max_val_name = '%.1f' % max_size
             first_non_empty = False
-        
+
         group_name = '<%s year' % max_val_name if barrier_idx == 0 else '%d-%s years' % (barriers[barrier_idx], max_val_name)
-        
+
         self.writeln('\\textbf{%s:} %s \\newline' % (group_name, ', '.join(skills)))
 
     for sgr in profile.specialSkillGroups:
@@ -392,14 +391,22 @@ class TexCVPrinter(TexPrinter):
       '' if self.paperSize == 'a5' else '\\pagestyle{fancy}',
       '\\fancyhf{}',
       '\\fancyhead[R]{%s}' % profile.personal['name'],
-      '\\fancyhead[C]{\\thepage}',
-      '\\lhead{\setlength{\\unitlength}{1pt}',
-      '\\begin{picture}(0,0)',
-      '\put(-36,-10){\includegraphics[width=28pt]{%s}}' % self.image_path('watermark.svg'),
-      '\end{picture}}',
-      '\input{styles.tex}',
-      '\\renewcommand{\headrulewidth}{0.4pt}'
+      '\\fancyhead[C]{\\thepage}'
     ])
+
+    if self.enableWatermark:
+      self.write(['\\lhead{\setlength{\\unitlength}{1pt}',
+        '\\begin{picture}(0,0)',
+        '\put(-36,-10){\includegraphics[width=28pt]{%s}}' % self.image_path('watermark.svg'),
+        '\end{picture}}'
+      ])
+
+    self.write([
+      '\\renewcommand{\headrulewidth}{0.4pt}',
+      # '\\renewcommand{\\footrulewidth}{0.4pt}',
+      '\input{styles.tex}'
+    ])
+
     self.print_styles()
     self.write([
       '\\begin{document}'
@@ -410,4 +417,4 @@ class TexCVPrinter(TexPrinter):
       printer(self.rootDir, self.rcPaths).print(profile, self.file)
 
     self.write(['\end{document}'])
-      
+

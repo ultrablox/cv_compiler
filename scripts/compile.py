@@ -26,7 +26,7 @@ DEBUG_LATEX = False
 
 LATEX_OUTPUT = '' if DEBUG_LATEX else '1>/dev/null'
 LATEX_PARAMS = [] if DEBUG_LATEX else ['-halt-on-error', '--interaction=batchmode']
-        
+
 
 def print_qr_code(file_name):
   qr = qrcode.QRCode(
@@ -41,11 +41,17 @@ def print_qr_code(file_name):
   img = qr.make_image(fill_color="black", back_color="white", image_factory=qrcode.image.svg.SvgImage)
   img.save(file_name)
 
+def add_bool_arg(parser, name, default=False):
+  group = parser.add_mutually_exclusive_group(required=False)
+  group.add_argument('--' + name, dest=name, action='store_true')
+  group.add_argument('--no-' + name, dest=name, action='store_false')
+  parser.set_defaults(**{name:default})
 
 def main():
   parser = argparse.ArgumentParser(description='Compile CV into PDF file.')
   parser.add_argument('--input_dir', type=str, default='/input', help='Input directory')
   parser.add_argument('--paper_size', type=str, default='a4', choices=['a4', 'a5'], help='Paper size')
+  add_bool_arg(parser, 'watermark', True)
   args = parser.parse_args()
 
   # Check necessary paths exist 
@@ -59,7 +65,7 @@ def main():
 
   lead_path = os.path.join(args.input_dir, 'lead.txt')
   check_always(os.path.exists(lead_path), 'Lead text "%s" does not exist' % lead_path)
-  
+
   # Load input data
   profile = EmployeeProfile()
   with open(data_path, 'r') as json_data:
@@ -71,7 +77,7 @@ def main():
 
   profile.deserialize_publications(args.input_dir)
   profile.compress()
-  
+
   with tempfile.TemporaryDirectory() as tmp_dir:
     # tmp_dir = os.path.join('..', 'tmp')
     # Generate watermark qr_code
@@ -80,9 +86,10 @@ def main():
 
     # Generate tex files
     rc_dirs = [os.path.join('..', 'resources'), os.path.join(args.input_dir), tmp_dir]
-    
+
     tex_printer = TexCVPrinter(tmp_dir, rc_dirs)
     tex_printer.paperSize = args.paper_size
+    tex_printer.enableWatermark = args.watermark
     tex_printer.print_to(profile, 'main.tex')
 
     # Copy static resources

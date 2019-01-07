@@ -17,6 +17,7 @@
   - [Compiling](#compiling)
 - [Technologies](#technologies)
 - [Feedback](#feedback)
+- [Credit the Author](#credit-the-author)
 
 ## Aims
 
@@ -205,3 +206,11 @@ INPUT_DIR=$HOME/Documents/journal_dir ./generate.sh
 ## Feedback
 
 I appreciate any form of feedback, that helps me improve the project. You can do it in form of **Pull Requests** or **Issues**.
+
+## Credit the Author
+
+If you like the project, and want to credit the author - leave the QR with link to this page in your CV - so more people can know about it. If for some reasons you want to get rid of the QR, use *--no-watermark* parameter:
+
+```bash
+./generate.sh --no-watermark
+```
