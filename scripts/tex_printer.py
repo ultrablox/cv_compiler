@@ -12,6 +12,7 @@ from urllib.parse import urlparse
 import sys
 from log import *
 
+
 class TexPrinter:
   def __init__(self, root_dir, resources_paths = []):
     self.rootDir = root_dir
@@ -76,12 +77,21 @@ class TexPrinter:
     for line in lines:
       self.writeln(line)
 
-  def get_href(self, url, force_short = False):
+  def get_href(self, url, force_short=False):
     parsed_url = urlparse(url)
     label = '%s%s' % (parsed_url.netloc, parsed_url.path)
     if force_short:
       label = parsed_url.path
-    return '\href{%s}{%s}' % (parsed_url.geturl(), label)
+
+    return '\href{%s}{%s}' % (latex_escape(parsed_url.geturl()), latex_escape(label))
+
+  def decorated_href(self, url):
+    parsed_url = urlparse(url)
+    decoration_img = 'img/internet.svg'
+    if parsed_url.netloc == 'github.com':
+      decoration_img = 'img/github_logo.svg'
+    return '\\vcenteredinclude{%s} %s' % (self.image_path(decoration_img), self.get_href(url))
+
 
 class ContactsPrinter(TexPrinter):
   def print_data(self, profile):
@@ -112,13 +122,15 @@ class ContactsPrinter(TexPrinter):
     self.write(['\\vspace{\\blocksep}',
       '}'])
 
+
 def human_code_size(n):
   if n < 1000:
-    return '%d' % n
+    return '%.1f' % (float(n) / 1000)
   elif n < 1000000:
     return '%.0fK' % (float(n) / 1000)
   else:
     return '%.1fM' % (float(n) / 1000000)
+
 
 class ProjectsPrinter(TexPrinter):
   def skills_line(self, prj):
@@ -130,7 +142,7 @@ class ProjectsPrinter(TexPrinter):
 
   def print_project_data(self, prj):
     self.writeln("\project{%s}{%s}" % (latex_escape(prj.name), self.image_path(os.path.join('img', prj.icon), [12, 12])))
-    self.writeln("{%d-%s}" % (prj.period.startDate.year, 'present' if prj.period.isOpen else str(prj.period.endDate.year)))
+    self.writeln("{%d-%s}" % (prj.get_period().startDate.year, 'present' if prj.get_period().isOpen else str(prj.get_period().endDate.year)))
     if prj.parent:
         self.writeln('{in %s}' % prj.parent.name)
     else:
@@ -141,43 +153,39 @@ class ProjectsPrinter(TexPrinter):
 
     first_line_items += ["\\teamsize{%s}" % (prj.teamSize)]
 
-    first_line_items += ["\\codesize{%s}" % human_code_size(prj.linesOfCode)]
+    if prj.linesOfCode:
+      first_line_items += ["\\codesize{%s}" % human_code_size(prj.linesOfCode)]
 
     if prj.webLink:
-        url = urllib.parse.urlparse(prj.webLink)
-        label = url.netloc
-        if url.path:
-            label += url.path
-        first_line_items += ['\weblink{%s}{%s}' % (latex_escape(prj.webLink), latex_escape(label))]
+      first_line_items += [self.decorated_href(prj.webLink)]
+
 
     # first_line_items += [type_str] 
-    self.writeln("\item %s" % ' '.join(first_line_items))
+    self.writeln("\item[] %s" % ' '.join(first_line_items))
     skills = self.skills_line(prj)
     if skills:
-      self.writeln('\item %s' % skills)
+      self.writeln('\item[] %s' % skills)
     self.writeln("}{charon:project}" )
 
     # Tasks
     for task in prj.tasks:
       self.writeln("%s" % latex_escape(task.description))
-      self.writeln('\\begin{itemize-noindent}')
-      for ach in task.achievements:
-        self.writeln("\item[] \\achievement{%s}" % latex_escape(ach))
-      self.writeln('\\end{itemize-noindent}')
-
-    # for achievement in prj.achievements:
-    #     self.writeln("\item \\achievement{%s}\n" % (latex_escape(achievement)))
-    # if len(prj.notes) != 0:
-    #     self.writeln("\item %s\n" % latex_escape('; '.join(prj.notes)))
-
+      if task.achievements:
+        self.writeln('\\begin{itemize-achievments}')
+        for ach in task.achievements:
+          self.writeln("\item[] \\achievement{%s}" % latex_escape(ach))
+        self.writeln('\\end{itemize-achievments}')
+      else:
+        self.writeln('')
 
   def print_data(self, profile):
     self.write(['\\blocksection{Main Projects}{'])
-    sorted_projects = sorted(profile.projects, key=lambda prj: prj.period.startDate, reverse=True)
+    sorted_projects = sorted(profile.projects, key=lambda prj: prj.get_period().startDate, reverse=True)
     for prj in sorted_projects:
       self.print_project_data(prj)
       self.writeln('\\vspace{\\blocksep}')
     self.write(['}'])
+
 
 class EmploymentsPrinter(TexPrinter):
   def print_data(self, profile):
@@ -200,6 +208,7 @@ class EmploymentsPrinter(TexPrinter):
       self.writeln("\t\end{itemize-noindent}")
       self.writeln("}{%s}" % self.image_path(employment.logo, [12, 12]))
     self.write(['}'])
+
 
 class EducationsPrinter(TexPrinter):
   def print_facility_data(self, degree, facility, period, gpa, web = None, notes = []):

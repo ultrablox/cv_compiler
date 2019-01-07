@@ -16,7 +16,9 @@ class EmployeeProfile:
     self.projects = []
     self.employments = []
     self.publicationStats = {}
-  
+    self.scientificPubs = []
+    self.popularPubs = []
+
   def deserialize(self, json_node):
     self.contacts = json_node['contacts']
     self.personal = json_node['personal']
@@ -24,7 +26,7 @@ class EmployeeProfile:
     self.traits = json_node['traits']
 
     self.specialSkillGroups = json_node['special_skills']
-    
+
     # Deserialize projects
     for prj in json_node['projects']:
       self.projects += [Project(prj)]
@@ -33,7 +35,7 @@ class EmployeeProfile:
     self.skills = {}
     for name, data in json_node['skills'].items():
         self.skills[name] = Skill(name, data)
-    
+
     for prj in self.projects:
       for skill_name in prj.get_total_skill_list():
         if skill_name not in self.skills:
@@ -50,7 +52,7 @@ class EmployeeProfile:
           self.skills[skill].add_period(task.period)
 
 
-    
+
     # Remove empty skills
     # empty_skills = []
     # for skill_name, skill_data in self.skills.items():
@@ -62,7 +64,7 @@ class EmployeeProfile:
 
     for employment_node in json_node['employments']:
         self.employments += [Employment(employment_node, self)]
-    
+
     # non_sci_pubs = []
 
     # self.popularPublications = json_node['pop_publications'][0:MAX_NON_SCI_PUBS]
@@ -70,8 +72,6 @@ class EmployeeProfile:
     self.conferences = json_node['conferences'][0:MAX_CONFERENCES]
 
   def deserialize_publications(self, base_path):
-    
-
     # Scientific publications
     sci_pubs_file = os.path.join(base_path, 'sci_publications.bib')
     if os.path.exists(sci_pubs_file):
@@ -80,9 +80,6 @@ class EmployeeProfile:
       with open(sci_pubs_file, encoding='utf-8') as bibtex_file:
         bib_database = bibtexparser.load(bibtex_file, parser=parser)
         self.scientificPubs = bib_database.entries
-    else:
-      self.scientificPubs = None
-
     # Popular publications
     pop_pubs_file = os.path.join(base_path, 'pop_publications.bib')
     if os.path.exists(pop_pubs_file):
@@ -91,20 +88,13 @@ class EmployeeProfile:
       with open(pop_pubs_file, encoding='utf-8') as bibtex_file:
         bib_database = bibtexparser.load(bibtex_file, parser=parser)
         self.popularPubs = bib_database.entries
-    else:
-      self.popularPubs = None
 
   # Returns array [{'name' : 'skill_name', 'size' : .f_years}]
   def skills_totals(self):
     res = []
     for key, data in self.skills.items():
-        res += [{'name' : data.name_with_abbr(), 'size' : data.total_size(), 'attitude' : data.attitude}]
-
-    # print(res)
-    # exit(1)
-
+        res += [{'name': data.name_with_abbr(), 'size': data.total_size(), 'attitude': data.attitude}]
     res = (item for item in res if item['size'] > 0.0)
-
     return sorted(res, key=lambda rec: rec['size'], reverse=True)
 
   # def add_period_for_skill(self, skill, period):
@@ -113,7 +103,7 @@ class EmployeeProfile:
   #         self.skills[skill] = new_skill
   #     cur_skill = self.skills[skill]
   #     cur_skill.add_period(period)
-  
+
   def best_skill(self):
       skills = self.skills_totals()
       return skills[0]['size']
@@ -131,7 +121,7 @@ class EmployeeProfile:
     ###
     # Only articles are printed
     # Scopus have priority over simple publication
-  
+
     good_count = 0
     for pub in self.scientificPubs:
       skip = False
@@ -141,7 +131,7 @@ class EmployeeProfile:
 
       if not skip:
         good_count += 1
-      
+
     # Check if we can print all of them 
     if good_count > MAX_SCI_PUBS:
       # Sort so good are first
@@ -166,4 +156,4 @@ class EmployeeProfile:
     for i in range(0, len(self.popularPubs)):
       pub = self.popularPubs[i]
       pub['visible'] = (i < MAX_NON_SCI_PUBS)
-      
+

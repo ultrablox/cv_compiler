@@ -17,6 +17,7 @@
 
 \usepackage[labelformat=empty,labelsep=none]{caption}
 
+\usepackage[hyphens]{url}
 \usepackage{hyperref}
 \usepackage[all]{hypcap} 
 
@@ -61,8 +62,22 @@
 
 % Non-indenting itemize
 
+\newenvironment{itemize-project}
+{\setlength{\leftmargini}{0.2cm}\begin{itemize}[noitemsep,nolistsep]
+    \setlength{\itemsep}{0pt}
+    \setlength{\parskip}{0pt}
+    \setlength{\parsep}{0pt}  }
+{\end{itemize}}
+
 \newenvironment{itemize-noindent}
 {\setlength{\leftmargini}{0.5cm}\begin{itemize}[noitemsep,nolistsep]
+    \setlength{\itemsep}{0pt}
+    \setlength{\parskip}{0pt}
+    \setlength{\parsep}{0pt}  }
+{\end{itemize}}
+
+\newenvironment{itemize-achievments}
+{\setlength{\leftmargini}{0.2cm}\begin{itemize}[noitemsep,nolistsep]
     \setlength{\itemsep}{0pt}
     \setlength{\parskip}{0pt}
     \setlength{\parsep}{0pt}  }
@@ -170,9 +185,9 @@
       \vcenteredinclude{#2}
     \fi
     #3 --- \textbf{\hypertarget{#7}{#1}} [#4]: #5
-    \begin{itemize-noindent}
+    \begin{itemize-project}
 	#6
-    \end{itemize-noindent}
+    \end{itemize-project}
 }
 
 \newcommand{\projectlink}[2]{\textbf{#2}}

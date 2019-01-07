@@ -9,7 +9,8 @@ import json
 import datetime
 
 import urllib.parse
-import sys, os
+import sys
+import os
 import argparse
 from check import *
 from skill_matrix import *
