@@ -52,7 +52,7 @@ class Task:
 
     self.achievements = []
     if 'achievements' in json_node:
-        self.achievements = json_node['achievements']
+      self.achievements = json_node['achievements']
 
 
 class Project:
@@ -92,6 +92,11 @@ class Project:
 
     if 'period' in prj_node:
       self.period = TimePeriod(prj_node['period'])
+
+    if 'hidden' in prj_node:
+      self.visible = not prj_node['hidden']
+    else:
+      self.visible = True
 
   def get_total_skill_list(self):
     res = []

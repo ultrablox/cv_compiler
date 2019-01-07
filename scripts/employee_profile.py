@@ -7,7 +7,7 @@ import bibtexparser
 from bibtexparser.bparser import BibTexParser
 from bibtexparser.customization import homogenize_latex_encoding
 
-MAX_SCI_PUBS = 5
+MAX_SCI_PUBS = 4
 MAX_NON_SCI_PUBS = 3
 MAX_CONFERENCES = 5
 
@@ -51,23 +51,8 @@ class EmployeeProfile:
         for skill in task.skills:
           self.skills[skill].add_period(task.period)
 
-
-
-    # Remove empty skills
-    # empty_skills = []
-    # for skill_name, skill_data in self.skills.items():
-    #     if skill_data.total_size() == 0.0:
-    #         empty_skills += [skill_name]
-
-    # for empty_name in empty_skills:
-    #     del self.skills[empty_name]
-
     for employment_node in json_node['employments']:
         self.employments += [Employment(employment_node, self)]
-
-    # non_sci_pubs = []
-
-    # self.popularPublications = json_node['pop_publications'][0:MAX_NON_SCI_PUBS]
 
     self.conferences = json_node['conferences'][0:MAX_CONFERENCES]
 
@@ -137,8 +122,26 @@ class EmployeeProfile:
       # Sort so good are first
       self.scientificPubs = sorted(self.scientificPubs, key=lambda pub: pub['visible'], reverse=True)
 
+
       # Sort leftmost by scopus
-      self.scientificPubs[0:good_count] = sorted(self.scientificPubs[0:good_count], key=lambda pub: is_scopus(pub), reverse=True)
+      self.scientificPubs[0:good_count] = sorted(self.scientificPubs[0:good_count], key=lambda pub: int(is_scopus(pub)), reverse=True)
+
+      # Sort both subsets by year
+      scopus_count = 0
+      for pub in self.scientificPubs[0:good_count]:
+        if is_scopus(pub):
+          scopus_count += 1
+      log_print(LOG_LEVEL_DEBUG, 'Total scopus publications: %d' % scopus_count)
+
+
+
+      self.scientificPubs[0:scopus_count] = sorted(self.scientificPubs[0:scopus_count], key=lambda pub: int(pub['year']), reverse=True)
+      # print(self.scientificPubs[0:good_count])
+      # exit(1)
+
+      self.scientificPubs[scopus_count:good_count] = sorted(self.scientificPubs[scopus_count:good_count], key=lambda pub: int(pub['year']), reverse=True)
+
+      # print(self.scientificPubs[0:good_count])
 
       # Mark invisible all that exceed the number
       for i in range(MAX_SCI_PUBS, good_count):

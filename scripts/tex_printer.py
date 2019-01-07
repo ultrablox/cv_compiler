@@ -140,6 +140,41 @@ class ProjectsPrinter(TexPrinter):
     else:
       return ''
 
+  def print_task(self, task):
+  
+    # if task.achievements:
+    #   if len(task.achievements) == 1:
+    #     self.write(['%s:\\achievement{%s}.\n' % (latex_escape(task.description), latex_escape(task.achievements[0])),
+    #     ''])
+    #   pass
+    # else:
+    #   self.write(['%s.\n' % latex_escape(task.description),
+    #     ''])
+    self.writeln("\\textbullet\ %s:" % latex_escape(task.description))
+    if task.achievements:
+      self.writeln('\\begin{itemize-achievments}')
+      for ach in task.achievements:
+        self.writeln("\item[] \\achievement{%s}" % latex_escape(ach))
+      self.writeln('\\end{itemize-achievments}')
+    else:
+      self.writeln('')
+
+  def print_tasks(self, tasks):
+    # Tasks with achievments are prioritized
+    respected_tasks = (x for x in tasks if len(x.achievements) > 0)
+    for task in respected_tasks:
+      self.print_task(task)
+
+    # sorted_tasks = sorted(tasks, key=lambda x : len(x.achievements))
+    # print(sorted_tasks)
+    # exit1(1)
+    # Tasks without achievements are merged into one line
+    dumb_tasks = '; '.join(x.description for x in tasks if len(x.achievements) == 0)
+    if dumb_tasks:
+      self.writeln('\\textbullet\ %s.' % latex_escape(dumb_tasks))
+      self.writeln('')
+
+      # self.print_task(task)
   def print_project_data(self, prj):
     self.writeln("\project{%s}{%s}" % (latex_escape(prj.name), self.image_path(os.path.join('img', prj.icon), [12, 12])))
     self.writeln("{%d-%s}" % (prj.get_period().startDate.year, 'present' if prj.get_period().isOpen else str(prj.get_period().endDate.year)))
@@ -149,6 +184,11 @@ class ProjectsPrinter(TexPrinter):
         self.writeln('{HOBBY}')
 
     self.writeln("{%s}{" % (prj.description))
+
+    skills = self.skills_line(prj)
+    if skills:
+      self.writeln('\item[] %s' % skills)
+
     first_line_items = []
 
     first_line_items += ["\\teamsize{%s}" % (prj.teamSize)]
@@ -162,28 +202,20 @@ class ProjectsPrinter(TexPrinter):
 
     # first_line_items += [type_str] 
     self.writeln("\item[] %s" % ' '.join(first_line_items))
-    skills = self.skills_line(prj)
-    if skills:
-      self.writeln('\item[] %s' % skills)
+    
     self.writeln("}{charon:project}" )
 
     # Tasks
-    for task in prj.tasks:
-      self.writeln("%s" % latex_escape(task.description))
-      if task.achievements:
-        self.writeln('\\begin{itemize-achievments}')
-        for ach in task.achievements:
-          self.writeln("\item[] \\achievement{%s}" % latex_escape(ach))
-        self.writeln('\\end{itemize-achievments}')
-      else:
-        self.writeln('')
+    self.print_tasks(prj.tasks)
+  
 
   def print_data(self, profile):
     self.write(['\\blocksection{Main Projects}{'])
     sorted_projects = sorted(profile.projects, key=lambda prj: prj.get_period().startDate, reverse=True)
     for prj in sorted_projects:
-      self.print_project_data(prj)
-      self.writeln('\\vspace{\\blocksep}')
+      if prj.visible:
+        self.print_project_data(prj)
+        self.writeln('\\vspace{\\blocksep}')
     self.write(['}'])
 
 
@@ -383,7 +415,7 @@ class TexCVPrinter(TexPrinter):
         '\\vcenteredinclude{%s}  #1' % self.image_path('img/code.svg'),
       '}',
       '\\newcommand{\\achievement}[1]{',
-        '\\vcenteredinclude{%s} #1' % self.image_path('img/star.svg'),
+        '\\vcenteredinclude{%s} #1' % self.image_path('img/star.svg', [8, 8]),
       '}',
       '\\newcommand{\skills}[1]{',
         '\\vcenteredinclude{%s} #1' % self.image_path('img/idea.svg'),
