@@ -11,7 +11,7 @@ class Skill:
 
 class SkillsDB:
   def find_skill(self, skill_name):
-    return None
+    return next(x for x in self.skills if x.name == skill_name)
 
   def load(self, db_dir):
     skill_nodes = []
@@ -32,6 +32,6 @@ class SkillsDB:
       graph.add_node(new_skill)
 
     for conn in connections:
-      src_node = self.find_skill('src')
-      dst_node = self.find_skill('dst')
+      src_node = self.find_skill(conn['src'])
+      dst_node = self.find_skill(conn['dst'])
       graph.add_edge(src_node, dst_node, weight=conn['value'])

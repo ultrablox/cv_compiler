@@ -1,0 +1,37 @@
+Senior C++ Design Engineer (Model Driven Engineering)
+Location Veldhoven, Netherlands Level Master Experience 5-10 Experienced Functional Area Design Engineering Background Information Technology Travel No Reference req6060
+
+Introduction
+
+If you enjoy software development, Supervisory Control in a complex system and be in an environment that enables you to have a system view and interaction on functional level, then this is an exciting opportunity for you.
+
+Job Mission
+
+In close co-operation with colleagues from software and other disciplines (mechatronics, optics, electronics) the software design engineer is a member of a multi-disciplinary team. In these teams software plays an important role for the success of ASML. Since software is an integrating competency, it is an essential added value for ASML. You will be involved at all stages of specifying, designing, testing and integrating the advanced software for use in our world-leading products.
+Our people make up a dynamic, fast-moving, entrepreneurial community. An advantage that leads to personal growth, professional development, and peer-group recognition. It’s also an environment that requires free-flowing teamwork, so that people can develop elegant solutions simply by talking to colleagues, and using each other’s unique area of expertise.
+
+Job Description
+
+The software engineer is responsible for creating clear specifications, making the efficient design choices and to 'make it happen' by also implementing the design. Within Production Control you will take part in creating the supervisory control software by means of model based engineering.
+
+Education
+
+Bachelor or Master level with an education in Embedded Systems, Computer Science, Informatics, Mechatronics, Mathematics, Physics, Engineering or comparable.
+
+Experience
+
+Demonstrable expertise in C++, C, object oriented programming, Unix/Linux, Solaris, VxWorks, software configuration management (ClearCase / GIT)
+Affinity with MDE ASD/Dezyne/MCLR-2
+
+Personal Skills
+Pro-active, self-starter, decisive, takes ownership
+Strong communicator with a pragmatic attitude.
+Real team player with quality orientation.
+Good knowledge of English.
+Context of the position
+
+Within ASML, the sector Development & Engineering (D&E) is responsible for the development of ASML products. Within this sector the department Machine Control & Infrastructure (MCI) is responsible for the design, implementation and maintenance of the software of the complex lithographic machines. ASML creates high tech machines; software engineers from MCI are facing several aspects of motion control, production control, data management and Interface control. A huge code base is maintained and under strict configuration management to provide maximum commonality between different machine types.
+
+Other Information
+
+Embedded software, software developer, software ontwikkelaar, Mathematics, Physics, Electronics, Wiskunde, Natuurkunde, C, C++, ASD, Unix/Linux, Solaris, MATLAB, Clearcase, configuration management, engineer, software engineer, design engineer, computer science, electrical engineering.

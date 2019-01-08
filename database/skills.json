@@ -3,6 +3,9 @@
     "full_name" : "C++"
   },
   {
+    "full_name" : "C"
+  },
+  {
     "full_name" : "OpenGL"
   },
   {
@@ -72,5 +75,8 @@
   {
     "full_name" : "Continious Integration",
     "synonims" : "CI"
+  },
+  {
+    "full_name" : "Shaders"
   }
 ]

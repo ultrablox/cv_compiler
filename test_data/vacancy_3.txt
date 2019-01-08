@@ -1,0 +1,38 @@
+Senior C++ Engineer
+
+
+Are you skilled in C++ and are you a fan of embedded engineering?  
+
+Work in a dynamic and small team that consists out of 8 people in the centre of Eindhoven. The company is specialized in building measurement computers. On one hand they work on an embedded platform for big measurement computers and on the other hand they build web applications to read the data out of these computers.  
+
+
+You will be part of the team that is working with C++ on the embedded platform, the other team is focussing on the web application. The platform is being used by big multinationals all over the world. 
+
+
+Keywords: C++, Windows, Linux, embedded
+
+The company:
+
+The company has around 50 people and their office is in the centre of Eindhoven, easy accessable with both car and public transport . They have built their own platform in and they are now working on a new webapplication that connect to this platform. 
+
+
+
+Required skills:
+
+Bachelor or Master in Computer Science (or similar)
+Minimum of 3-7 years experience in software engineering
+Experience in OO programming 
+Experience with C++
+Agile/SCRUM is a plus
+Dutch speaking is preferable, not necessary 
+
+
+Benefits:
+
+Competitive Salary
+
+Holiday Allowance
+30% tax ruling
+
+
+Interested? Please contact me on bob@doghouse-recruitment.nl

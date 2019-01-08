@@ -1,0 +1,42 @@
+Staff Software Engineer - SDx Frameworks
+
+The Xilinx® SDx tools, including the SDAccel™ environment, the SDSoC™ environment, and Vivado® HLS, provide an out-of-the-box experience for system programmers looking to partition elements of a software application to run in an FPGA-based hardware kernel, and having that hardware work seamlessly with the rest of the application running in a processor or embedded processor.
+
+
+The SDx Frameworks team develops software components that enable the Xilinx SDx development environment. The team is looking for a talented, self-driven and motivated software engineer who can thrive in a fast-paced, start-up like environment. She/he will analyze and develop software components for generating high-performance accelerator systems from programs written in C/C++ and OpenCL.
+
+
+Responsibilities:
+
+Exhibit leadership in developing product features of moderate to high complexity, producing well designed code based on high level and/or ill-defined requirements
+Demonstrate advanced software development skills and proficiency, and set the example for less experienced developers with respect to test driven development
+Actively seek out, guide and mentor less experienced developers and accept appropriate accountability for the code quality and feature integrity of those mentored
+Exercise technical oversight to ensure milestone achievement, seamless feature integration and robust test coverage in all areas of responsibility
+
+Minimum Qualifications:
+
+Experience developing software that works in conjunction with hardware. As a result, you have developed a good understanding of hardware concepts. You are knowledgeable of computer architecture.
+Strong interest in enabling hardware-accelerated systems
+Excellent C/C++ programming and problem-solving skills
+Experience with application development in Linux environment
+Strong English language communication skills both verbal and written
+Must be a hands-on, self-starter who makes and follows through on commitments
+
+Additional Qualifications:
+
+Foundational skills/work experience using Java, Python, JIRA, gtest/gmock
+Experience with HDL including Verilog and SystemC
+Exposure to OpenCL or CUDA
+Experience working on RESTful APIs
+Exposure to compiler development in LLVM
+Experience or coursework in FPGA digital design or EDA optimization tools
+
+Education:
+
+BS in Computer Science, Electrical Engineering, or Electrical and Computer Engineering with 9 years relevant experience, OR
+MS in Computer Science, Electrical Engineering, or Electrical and Computer Engineering with 7 years relevant experience
+
+Location:
+
+Longmont, CO or
+San Jose CA (HQ)

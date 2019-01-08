@@ -1,0 +1,44 @@
+The perks 
+
+As a valued employee, you’ll benefit from a free Sky Q premium package (one off payment required for installation), an excellent pension scheme and private health care. What’s more, you’ll also have access to over 12,000 LinkedIn Learning courses to support your development. As if that’s not enough, our impressive Osterley campus boasts endless subsidised restaurants, on-site cinema, on-site gym, and much more to make your experience with us even more enjoyable. 
+
+
+To find out more about working with us, search #LifeatSky on LinkedIn, Twitter or Instagram. 
+
+
+Your key responsibilities:
+
+As a C++/Qt Developer working on the Sky Q EPG, you’ll be drawing on your know-how to deliver high quality features quickly. Working in an Agile, TDD, pairing environment, you will be encouraged to help solve the problems faced in this domain with the potential of bringing new solutions or technologies to the platform. 
+
+- You will develop excellent quality software using agile techniques such as Test Driven Development and Pair Programming
+- Take an active role in Story definition, assisting QA's and business partners with Acceptance criteria
+- You will drive the best technology and software development practices into the team with passion and enthusiasm
+- Participate in regular showcases of new work to the product owners and business partners
+- Strive for continuous improvement within the team
+
+
+Your skills:
+
+- You have strong C++ development background and comfortable working in a Linux environment
+- You have experience with multiple UI frameworks, and exposure to Qt is highly beneficial
+- Regular use of agile and XP practices such as pairing and TDD are highly beneficial
+- Experience of development on embedded devices, graphics stacks and OpenGL would be a bonus
+- Working alongside creative colleagues, and bringing their work to life as faithfully as possible
+- Knowledge and experience of a wide range of best of breed open source and commercial technologies
+- Bachelors’ degree or equivalent industry experience
+- You have good communication skills – comfortable communicating at all levels
+
+
+Ready to work in a dynamic environment alongside talented people who take pride in delivering great results? Apply today
+
+
+We’re happy to talk flexible working
+
+
+It’s our people that make us Europe’s leading entertainment company. That’s why we work hard to be an inclusive employer, so everyone at Sky can be their best.
+
+
+If you are successful in your application for this role, your appointment will be subject to receiving a positive outcome from your Criminal Record Check.
+
+
+Believe in better
