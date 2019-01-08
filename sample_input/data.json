@@ -1,74 +1,47 @@
 {
     "personal" : {
-        "name" : "Bruce Wayne",
-        "sex" : "Male",
-        "birthdate" : "01.08.1234",
-        "nationality" : "Indian",
-        "additional" : ""
+      "name" : "Bruce Wayne",
+      "sex" : "Male",
+      "birthdate" : "01.08.1234",
+      "nationality" : "Indian",
+      "additional" : ""
     },
     "contacts" : {
-        "email" : "bruce@gmail.com",
-        "skype" : "bruce",
-        "phone" : "06-12345678",
-        "residence" : "Endhoven, Netherlands",
-        "linkedin" : "https://www.linkedin.com/in/yuri-blokhin-01688a78/",
-        "languages" : [
-            "English (advanced)",
-            "Chineese (native)",
-            "German (basic)"
-        ]
+      "email" : "bruce@gmail.com",
+      "skype" : "bruce",
+      "phone" : "06-12345678",
+      "residence" : "Endhoven, Netherlands",
+      "linkedin" : "https://www.linkedin.com/in/yuri-blokhin-01688a78/",
+      "languages" : [
+          "English (advanced)",
+          "Chineese (native)",
+          "German (basic)"
+      ]
     },
     "education" : [
-        {
-            "degree" : "Master in CV Writing",
-            "period" : "01.09.2006-30.07.2011",
-            "facility" : "Massachusetts Institute of Technology MIT",
-            "web" : "http://www.mit.edu",
-            "gpa" : "GPA: 99%",
-            "notes" : [
-                "Thesis: Development of CV for getting Dream Job"
-            ]
-        }
+      {
+        "degree" : "Master in CV Writing",
+        "period" : "01.09.2006-30.07.2011",
+        "facility" : "Massachusetts Institute of Technology MIT",
+        "web" : "http://www.mit.edu",
+        "gpa" : "GPA: 99%",
+        "notes" : [
+            "Thesis: Development of CV for getting Dream Job"
+        ]
+      }
     ],
-    "skills" : {
-        "C++" : {
-            "attitude" : "favourite"
-        },
-        "STL" : {
-            "attitude" : "favourite"
-        }, 
-        "QT" : {
-            "attitude" : "favourite"
-        },
-        "Go" : {
-            "attitude" : "negative"
-        },
-        "Assembler" : {
-            "attitude" : "negative"
-        },
-        "Linux" : {
-            "attitude" : "negative"
-        },
-        "Latex" : {
-            "attitude" : "favourite"
-        },
-        "Python" : {
-            "attitude" : "favourite"
-        },
-        "boost" : {
-            "attitude" : "favourite"
-        },
-        "ML" : {
-            "attitude" : "negative",
-            "full_name" : "Machine Learning"
-        },
-        "JS" : {
-            "attitude" : "negative",
-            "full_name" : "Java Script"
-        },
-        "CI" : {
-            "full_name" : "Cont. Integration"
-        }
+    "preferences" : {
+      "C++" : "favourite",
+      "STL" : "favourite",
+      "Qt" : "favourite",
+      "Go" : "negative",
+      "Assembler" : "negative",
+      "Linux" : "negative",
+      "Latex" : "favourite",
+      "Python" : "favourite",
+      "boost" : "favourite",
+      "ML" : "negative",
+      "JS" : "negative"
     },
     "projects" : [
     	{

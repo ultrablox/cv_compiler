@@ -60,23 +60,12 @@ def main():
   out_dir = os.path.abspath(os.path.join('..', 'out'))
   check_always(os.path.exists(out_dir), 'Output directory "%s" does not exist' % out_dir)
 
-  # Check input structure
-  data_path = os.path.join(args.input_dir, 'data.json')
-  check_always(os.path.exists(data_path), 'Primary input "%s" does not exist' % data_path)
-
-  lead_path = os.path.join(args.input_dir, 'lead.txt')
-  check_always(os.path.exists(lead_path), 'Lead text "%s" does not exist' % lead_path)
 
   # Load input data
   profile = EmployeeProfile()
-  with open(data_path, 'r') as json_data:
-      data = json.load(json_data)
-      profile.deserialize(data)
+  profile.load(args.input_dir)
 
-  with open(lead_path, 'r') as file:
-    profile.lead = file.read()
 
-  profile.deserialize_publications(args.input_dir)
   profile.compress()
 
   with tempfile.TemporaryDirectory() as tmp_dir:

@@ -8,5 +8,15 @@
     "src" : "OpenGL",
     "dst" : "Shaders",
     "value" : 0.8
+  },
+  {
+    "src" : "OpenGL",
+    "dst" : "CUDA",
+    "value" : 0.6
+  },
+  {
+    "src" : "Hardware",
+    "dst" : "Assembler",
+    "value" : 0.8
   }
 ]

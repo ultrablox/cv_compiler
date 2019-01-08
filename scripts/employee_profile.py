@@ -4,6 +4,7 @@
 
 from basic_entities import *
 import bibtexparser
+import json
 from bibtexparser.bparser import BibTexParser
 from bibtexparser.customization import homogenize_latex_encoding
 
@@ -18,6 +19,23 @@ class EmployeeProfile:
     self.publicationStats = {}
     self.scientificPubs = []
     self.popularPubs = []
+  
+  def load(self, input_dir):
+    # Check input structure
+    data_path = os.path.join(input_dir, 'data.json')
+    check_always(os.path.exists(data_path), 'Primary input "%s" does not exist' % data_path)
+
+    lead_path = os.path.join(input_dir, 'lead.txt')
+    check_always(os.path.exists(lead_path), 'Lead text "%s" does not exist' % lead_path)
+
+    with open(data_path, 'r') as json_data:
+      data = json.load(json_data)
+      self.deserialize(data)
+
+    with open(lead_path, 'r') as file:
+      self.lead = file.read()
+
+    self.deserialize_publications(input_dir)
 
   def deserialize(self, json_node):
     self.contacts = json_node['contacts']

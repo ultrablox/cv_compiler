@@ -44,7 +44,7 @@
     "full_name" : "git"
   },
   {
-    "full_name" : "LLVM API"
+    "full_name" : "LLVM"
   },
   {
     "full_name" : "Embedded"
@@ -74,9 +74,56 @@
   },
   {
     "full_name" : "Continious Integration",
-    "synonims" : "CI"
+    "synonims" : ["CI"]
   },
   {
     "full_name" : "Shaders"
+  },
+  {
+    "full_name" : "OpenCL"
+  },
+  {
+    "full_name" : "OpenMP"
+  },
+  {
+    "full_name" : "JIRA"
+  },
+  {
+    "full_name" : "Linux",
+    "includes" : ["Unix"]
+  },
+  {
+    "full_name" : "Unix"
+  },
+  {
+    "full_name" : "Hardware"
+  },
+  {
+    "full_name" : "FPGA"
+  },
+  {
+    "full_name" : "LLVM"
+  },
+  {
+    "full_name" : "Agile"
+  },
+  {
+    "full_name" : "Scrum"
+  },
+  {
+    "full_name" : "Assembler",
+    "synonims" : ["ASM"]
+  },
+  {
+    "full_name" : "Test Driven Development",
+    "synonims" : ["TDD"]
+  },
+  {
+    "full_name" : "Mentor",
+    "synonims" : ["Guide", "Mentoring"]
+  },
+  {
+    "full_name" : "OpenCV"
   }
 ]
+
