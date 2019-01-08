@@ -1,0 +1,76 @@
+[
+  {
+    "full_name" : "C++"
+  },
+  {
+    "full_name" : "OpenGL"
+  },
+  {
+    "full_name" : "Artificial Intelligence",
+    "synonims" : "AI"
+  },
+  {
+    "full_name" : "Automated Planning",
+    "synonims" : "AI Planning"
+  },
+  {
+    "full_name" : "Expert Systems",
+    "synonims" : "ES"
+  },
+  {
+    "full_name" : "Standard Template Library",
+    "synonims" : "STL"
+  },
+  {
+    "full_name" : "OpenGL"
+  },
+  {
+    "full_name" : "QT"
+  },
+  {
+    "full_name" : "CUDA"
+  },
+  {
+    "full_name" : "Ruby"
+  },
+  {
+    "full_name" : "Ruby On Rails",
+    "includes" : ["Ruby"]
+  },
+  {
+    "full_name" : "git"
+  },
+  {
+    "full_name" : "LLVM API"
+  },
+  {
+    "full_name" : "Embedded"
+  },
+  {
+    "full_name" : "Automotive"
+  },
+  {
+    "full_name" : "C#"
+  },
+  {
+    "full_name" : "ASP.NET",
+    "includes" : ["C#"]
+  },
+  {
+    "full_name" : "Python"
+  },
+  {
+    "full_name" : "Compilers"
+  },
+  {
+    "full_name" : "Algorithms"
+  },
+  {
+    "full_name" : "JavaScript",
+    "synonims" : "JS"
+  },
+  {
+    "full_name" : "Continious Integration",
+    "synonims" : "CI"
+  }
+]

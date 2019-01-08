@@ -1,3 +1,5 @@
 bibtexparser
 transliterate
 qrcode
+python-linkedin-v2
+networkx
