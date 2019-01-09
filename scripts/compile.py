@@ -19,11 +19,12 @@ import glob
 import shutil
 from tex_printer import *
 from employee_profile import *
+from skills_db import *
 import qrcode
 import qrcode.image.svg
 import tempfile
 
-DEBUG_LATEX = False
+DEBUG_LATEX = True
 
 LATEX_OUTPUT = '' if DEBUG_LATEX else '1>/dev/null'
 LATEX_PARAMS = [] if DEBUG_LATEX else ['-halt-on-error', '--interaction=batchmode']
@@ -42,29 +43,32 @@ def print_qr_code(file_name):
   img = qr.make_image(fill_color="black", back_color="white", image_factory=qrcode.image.svg.SvgImage)
   img.save(file_name)
 
+
 def add_bool_arg(parser, name, default=False):
   group = parser.add_mutually_exclusive_group(required=False)
   group.add_argument('--' + name, dest=name, action='store_true')
   group.add_argument('--no-' + name, dest=name, action='store_false')
   parser.set_defaults(**{name:default})
 
+
 def main():
   parser = argparse.ArgumentParser(description='Compile CV into PDF file.')
-  parser.add_argument('--input_dir', type=str, default='/input', help='Input directory')
+  parser.add_argument('--input_dir', type=str, default='/input', help='input profile directory')
   parser.add_argument('--paper_size', type=str, default='a4', choices=['a4', 'a5'], help='Paper size')
   add_bool_arg(parser, 'watermark', True)
   args = parser.parse_args()
 
-  # Check necessary paths exist 
+  # Check necessary paths exist
   check_always(os.path.exists(args.input_dir), 'Input directory "%s" does not exist' % args.input_dir)
   out_dir = os.path.abspath(os.path.join('..', 'out'))
   check_always(os.path.exists(out_dir), 'Output directory "%s" does not exist' % out_dir)
 
-
   # Load input data
-  profile = EmployeeProfile()
-  profile.load(args.input_dir)
+  skill_db = SkillsDB()
+  skill_db.load(os.path.join('..', 'database'))
 
+  profile = EmployeeProfile(skill_db)
+  profile.load(args.input_dir)
 
   profile.compress()
 
@@ -91,6 +95,7 @@ def main():
 
     # Move result to output
     shutil.copy(os.path.join(tmp_dir, 'main.pdf'), os.path.join(out_dir, '%s_CV.pdf' % to_file_name(profile.personal['name'])))
+
 
 if __name__ == "__main__":
     main()

@@ -37,7 +37,7 @@
       "Go" : "negative",
       "Assembler" : "negative",
       "Linux" : "negative",
-      "Latex" : "favourite",
+      "LaTex" : "favourite",
       "Python" : "favourite",
       "boost" : "favourite",
       "ML" : "negative",
@@ -46,7 +46,6 @@
     "projects" : [
     	{
         "name" : "cv-compiler",
-        "period" : "17.07.2017-now",
         "skills" : ["C++"],
         "icon" : "cv_compiler_project.svg",
         "description" : "A typical CV compiler for software engineer",
@@ -57,7 +56,7 @@
           {
             "description" : "Development of a template including structure and form for technical CV",
             "period" : "01.03.2017-31.08.2017",
-            "skills" : ["Latex"],
+            "skills" : ["LaTex"],
             "achievements" : [
               "reduced timecost for writing CV down to 40%",
               "increased positive response up to 300%"
@@ -66,7 +65,7 @@
           {
             "description" : "Automating of CV printing",
             "period" : "01.07.2017-now",
-            "skills" : ["Python", "Latex", "Linux", "CI"],
+            "skills" : ["Python", "LaTex", "Linux", "CI"],
             "achievements" : [
               "reduced timecost for adding new records into CV down to 15%"
             ]
@@ -76,7 +75,6 @@
       {
         "name" : "Messenger",
         "icon" : "fb_messenger_project.svg",
-        "period" : "01.09.2017-now",
         "description" : "An internet messenger software",
         "team-size" : "13",
         "web" : "https://www.messenger.com",
@@ -85,7 +83,7 @@
         "tasks" : [
           {
             "description" : "Development exchange of large media files",
-            "period" : "01.09.2016-30.08.2017",
+            "period" : "01.09.2016-now",
             "skills" : ["C++", "boost", "PHP"],
             "achievements" : [
               "improved compression ratio for bzip2 algorithm up to 130% for media content",
@@ -97,7 +95,6 @@
       {
         "name" : "Google Drive",
         "icon" : "gdrive_project.svg",
-        "period" : "01.09.2016-30.08.2017",
         "description" : "Automated version control system for desktop users",
         "team-size" : "6",
         "web" : "https://www.google.com/drive/",
@@ -125,7 +122,6 @@
       {
         "name" : "Photoshop",
         "icon" : "photoshop_project.svg",
-        "period" : "01.09.2015-30.08.2016",
         "description" : "Raster graphics editor",
         "team-size" : "9",
         "web" : "https://www.adobe.com/products/photoshop.html",
@@ -134,7 +130,7 @@
           {
             "description" : "Development of text-recognition filter from raw image",
             "period" : "01.09.2015-28.02.2016",
-            "skills" : ["CI", "C++", "ML"],
+            "skills" : ["CI", "C++", "ML", "Python", "STL"],
             "achievements" : [
               "achievied recognition accuracy up to 85%"
             ]
@@ -152,7 +148,6 @@
       {
         "name" : "Core i7",
         "icon" : "i7_project.png",
-        "period" : "01.09.2014-30.07.2015",
         "description" : "Intel i7 Core CPU series",
         "team-size" : "5",
         "web" : "https://en.wikipedia.org/wiki/Intel_Core#Core_i7",

@@ -9,19 +9,20 @@ from utils import *
 
 VISUAL_SKILL_COUNT = 22
 
+
 class SkillMatrix:
   def __init__(self, employer_profile):
     self.maxValue = employer_profile.best_skill()
     self.totals = employer_profile.skills_totals()
-    self.skills = employer_profile.skills
+    # self.skills = employer_profile.skills
 
   def generate(self, file):
     # They are already sorted
     visual_count = min(len(self.totals), VISUAL_SKILL_COUNT)
     top_skills = self.totals[0:visual_count]
-    
+
     coords = [x['name'] for x in top_skills]
-    
+
     file.writelines(['\pgfplotsset{\n',
       'compat=1.8,\n',
       # 'tick label style = {font=Arial Narrow},\n',
@@ -55,12 +56,12 @@ class SkillMatrix:
       'every node near coord/.append style={font=\\bfseries, /pgf/number format/.cd, fixed, fixed zerofill, precision=1},\n',
       'legend cell align={left},\n',
       ']\n'])
-  
+
     labels = ['Favourite, passionate about it', 'Neutral', 'Prefferably avoid in future']
     colors = ['green', 'gray', 'orange']
 
     vals = [[0] * visual_count, [0] * visual_count, [0] * visual_count]
-  
+
     switcher = {
         SkillAttitude.FAVOURITE: 0,
         SkillAttitude.NEUTRAL: 1,
@@ -81,7 +82,7 @@ class SkillMatrix:
       format_str = ', nodes near coords*' if (i == 2) else ''
       file.write('\\addplot[fill=%s%s, draw=none] coordinates {%s};\n' % (colors[i], format_str, latex_escape(' '.join(x_coords))))
       file.write('\\addlegendentry{%s}\n' % labels[i])
-    
+
     file.writelines(['\end{axis}\n',
       '\end{tikzpicture}\n',
       '\\newline\n'])

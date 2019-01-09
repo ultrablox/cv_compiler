@@ -1,0 +1,24 @@
+C++;C;0.8
+STL;C++;0.95
+boost;C++;0.95
+OpenGL;Shaders;0.8
+OpenGL;CUDA;0.6
+Hardware;Assembler;0.8
+LLDB;Mac OS;0.3
+GDB;Linux;0.3
+GDB;C++;0.7
+LLDB;C++;0.7
+HPC;OpenMP;0.6
+LLVM;Compiler Development;0.9
+Visual Studio;Windows;0.8
+Revit API;C#;0.8
+AutoCAD API;C#;0.8
+3dsMax API;C++;0.8
+Objective-C;IOS;0.8
+GLSL;Shaders;0.8
+GLSL;OpenGL;0.8
+Docker;Continious Integration;0.5
+ARM;Hardware;0.6
+ARM;Embedded;0.9
+BigData;Machine Learning;0.7
+FreeRTOS;Embedded;0.9

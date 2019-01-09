@@ -3,10 +3,10 @@
 # GNU General Public License v3.0+ (see https://www.gnu.org/licenses/gpl-3.0.txt)
 
 
-from enum import Enum, auto
+# from enum import Enum, auto
 
-class SkillAttitude(Enum):
-    FAVOURITE = auto()
-    NEUTRAL = auto()
-    NEGATIVE = auto()
-    
+class SkillAttitude:#(Enum)
+    NEUTRAL = 0#auto()
+    FAVOURITE = 1#auto()
+    NEGATIVE = 2#auto()
+

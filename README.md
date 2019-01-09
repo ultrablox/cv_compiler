@@ -197,6 +197,15 @@ cd cv_compiler/scripts
 INPUT_DIR=$HOME/Documents/journal_dir ./generate.sh
 ```
 
+## Projecting (experimental)
+
+In order to create CV projection for exact vacncy:
+
+```bash
+cd cv_compiler/scripts
+INPUT_DIR=../sample_input ./generate_projection.sh test_data/vacancy_1.txt
+```
+
 ## Technologies
 
 [<img src="docs/assets/img/latex.png?raw=true" height="64" />](https://www.latex-project.org)

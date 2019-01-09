@@ -10,25 +10,28 @@
   },
   {
     "full_name" : "Artificial Intelligence",
-    "synonims" : "AI"
+    "synonims" : ["AI"]
   },
   {
     "full_name" : "Automated Planning",
-    "synonims" : "AI Planning"
+    "synonims" : ["AI Planning"]
   },
   {
     "full_name" : "Expert Systems",
-    "synonims" : "ES"
+    "synonims" : ["ES"]
   },
   {
     "full_name" : "Standard Template Library",
-    "synonims" : "STL"
+    "synonims" : ["STL"]
   },
   {
     "full_name" : "OpenGL"
   },
   {
-    "full_name" : "QT"
+    "full_name" : "Vulkan"
+  },
+  {
+    "full_name" : "Qt"
   },
   {
     "full_name" : "CUDA"
@@ -38,6 +41,7 @@
   },
   {
     "full_name" : "Ruby On Rails",
+    "synonims" : ["RoR"],
     "includes" : ["Ruby"]
   },
   {
@@ -70,7 +74,7 @@
   },
   {
     "full_name" : "JavaScript",
-    "synonims" : "JS"
+    "synonims" : ["JS"]
   },
   {
     "full_name" : "Continious Integration",
@@ -78,6 +82,9 @@
   },
   {
     "full_name" : "Shaders"
+  },
+  {
+    "full_name" : "GLSL"
   },
   {
     "full_name" : "OpenCL"
@@ -96,7 +103,8 @@
     "full_name" : "Unix"
   },
   {
-    "full_name" : "Hardware"
+    "full_name" : "Hardware",
+    "synonims" : ["PCB development", "PCB"]
   },
   {
     "full_name" : "FPGA"
@@ -124,6 +132,99 @@
   },
   {
     "full_name" : "OpenCV"
+  },
+  {
+    "full_name" : "Machine Learning",
+    "synonims" : ["ML"]
+  },
+  {
+    "full_name" : "LaTex"
+  },
+  {
+    "full_name" : "HTML"
+  },
+  {
+    "full_name" : "PHP"
+  },
+  {
+    "full_name" : "boost"
+  },
+  {
+    "full_name" : "LLDB"
+  },
+  {
+    "full_name" : "GDB"
+  },
+  {
+    "full_name" : "LLDB"
+  },
+  {
+    "full_name" : "LLDB"
+  },
+  {
+    "full_name" : "Windows"
+  },
+  {
+    "full_name" : "Mac OS",
+    "synonims" : ["OSX"]
+  },
+  {
+    "full_name" : "High Performance Computing",
+    "synonims" : ["HPC"]
+  },
+  {
+    "full_name" : "Visual Studio"
+  },
+  {
+    "full_name" : "QNX"
+  },
+  {
+    "full_name" : "Revit API"
+  },
+  {
+    "full_name" : "3dsMax API"
+  },
+  {
+    "full_name" : "AutoCAD API"
+  },
+  {
+    "full_name" : "SQL"
+  },
+  {
+    "full_name" : "Objective-C"
+  },
+  {
+    "full_name" : "IOS"
+  },
+  {
+    "full_name" : "Real-Time Rendering",
+    "synonims" : ["RTR"]
+  },
+  {
+    "full_name" : "Go"
+  },
+  {
+    "full_name" : "Docker"
+  },
+  {
+    "full_name" : "ARM"
+  },
+  {
+    "full_name" : "Emscripten"
+  },
+  {
+    "full_name" : "Search Engine Optimization",
+    "synonims" : ["SEO"]
+  },
+  {
+    "full_name" : "BigData"
+  },
+  {
+    "full_name" : "Behavior-driven development",
+    "synonims" : ["BDD"]
+  },
+  {
+    "full_name" : "FreeRTOS"
   }
 ]
 

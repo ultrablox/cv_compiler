@@ -4,7 +4,7 @@
 # GNU General Public License v3.0+ (see https://www.gnu.org/licenses/gpl-3.0.txt)
 #
 
-set -x
+# set -x
 
 COMPILE_ARGS=${@:1}
 DOCKER_IMAGE="ultrablox/latex-python3.6"
