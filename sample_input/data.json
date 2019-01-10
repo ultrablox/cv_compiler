@@ -2,7 +2,7 @@
     "personal" : {
       "name" : "Bruce Wayne",
       "sex" : "Male",
-      "birthdate" : "01.08.1234",
+      "birthdate" : "01.08.1985",
       "nationality" : "Indian",
       "additional" : ""
     },
@@ -50,8 +50,8 @@
         "icon" : "cv_compiler_project.svg",
         "description" : "A typical CV compiler for software engineer",
         "web" : "https://ultrablox.github.io/cv_compiler/",
-        "team-size" : "1",
-        "code_size" : "3000",
+        "team-size" : 1,
+        "code_size" : 3000,
         "tasks" : [
           {
             "description" : "Development of a template including structure and form for technical CV",
@@ -76,10 +76,10 @@
         "name" : "Messenger",
         "icon" : "fb_messenger_project.svg",
         "description" : "An internet messenger software",
-        "team-size" : "13",
+        "team-size" : 13,
         "web" : "https://www.messenger.com",
         "skills" : ["Scrum", "Agile"],
-        "code_size" : "85000",
+        "code_size" : 85000,
         "tasks" : [
           {
             "description" : "Development exchange of large media files",
@@ -96,10 +96,10 @@
         "name" : "Google Drive",
         "icon" : "gdrive_project.svg",
         "description" : "Automated version control system for desktop users",
-        "team-size" : "6",
+        "team-size" : 6,
         "web" : "https://www.google.com/drive/",
         "skills" : ["Scrum"],
-        "code_size" : "260000",
+        "code_size" : 260000,
         "tasks" : [
           {
             "description" : "Development of synchronization mechanism for multi-user document editing",
@@ -123,9 +123,9 @@
         "name" : "Photoshop",
         "icon" : "photoshop_project.svg",
         "description" : "Raster graphics editor",
-        "team-size" : "9",
+        "team-size" : 9,
         "web" : "https://www.adobe.com/products/photoshop.html",
-        "code_size" : "1560000",
+        "code_size" : 1560000,
         "tasks" : [
           {
             "description" : "Development of text-recognition filter from raw image",
@@ -149,9 +149,9 @@
         "name" : "Core i7",
         "icon" : "i7_project.png",
         "description" : "Intel i7 Core CPU series",
-        "team-size" : "5",
+        "team-size" : 5,
         "web" : "https://en.wikipedia.org/wiki/Intel_Core#Core_i7",
-        "code_size" : "870000",
+        "code_size" : 870000,
         "tasks" : [
           {
             "description" : "Development synchronization mechanism between cores for i7 generation",
@@ -169,8 +169,8 @@
         {
             "name" : "Facebook Inc",
             "logo" : "img/logo_fb.svg",
-            "description" : "social network",
-            "role" : "Software Engineer",
+            "description" : "Project-based software company operating in social networking",
+            "role" : "Sr. Software Engineer",
             "location" : "London, EN",
             "period" : "01.09.2017-now",
             "web" : "https://www.facebook.com",
@@ -179,7 +179,7 @@
         {
             "name" : "Google Inc",
             "logo" : "img/logo_google.svg",
-            "description" : "search engine",
+            "description" : "Software company operating in web searching",
             "role" : "Software Engineer",
             "location" : "Zurich, SZ",
             "period" : "01.09.2016-30.08.2017",
@@ -189,7 +189,7 @@
         {
             "name" : "Adobe Inc",
             "logo" : "img/logo_adobe.svg",
-            "description" : "pdf editing software",
+            "description" : "Software company focused on graphics tools development",
             "role" : "Software Engineer",
             "location" : "Los Angeles, CA",
             "period" : "01.09.2015-30.08.2016",
@@ -199,7 +199,7 @@
         {
             "name" : "Intel Inc",
             "logo" : "img/logo_intel.svg",
-            "description" : "various processors development",
+            "description" : "Hardware producing company specialized in processors development",
             "role" : "Software Engineer",
             "location" : "Los Angeles, CA",
             "period" : "01.09.2014-30.08.2015",

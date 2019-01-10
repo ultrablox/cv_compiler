@@ -15,11 +15,8 @@
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
 
-\usepackage[labelformat=empty,labelsep=none]{caption}
-
-\usepackage[hyphens]{url}
-\usepackage{hyperref}
-\usepackage[all]{hypcap} 
+% \usepackage[labelformat=empty,labelsep=none]{caption}
+% \usepackage[all]{hypcap} 
 
 \usepackage{graphicx,scalerel}
 
@@ -29,24 +26,6 @@
 %\usepackage[erewhon,vvarbb,bigdelims]{newtxmath} % Use the Erewhon font
 \usepackage[utf8]{inputenc} % Required for inputting international characters
 \usepackage[T1]{fontenc} % Output font encoding for international characters
-\usepackage{paracol}
-\usepackage{fontspec} % Required for specification of custom fonts
-% \setmainfont[Path = ./fonts/,
-% Extension = .otf,
-% BoldFont = Erewhon-Bold,
-% ItalicFont = Erewhon-Italic,
-% BoldItalicFont = Erewhon-BoldItalic,
-% SmallCapsFeatures = {Letters = SmallCaps}
-% ]{Erewhon-Regular}
-% \setmainfont[Extension = .ttf,
-%     BoldFont = Arial Narrow Bold,
-%     ItalicFont = Arial Narrow Italic
-% ]{Arial Narrow}
-
-\setmainfont[Extension = .ttf,
-    BoldFont = ArchivoNarrow-Bold,
-    ItalicFont = ArchivoNarrow-Italic
-]{ArchivoNarrow-Regular}
 
 
 % \usepackage{ifmtarg}
@@ -81,12 +60,7 @@
     \setlength{\parsep}{0pt}  }
 {\end{itemize}}
 
-\newenvironment{itemize-achievments}
-{\setlength{\leftmargini}{0.2cm}\begin{itemize}[noitemsep,nolistsep]
-    \setlength{\itemsep}{0pt}
-    \setlength{\parskip}{0pt}
-    \setlength{\parsep}{0pt}  }
-{\end{itemize}}
+
 
 % Text width for tabbing environments
 \newlength{\smallertextwidth}
@@ -107,13 +81,6 @@
 \newlength\blocksep
 \setlength\blocksep{2mm}
 
-\usepackage{xcolor}
-\hypersetup{
-    colorlinks,
-    linkcolor={red!30!black},
-    citecolor={black!50!black},
-    urlcolor={black!80!black}
-}
 
 \newcommand{\blocksection}[2]{
     \columnratio{0.18}

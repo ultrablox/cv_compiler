@@ -18,6 +18,12 @@ class Skill:
 
   def has_synonim(self, name):
     return name in self.get_synonims()
+  
+  def set_display_name(self, new_name):
+    self.displayName = new_name
+
+  def display_name(self):
+    return self.displayName
 
 
 class SkillsDB:
@@ -39,6 +45,7 @@ class SkillsDB:
 
   def create_skill(self, name):
     new_skill = Skill(name)
+    new_skill.set_display_name(name)
     self.skills += [new_skill]
     self.graph.add_node(new_skill)
     return new_skill
@@ -54,6 +61,10 @@ class SkillsDB:
         new_skill = self.create_skill(skill_node['full_name'])
         if 'synonims' in skill_node:
           new_skill.synonims += skill_node['synonims']
+        if 'display_name' in skill_node:
+          new_skill.set_display_name(skill_node['display_name'])
+        else:
+          new_skill.set_display_name(skill_node['full_name'])
 
     connections = []
     with open(os.path.join(db_dir, 'skill_connections.csv'), newline='') as csvfile:

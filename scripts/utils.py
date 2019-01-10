@@ -8,6 +8,7 @@ import pathlib
 import urllib.parse
 from transliterate import translit, get_available_language_codes
 import re
+import datetime
 
 
 def first_true(iterable, default=False, pred=None):
@@ -72,3 +73,14 @@ def serialize_array(items):
 
 def serialize_array_to_property(dict, prop_name, items):
   dict[prop_name] = serialize_array(items)
+
+def human_code_size(n):
+  if n < 1000:
+    return '%.1f' % (float(n) / 1000)
+  elif n < 1000000:
+    return '%.0fK' % (float(n) / 1000)
+  else:
+    return '%.1fM' % (float(n) / 1000000)
+
+def to_month_year(time_point):
+  return time_point.strftime('%b %Y')

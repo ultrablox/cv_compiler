@@ -169,7 +169,7 @@ class EmployeeProfile:
   def skills_totals(self):
     res = []
     for rec in self.skillRecords:
-        res += [{'name': rec.skill.name, 'size': rec.total_size(), 'attitude': rec.attitude}]
+        res += [{'name': rec.skill.display_name(), 'size': rec.total_size(), 'attitude': rec.attitude}]
     res = (item for item in res if item['size'] > 0.0)
     return sorted(res, key=lambda rec: rec['size'], reverse=True)
 

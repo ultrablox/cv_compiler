@@ -30,17 +30,22 @@ class SkillMatrix:
       # 'legend style = {font=Arial Narrow},\n',
       # 'label style = {font=Arial Narrow}\n',
       # 'node style = {}\n',
-      'every non boxed x axis/.append style={x axis line style=-},',
-      'every non boxed y axis/.append style={y axis line style=-}',
+      'every non boxed x axis/.append style={x axis line style=-},\n',
+      'every non boxed y axis/.append style={y axis line style=-},\n',
+      'tick label style = {font=\\rmfamily},\n',
+      # 'every axis label = {font=\\rmfamily},\n',
+      r'legend style = {font=\rmfamily},',
+      # 'label style = {font=\\rmfamily},\n',
       '}\n'
     ])
 
     file.writelines(['\\begin{tikzpicture}\n',
       '\\begin{axis}[\n',
+      r'font=\rmfamily,',
       '\tybar stacked,\n',
       '\tbar width=12pt,\n',
       '\taxis lines=middle,\n',
-      '\ty label style={at={(axis description cs:-0.025,.5)},rotate=90,anchor=south},\n',
+      '\ty label style={font=\\rmfamily\\bfseries, at={(axis description cs:-0.025,.5)},rotate=90,anchor=south},\n',
       '\tylabel={Experience, years},\n',
       '\tsymbolic x coords={%s},\n' % latex_escape(','.join(coords)),
       '\txtick=data,\n',
@@ -53,11 +58,12 @@ class SkillMatrix:
       '\tclip=false,\n'
       '\twidth=0.75\\textwidth,\n'
       '\theight=6cm,\n',
-      'every node near coord/.append style={font=\\bfseries, /pgf/number format/.cd, fixed, fixed zerofill, precision=1},\n',
+      'every node near coord/.append style={/pgf/number format/.cd, fixed, fixed zerofill, precision=1},\n',
+      'every node near coord/.append style={/pgf/number format/assume math mode=true},\n',
       'legend cell align={left},\n',
       ']\n'])
 
-    labels = ['Favourite, passionate about it', 'Neutral', 'Prefferably avoid in future']
+    labels = ['Desired', 'Job\'s a job', 'Prefferably avoid']
     colors = ['green', 'gray', 'orange']
 
     vals = [[0] * visual_count, [0] * visual_count, [0] * visual_count]

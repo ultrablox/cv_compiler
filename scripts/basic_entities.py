@@ -78,7 +78,7 @@ class Project:
   def __init__(self):
     self.parent = None
     self.linesOfCode = None
-    self.webLink = None
+    self.webLink = ''
     self.icon = ''
     self.visible = True
     self.tasks = []
