@@ -9,6 +9,7 @@ import urllib.parse
 from transliterate import translit, get_available_language_codes
 import re
 import datetime
+from datetime import date
 
 
 def first_true(iterable, default=False, pred=None):
@@ -84,3 +85,9 @@ def human_code_size(n):
 
 def to_month_year(time_point):
   return time_point.strftime('%b %Y')
+
+
+def calculate_age(born):
+  today = date.today()
+  return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+

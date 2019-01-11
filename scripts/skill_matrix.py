@@ -7,7 +7,7 @@ import math
 from skill_attitude import *
 from utils import *
 
-VISUAL_SKILL_COUNT = 22
+VISUAL_SKILL_COUNT = 16
 
 
 class SkillMatrix:
@@ -43,7 +43,7 @@ class SkillMatrix:
       '\\begin{axis}[\n',
       r'font=\rmfamily,',
       '\tybar stacked,\n',
-      '\tbar width=12pt,\n',
+      '\tbar width=10pt,\n',
       '\taxis lines=middle,\n',
       '\ty label style={font=\\rmfamily\\bfseries, at={(axis description cs:-0.025,.5)},rotate=90,anchor=south},\n',
       '\tylabel={Experience, years},\n',
@@ -56,8 +56,8 @@ class SkillMatrix:
       '\tenlargelimits=false,\n',
       # 'enlarge y limits=0.03,\n',
       '\tclip=false,\n'
-      '\twidth=0.75\\textwidth,\n'
-      '\theight=6cm,\n',
+      '\twidth=180pt,\n'
+      '\theight=150pt,\n',
       'every node near coord/.append style={/pgf/number format/.cd, fixed, fixed zerofill, precision=1},\n',
       'every node near coord/.append style={/pgf/number format/assume math mode=true},\n',
       'legend cell align={left},\n',

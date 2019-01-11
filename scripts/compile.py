@@ -17,7 +17,8 @@ from skill_matrix import *
 from basic_entities import *
 import glob
 import shutil
-from tex_printer import *
+from tex_classic_printer import *
+from tex_cards_printer import *
 from employee_profile import *
 from skills_db import *
 import qrcode
@@ -81,7 +82,8 @@ def main():
     # Generate tex files
     rc_dirs = [os.path.join('..', 'resources'), os.path.join(args.input_dir), tmp_dir]
 
-    tex_printer = TexCVPrinter(tmp_dir, rc_dirs)
+    # tex_printer = TexClassicPrinter(tmp_dir, rc_dirs)
+    tex_printer = TexCardsPrinter(tmp_dir, rc_dirs)
     tex_printer.paperSize = args.paper_size
     tex_printer.enableWatermark = args.watermark
     tex_printer.print_to(profile, 'main.tex')
