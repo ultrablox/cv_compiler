@@ -7,7 +7,7 @@ import math
 from skill_attitude import *
 from utils import *
 
-VISUAL_SKILL_COUNT = 16
+VISUAL_SKILL_COUNT = 10
 
 
 class SkillMatrix:
@@ -16,7 +16,7 @@ class SkillMatrix:
     self.totals = employer_profile.skills_totals()
     # self.skills = employer_profile.skills
 
-  def generate(self, file):
+  def generate(self, file, height):
     # They are already sorted
     visual_count = min(len(self.totals), VISUAL_SKILL_COUNT)
     top_skills = self.totals[0:visual_count]
@@ -57,7 +57,7 @@ class SkillMatrix:
       # 'enlarge y limits=0.03,\n',
       '\tclip=false,\n'
       '\twidth=180pt,\n'
-      '\theight=150pt,\n',
+      '\theight=%dpt,\n' % height,
       'every node near coord/.append style={/pgf/number format/.cd, fixed, fixed zerofill, precision=1},\n',
       'every node near coord/.append style={/pgf/number format/assume math mode=true},\n',
       'legend cell align={left},\n',

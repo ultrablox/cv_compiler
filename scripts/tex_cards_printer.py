@@ -109,17 +109,10 @@ class EducationCardPrinter(TexPrinter):
 
   def print_facility_data(self, degree, facility, period, gpa, web = None, notes = []):
     self.write([
-      r'\begin{minipage}[t]{40pt}',
-      r'\raggedleft',
-      r'\vspace{-8pt}'
-      r'%s' % self.image('img/book.svg', 24),
       '',
       r' %s-' % to_month_year(period.startDate),
       '',
       r'%s' % to_month_year(period.endDate),
-      r'\end{minipage}',
-      r'\hspace{6pt}',
-      r'\begin{minipage}[t]{0.8\textwidth}',
         r'\sffamily \textbf{%s}, ' % (degree),
         # r'',
         r'\sffamily %s' % (facility),
@@ -130,12 +123,11 @@ class EducationCardPrinter(TexPrinter):
         r''
     ])
 
-    if notes:
-      for note in notes:
-        self.write([r'\rmfamily %s' % note])
+    # if notes:
+    #   for note in notes:
+    #     self.write([r'\rmfamily %s' % note])
 
     self.write([
-      r'\end{minipage}'
     ])
 
   def print_data(self):
@@ -155,7 +147,7 @@ class SkillsCardPrinter(TexPrinter):
   def print_data(self):
     profile = self.profile
     skill_matrix = SkillMatrix(profile)
-    skill_matrix.generate(self.file)
+    skill_matrix.generate(self.file, TexCardsPrinter.CARD_HEIGHT - 60)
 
     totals = profile.skills_totals()
     totals = totals[VISUAL_SKILL_COUNT:]
@@ -258,19 +250,9 @@ class EmploymentCardPrinter(TexPrinter):
 
   def print_employment(self, role, company, period, description, web, notes=[]):
     self.write([
-      r'\begin{minipage}[t]{40pt}',
-      r'\raggedleft',
       r' %s-' % to_month_year(period.startDate),
       '',
       r'%s' % to_month_year(period.endDate),
-      r'\end{minipage}',
-      r'\hspace{2pt}',
-      r'\begin{minipage}[t]{26pt}',
-      r'\vspace{-8pt}'
-      r'%s' % self.image('img/education.svg', 24),
-      r'\end{minipage}',
-      r'\hspace{2pt}',
-      r'\begin{minipage}[t]{0.6\textwidth}',
         r'\sffamily \textbf{%s}, ' % (role),
         r'\sffamily %s' % (company),
         r'',
@@ -284,7 +266,6 @@ class EmploymentCardPrinter(TexPrinter):
       self.write([r' %s' % note])
 
     self.write([
-      r'\end{minipage}'
     ])
 
   def print_data(self):
@@ -307,9 +288,11 @@ class EmploymentCardPrinter(TexPrinter):
     #   r'\vspace{\blocksep}'
     # ])
 
+# A4 =  210 mm x  297 mm =  595 pt x  842 pt
 class TexCardsPrinter(TexPrinter):
-  CARD_WIDTH = 170
-  CARD_HEIGHT = 168
+  V_SPACING = 15
+  CARD_WIDTH = (595 - 4 * V_SPACING)/3
+  CARD_HEIGHT = 206
   CARDS_IN_ROW = 3
   HEADER_HEIGHT = 24
   HOR_SPACING = 4
@@ -369,7 +352,7 @@ class TexCardsPrinter(TexPrinter):
       ]) 
 
 
-  def print_data_chain(self, data = []):
+  def print_data_chain_good(self, data = []):
     for i in range(0, len(data), 3):
       self.print_header_row(data[i:i+3])
       self.write([
@@ -380,12 +363,28 @@ class TexCardsPrinter(TexPrinter):
           r'',
         ])
 
+  def print_data_chain(self, data):
+    for el in data:
+      self.write([
+         r'\fbox{'
+        r'\begin{minipage}[t]{%dpt}' % (self.CARD_WIDTH),
+
+      ])
+      el['data'].print_data()
+      self.write([
+
+        r'\end{minipage}',
+        r'}',
+      #   # r'\hspace{%dpt}' % self.HOR_SPACING,
+        r''
+      ]) 
+
 
   def print_data(self, profile, file):
     self.write([
       r'\documentclass[10pt]{ucv-cards}',
 
-      r'\usepackage[a4paper, top=10mm, bottom=10mm, left=10mm, right=10mm]{geometry}',
+      r'\usepackage[a4paper, top=10mm, bottom=10mm, left=%dmm, right=%dmm]{geometry}' % (self.V_SPACING, self.V_SPACING),
       r'\usepackage{fancyhdr,graphicx}',
       r'\pagestyle{fancy}',
       r'\fancyhf{}',
@@ -481,4 +480,6 @@ class TexCardsPrinter(TexPrinter):
     self.print_data_chain(data)
 
     self.write(['\end{document}'])
+
+    print('card_width=%f' % self.CARD_WIDTH)
 
