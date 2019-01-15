@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{ultracv}[2014/08/16 Example LaTeX class]
+\ProvidesClass{ucv-card}[2014/08/16 Example LaTeX class]
 
 \LoadClass{article}
 
@@ -29,19 +29,8 @@
 ]{OpenSans}
 
 
-% \rmfamily,\sffamily
-
-% Layout
-\newlength\sectionspace
-\setlength{\sectionspace}{2mm}
-
-% COLORATION
-% https://uxmovement.com/content/how-color-saturation-affects-user-efficiency/
-% Dark, desaturated colors to express professional and serious
-
 % URLs are smaller
 \RequirePackage{hyperref}
-% \RequirePackage[hyphens]{url}
 
 \RequirePackage{xcolor}
 \hypersetup{
@@ -53,8 +42,6 @@
 
 \newcommand{\httplink}[2]{{\href{#1}{\rmfamily\color{gray}\fontsize{9}{9}\selectfont#2}}}
 
-
-
 % Compact itemization
 % \RequirePackage{enumitem}
 
@@ -65,7 +52,6 @@
 \newenvironment{itemize-cv}
 {
   \begin{itemize}[noitemsep,nolistsep,leftmargin=12pt]
-    % \renewcommand\labelitemi{\includegraphics[height=12pt]{img/correct.pdf}}
     \setlength{\itemsep}{0pt}
     \setlength{\parskip}{0pt}
     \setlength{\parsep}{0pt}}
@@ -74,8 +60,6 @@
 \newenvironment{itemize-achievments}
 {
   \begin{itemize}[noitemsep,nolistsep,label=$\star$,leftmargin=2pt]
-    % \setlength\itemindent{0pt}
-    % \setlength{\leftmargini}{0pt}
     \setlength{\itemsep}{0pt}
     \setlength{\parskip}{0pt}
     \setlength{\parsep}{0pt}}
@@ -90,65 +74,9 @@
 
 \newcommand{\projectlink}[2]{\textbf{#2}}
 
-\RequirePackage{lipsum}
-
-\RequirePackage{parcolumns}
-
+% Setup drawing package
 \RequirePackage[absolute,showboxes]{textpos}
 \setlength{\TPHorizModule}{1pt}
 \setlength{\TPVertModule}{\TPHorizModule}
 \textblockorigin{0pt}{0pt}
-
-\RequirePackage{wrapfig}
-
-\RequirePackage{graphicx}
-
-% Styles for main column
-\newcommand{\cvhead}[1]{
-  {
-  \sffamily
-  % \Large
-  \fontsize{14}{14}
-  % \color{black}
-  % \selectfont
-  \bfseries
-  #1
-  \par
-  }
-  \vspace{4pt}
-}
-
-\newcommand{\cvsubhead}[1]{
-  {
-  \rmfamily
-  \fontsize{12}{12}
-  % \color{black}
-  % \selectfont
-  \bfseries
-  #1
-  \par
-  }
-}
-
-\newcommand{\cvsubsubhead}[1]{
-  {
-  \rmfamily
-  \fontsize{12}{12}
-  \color{gray}
-  % \selectfont
-  \bfseries
-  #1
-  % \vspace{1pt}
-  \par
-  }
-}
-
-\newcommand{\cvnormal}{
-  % \rmfamily
-  % \fontsize{10}{10}
-  % \color{black}
-  % \selectfont
-  % \mdseries
-}
-
-\newcommand{\colsectionspace}{\vspace{6pt}}
+\setlength{\parindent}{0pt}

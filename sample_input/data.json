@@ -9,9 +9,9 @@
     "contacts" : {
       "email" : "bruce@gmail.com",
       "skype" : "bruce",
-      "phone" : "06-12345678",
+      "phone" : "+31-12345678",
       "residence" : "Endhoven, Netherlands",
-      "linkedin" : "https://www.linkedin.com/in/yuri-blokhin-01688a78/",
+      "linkedin" : "https://www.linkedin.com/in/batman",
       "languages" : [
           "English",
           "Chineese",
@@ -27,6 +27,16 @@
         "gpa" : "GPA: 99%",
         "notes" : [
             "Thesis: Development of CV for getting Dream Job"
+        ]
+      },
+      {
+        "degree" : "Bachelor in Computer Science",
+        "period" : "01.09.2004-30.07.2006",
+        "facility" : "Massachusetts Institute of Technology MIT",
+        "web" : "http://www.mit.edu",
+        "gpa" : "GPA: 85%",
+        "notes" : [
+            "Thesis: Creating computer from scratch"
         ]
       }
     ],

@@ -25,10 +25,7 @@ import qrcode
 import qrcode.image.svg
 import tempfile
 
-DEBUG_LATEX = True
 
-LATEX_OUTPUT = '' if DEBUG_LATEX else '1>/dev/null'
-LATEX_PARAMS = [] if DEBUG_LATEX else ['-halt-on-error', '--interaction=batchmode']
 
 
 def print_qr_code(file_name):

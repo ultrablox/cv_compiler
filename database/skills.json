@@ -43,6 +43,7 @@
   },
   {
     "full_name" : "Ruby On Rails",
+    "display_name" : "RoR",
     "synonims" : ["RoR"],
     "includes" : ["Ruby"]
   },
@@ -179,7 +180,8 @@
     "synonims" : ["HPC"]
   },
   {
-    "full_name" : "Visual Studio"
+    "full_name" : "Visual Studio",
+    "display_name" : "MSVS"
   },
   {
     "full_name" : "QNX"
@@ -204,7 +206,7 @@
   },
   {
     "full_name" : "Real-Time Rendering",
-    "display_name" : "RT Rendering",
+    "display_name" : "RTR",
     "synonims" : ["RTR"]
   },
   {

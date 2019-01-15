@@ -11,6 +11,11 @@ import re
 import datetime
 from datetime import date
 
+DEBUG_LATEX = True
+
+LATEX_OUTPUT = '' if DEBUG_LATEX else '1>/dev/null'
+LATEX_PARAMS = [] if DEBUG_LATEX else ['-halt-on-error', '--interaction=batchmode']
+
 
 def first_true(iterable, default=False, pred=None):
   """Returns the first true value in the iterable.
@@ -75,6 +80,7 @@ def serialize_array(items):
 def serialize_array_to_property(dict, prop_name, items):
   dict[prop_name] = serialize_array(items)
 
+
 def human_code_size(n):
   if n < 1000:
     return '%.1f' % (float(n) / 1000)
@@ -91,3 +97,7 @@ def calculate_age(born):
   today = date.today()
   return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
 
+
+def call_latex(dest_dir):
+  call_system('cd %s && xelatex %s main.tex %s' % (dest_dir, ' '.join(LATEX_PARAMS), LATEX_OUTPUT))
+  return os.path.join(dest_dir, 'main.pdf')

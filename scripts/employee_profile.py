@@ -60,10 +60,13 @@ class EmployeeProfile:
       self.specialSkillGroups = json_node['special_skills']
 
     # Deserialize projects
+    prj_id = 1
     for prj in json_node['projects']:
       new_prj = Project()
       new_prj.deserialize(prj)
+      new_prj.id = prj_id
       self.projects += [new_prj]
+      prj_id += 1
 
     # Initialize full skill list
     project_skills = []
@@ -111,10 +114,13 @@ class EmployeeProfile:
         for skill in task.skills:
           self.add_skill_experience(skill, task.period)
 
+    emp_idx = 0
     for employment_node in json_node['employments']:
       new_empl = Employment()
       new_empl.deserialize(employment_node, self)
+      new_empl.id = emp_idx
       self.employments += [new_empl]
+      emp_idx += 1
 
     if 'conferences' in json_node:
       self.conferences = json_node['conferences']
