@@ -144,7 +144,7 @@
 }
 
 \newcommand{\cvnormal}{
-  % \rmfamily
+  \rmfamily
   % \fontsize{10}{10}
   % \color{black}
   % \selectfont
@@ -152,3 +152,11 @@
 }
 
 \newcommand{\colsectionspace}{\vspace{6pt}}
+
+
+\RequirePackage[absolute,showboxes]{textpos}
+\setlength{\TPHorizModule}{1pt}
+\setlength{\TPVertModule}{\TPHorizModule}
+\textblockorigin{0pt}{0pt}
+\setlength{\parindent}{0pt}
+

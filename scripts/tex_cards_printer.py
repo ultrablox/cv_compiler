@@ -556,16 +556,19 @@ class TexCardsPrinter(TexPrinter):
 
 
   def print_data(self, profile, file):
-
+    EMPLOYMENT_CARD_HEIGHT = 100
     #
     # Print independent cards
     #
 
     # Employment history
-    # emp_printer = EmploymentCardPrinter(self.CARD_WIDTH, self.CARD_HEIGHT)
-    # emp_printer.init_resources(self.rcPaths, self.rootDir)
-    # for employment in profile.employments:
-    #   emp_printer.compile_to(employment, os.path.join(out_dir, 'emp_%d.pdf' % employment.id))
+    emp_files = []
+    emp_printer = EmploymentCardPrinter(self.CARD_WIDTH, EMPLOYMENT_CARD_HEIGHT)
+    emp_printer.init_resources(self.rcPaths, self.rootDir)
+    for employment in profile.employments:
+      out_pdf = os.path.join(self.rootDir, 'emp_%d.pdf' % employment.id)
+      emp_printer.compile_to(employment, out_pdf)
+      emp_files += [out_pdf]
 
     # # Projects
     # prj_printer = ProjectCardPrinter(self.CARD_WIDTH, self.CARD_HEIGHT)
@@ -677,27 +680,21 @@ class TexCardsPrinter(TexPrinter):
 
     self.write([
       r'\end{minipage}',
-      r'\end{wrapfigure}',
-      r''
+      r'\end{wrapfigure}'
     ])
 
     self.write([
-      # r'\cvhead{Main Projects}',
+      r'\cvhead{Main Projects}',
       r'',
-      # r'\cvsubsubhead{Relevant are first}',
+      r'\cvsubsubhead{Relevant are first}',
       r''
     ])
 
 
-    # for project in profile.projects:
-    #   self.write([
-    #     r'\rule{180pt}{100pt}'
-    #   ])
-
-    self.write([
-      r'',
-      r'\lipsum[1-30]'
-    ])
+    for project in profile.projects:
+      self.write([
+        r'\rule{180pt}{100pt}'
+      ])
 
     self.write([
       ''
@@ -710,11 +707,10 @@ class TexCardsPrinter(TexPrinter):
       r''
     ])
 
-    # for employment in profile.employments:
-    #   self.write([
-    #     r'\rule{180pt}{100pt}'
-    #   ])
-
+    for employment in emp_files:
+      self.write([
+        r'\includegraphics[]{%s}' % employment
+      ])
     self.write([
       ''
     ])

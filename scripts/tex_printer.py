@@ -132,8 +132,8 @@ class SingleCardPrinter(TexPrinterBase):
 
   def generate_body(self, entity):
     self.write([
-      r'\documentclass{ucv-card}',
-      r'\usepackage[margin=0pt,paperheight=%dpt,paperwidth=%dpt]{geometry}' % (self.width, self.height),
+      r'\documentclass{ucv-cards}',
+      r'\usepackage[margin=0pt,paperwidth=%dpt,paperheight=%dpt]{geometry}' % (self.width, self.height),
       r'\begin{document}',
     ])
     self.generate_content(entity)
