@@ -3,6 +3,7 @@ from skill_matrix import *
 from project_printer import *
 from employment_printer import *
 
+PT_IN_MM = 2.83465
 
 class PlaceholderCardPrinter(TexPrinter):
   def print_data(self):
@@ -377,7 +378,7 @@ class TexCardsPrinter(TexPrinter):
       r'font=\cvnormal,',
       r'xlabel={Experience, years},',
       r'xbar stacked,',
-      r'width=0.9\textwidth,',
+      r'width=0.9\columnwidth,',
       # r'legend style={',
       # r'legend columns=4,',
       # r'    at={(xticklabel cs:0.5)},',
@@ -459,15 +460,89 @@ class TexCardsPrinter(TexPrinter):
     self.print_skill_chart(skills[:VISUAL_SKILL_COUNT])
     self.print_skill_list(skills[VISUAL_SKILL_COUNT:])
 
+  
+  def print_employment(self, employment):
+    self.write([
+      r'\cvhead{%s}' % employment.role,
+      r'',
+      r'\cvsubhead{%s}' % employment.name,
+      r'',
+      r'\cvsubsubhead{%s}' % self.get_href(employment.web),
+      r'',
+      r'\rmfamily %s' % latex_escape(employment.description),
+      r''
+    ])
+    
+    self.write([
+      r'{\rmfamily\fontsize{8}{8}\selectfont %s' % to_month_year(employment.period.startDate),
+      r'%s\par}' % to_month_year(employment.period.endDate),
+      ''
+    ])
+
+    if employment.notes:
+      self.write([
+        r'\begin{itemize-cv}'
+      ])
+
+      for note in employment.notes:
+        self.write([r'\item %s' % note])
+
+      self.write([
+        r'\end{itemize-cv}',
+        r''
+      ])
+
+  
+  def print_project(self, project):
+    place = 'in %s' % project.parent.name if project.parent else 'hobby'
+    period = project.get_period()
+
+    self.write([
+      r'\cvsubhead{%s}' % (latex_escape(project.name)),
+      r'',
+      r'\cvsubsubhead{%d-%d}' % (period.startDate.year, period.endDate.year),
+      r'',
+      r'\cvirrelevant{%s}' % self.get_href(project.webLink),
+      # r'\raggedleft',
+      # r'\cvirrelevant{%s}' % (to_month_year(period.startDate), to_month_year(period.endDate), place),
+      r'',
+      r'\rmfamily %s' % latex_escape(project.description),
+      r'',
+      r'\rmfamily \textit{%s}' % latex_escape(', '.join(project.get_total_skill_list())),
+      
+      r''
+    ])
+
+    # for note in notes:
+    #   self.write([r'\regulartext %s' % note])
+
+    # Tasks
+    # self.print_tasks(tasks)
+    self.writeln(r'\begin{itemize-cv}')
+    for task in project.tasks:
+      self.writeln(r'\item[\done] %s' % latex_escape(task.description))
+      if task.achievements:
+        self.writeln(r'\begin{itemize-achievments}')
+        for ach in task.achievements:
+          self.writeln(r'\item %s' % latex_escape(ach))
+        self.writeln(r'\end{itemize-achievments}')
+      else:
+        self.writeln('')
+    self.writeln(r'\end{itemize-cv}')
+
+
+    self.write([
+      r''
+    ])
 
   def print_personal(self, profile):
     age = calculate_age(datetime.datetime.strptime(profile.personal['birthdate'], '%d.%m.%Y'))
 
     self.write([
-      r'\begin{minipage}{0.3\textwidth}',
+      r'\begin{minipage}{0.3\columnwidth}',
       r'\fbox{\includegraphics[width=0.9\textwidth,keepaspectratio]{%s}}' % self.image_path('img/photo.jpg', [62,62]),
       r'\end{minipage}',
-      r'\begin{minipage}{0.67\textwidth}',
+      r'\begin{minipage}{0.67\columnwidth}',
       r'\cvhead{%s}' % profile.personal['name'],
       r'',
       r'\cvsubhead{%s, %s y.o.}' % (profile.personal['sex'], age),
@@ -484,14 +559,14 @@ class TexCardsPrinter(TexPrinter):
 
   def print_contacts(self, profile):
     self.write([
-      r'\noindent\rule{\textwidth}{0.5pt}',
+      r'\noindent\rule{\columnwidth}{0.5pt}',
       r''
     ])
 
     linkedin_name = profile.contacts['linkedin'].split('/')[-1]
 
     self.write([
-      r'\begin{minipage}{0.38\textwidth}',
+      r'\begin{minipage}{0.38\columnwidth}',
       r'\vcenteredinclude{%s}' % self.image_path('img/linkedin.svg'),
       r'\rmfamily %s' % linkedin_name,
       r'',
@@ -501,7 +576,7 @@ class TexCardsPrinter(TexPrinter):
     ])
 
     self.write([
-      r'\begin{minipage}{0.58\textwidth}',
+      r'\begin{minipage}{0.58\columnwidth}',
       r'\raggedleft',
       r'\rmfamily \href{mailto:%s}{%s}' % (profile.contacts['email'], profile.contacts['email']),
       r'\vcenteredinclude{%s}' % self.image_path('img/email.svg'),
@@ -513,7 +588,7 @@ class TexCardsPrinter(TexPrinter):
     ])
     self.write([
       r'',
-      r'\noindent\rule{\textwidth}{0.5pt}',
+      r'\noindent\rule{\columnwidth}{0.5pt}',
       r'',
       r'\colsectionspace',
       r''
@@ -567,7 +642,7 @@ class TexCardsPrinter(TexPrinter):
     emp_printer.init_resources(self.rcPaths, self.rootDir)
     for employment in profile.employments:
       out_pdf = os.path.join(self.rootDir, 'emp_%d.pdf' % employment.id)
-      emp_printer.compile_to(employment, out_pdf)
+      # emp_printer.compile_to(employment, out_pdf)
       emp_files += [out_pdf]
 
     # # Projects
@@ -672,32 +747,119 @@ class TexCardsPrinter(TexPrinter):
       r'\setlength{\parindent}{0pt}',
       r'\setlength{\columnsep}{4pt}',
       r'\setlength{\intextsep}{0pt}',
-      r'\begin{wrapfigure}{l}{180pt}',
-      r'\begin{minipage}[t][0.98\textheight]{180pt}'
+      # r'\columnratio{0.33}',
+      # r'\begin{paracol}{2}'
+      # r'\begin{wrapfigure}{l}{180pt}',
+      # r'\begin{minipage}[t][0.98\textheight]{180pt}'
+    ])
+    
+    self.write([
+      r'\begin{textblock}{%d}[0, 0](%f,%f)' % (self.CARD_WIDTH, PT_IN_MM*10, PT_IN_MM*10),
     ])
 
     self.print_head_column(profile)
 
     self.write([
-      r'\end{minipage}',
-      r'\end{wrapfigure}'
+      r'\end{textblock}'
     ])
 
     self.write([
-      r'\cvhead{Main Projects}',
-      r'',
-      r'\cvsubsubhead{Relevant are first}',
+      # r'\end{minipage}',
+      # r'\end{wrapfigure}'
+      # r'\switchcolumn'
+    ])
+    
+    self.write([
+      '\clearpage',
+    ])
+
+    # self.write([
+    #   r'\begin{minipage}[b][0.33\textheight]{400pt}',
+    #   r'xxx',
+    #   r'',
+    #   r'xxx',
+    #   r'',
+    #   r'xxx',
+    #   r'',
+    #   r'xxx',
+    #   r'',
+    #   r'xxx',
+    #   r'',
+    #   r'xxx',
+    #   r'\end{minipage}',
+    #   # r'\end{wrapfigure}'
+    #   # r'\switchcolumn'
+    # ])
+    
+  
+    
+
+    # self.write([
+    #   r'\cvhead{Main Projects}',
+    #   r'',
+    #   r'\cvsubsubhead{Relevant are first}',
+    #   r''
+    # ])
+    
+    
+
+
+    self.write([
+      # r'\begin{minipage}{0.67\textwidth}',
+      # r'\fbox{'
+      r'\newgeometry{top=10mm, bottom=10mm, left=%dpt, right=10mm}' % (self.CARD_WIDTH + 10*PT_IN_MM)
+    ])
+
+    for i in range(0, len(profile.projects), 2):
+      projects = profile.projects[i:i+2]
+  
+    # for project in profile.projects:
+      
+      self.write([
+        r'\setcolumnwidth{%fpt,%fpt}' % (self.CARD_WIDTH, self.CARD_WIDTH),
+        r'\begin{paracol}{2}'
+      ])
+
+      if i == 0:
+        self.write([
+          r'[',
+          r'\cvhead{Main Projects}',
+          r'',
+          r'\cvsubsubhead{Relevant are first}',
+          r']'
+        ])
+
+      for project in projects:
+        self.write([
+          r'\begin{minipage}{\columnwidth}',
+        ])
+
+        self.print_project(project)
+
+        self.write([
+          r'\end{minipage}',
+          r'\switchcolumn'
+        ])
+
+      self.write([
+        r'\end{paracol}',
+        r''
+      ])
+    
+    self.write([
+      # r'}',
+      # r'\end{minipage}',
       r''
     ])
 
-
-    for project in profile.projects:
-      self.write([
-        r'\rule{180pt}{100pt}'
-      ])
+    self.write([
+      # r'\begin{minipage}{0.67\textwidth}',
+      # r'\fbox{'
+      r'\restoregeometry'
+    ])
 
     self.write([
-      ''
+      '\clearpage'
     ])
 
     self.write([
@@ -707,10 +869,36 @@ class TexCardsPrinter(TexPrinter):
       r''
     ])
 
-    for employment in emp_files:
+    
+
+    for i in range(0, len(profile.employments), 3):
+      empls = profile.employments[i:i+3]
       self.write([
-        r'\includegraphics[]{%s}' % employment
+        r'\columnratio{0.33}',
+        r'\begin{paracol}{3}'
       ])
+
+      for emp in empls:
+        self.write([
+          r'\begin{minipage}{\columnwidth}',
+          # r'\fbox{'
+        ])
+
+        self.print_employment(emp)
+
+        self.write([
+          r'\end{minipage}',
+          r'\switchcolumn'
+        ])
+
+      # self.write([
+      #   r'\includegraphics[]{%s}' % employment
+      # ])
+
+      self.write([
+        r'\end{paracol}'
+      ])
+
     self.write([
       ''
     ])
@@ -728,6 +916,7 @@ class TexCardsPrinter(TexPrinter):
     # self.print_data_chain(data)
 
     self.write([
+      # r'\end{paracol}',
       r'\end{document}'
     ])
 

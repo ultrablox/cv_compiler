@@ -107,10 +107,7 @@
 \newcommand{\cvhead}[1]{
   {
   \sffamily
-  % \Large
   \fontsize{14}{14}
-  % \color{black}
-  % \selectfont
   \bfseries
   #1
   \par
@@ -120,10 +117,8 @@
 
 \newcommand{\cvsubhead}[1]{
   {
-  \rmfamily
+  \sffamily
   \fontsize{12}{12}
-  % \color{black}
-  % \selectfont
   \bfseries
   #1
   \par
@@ -132,15 +127,40 @@
 
 \newcommand{\cvsubsubhead}[1]{
   {
+  \sffamily
+  \fontsize{12}{12}
+  \selectfont
+  % \bfseries
+  #1
+  \par
+  }
+}
+
+\newcommand{\cvsubsubheadg}[1]{
+  {
   \rmfamily
   \fontsize{12}{12}
   \color{gray}
-  % \selectfont
+  \selectfont
   \bfseries
   #1
-  % \vspace{1pt}
   \par
   }
+}
+
+\newcommand{\cvirrelevant}[1]{
+  {
+  \rmfamily
+  \fontsize{10}{10}
+  \color{gray}
+  \bfseries
+  #1
+  \par
+  }
+}
+
+\newcommand{\cvyear}[1]{
+{\rmfamily\fontsize{12}{12}\selectfont#1\par}
 }
 
 \newcommand{\cvnormal}{
@@ -159,4 +179,7 @@
 \setlength{\TPVertModule}{\TPHorizModule}
 \textblockorigin{0pt}{0pt}
 \setlength{\parindent}{0pt}
+
+
+\RequirePackage{paracol}
 
