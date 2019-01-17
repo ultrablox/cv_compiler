@@ -16,22 +16,22 @@ class EmploymentCardPrinter(SingleCardPrinter):
 
     self.write([
       r'\begin{textblock}{%d}[0, 0](%d,%d)' % (self.width - 44 - 3*SPACING, SPACING + 44 + SPACING, SPACING),
-      r'\cvhead{%s}' % role,
+      r'%s' % role,
       r'',
-      r'\cvsubhead{%s}' % company,
+      r'%s' % company,
       r'',
-      r'\cvsubsubhead{%s}' % self.get_href(web),
+      r'%s' % self.get_href(web),
       r'',
-      r'\rmfamily %s' % latex_escape(description),
+      r'%s' % latex_escape(description),
       r'\end{textblock}'
     ])
 
     self.write([
       r'\begin{textblock}{44}[0, 0](%d,%d)' % (SPACING, SPACING + 44 + SPACING),
       r'\centering',
-      r'{\rmfamily\fontsize{8}{8}\selectfont %s' % to_month_year(period.startDate),
+      r'%s' % to_month_year(period.startDate),
       '',
-      r'%s\par}' % to_month_year(period.endDate),
+      r'%s' % to_month_year(period.endDate),
       r'\end{textblock}'
     ])
 

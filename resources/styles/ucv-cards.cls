@@ -94,13 +94,6 @@
 
 \RequirePackage{parcolumns}
 
-\RequirePackage[absolute,showboxes]{textpos}
-\setlength{\TPHorizModule}{1pt}
-\setlength{\TPVertModule}{\TPHorizModule}
-\textblockorigin{0pt}{0pt}
-
-\RequirePackage{wrapfig}
-
 \RequirePackage{graphicx}
 
 % Styles for main column
@@ -174,7 +167,7 @@
 \newcommand{\colsectionspace}{\vspace{6pt}}
 
 
-\RequirePackage[absolute,showboxes]{textpos}
+\RequirePackage[absolute]{textpos}%,showboxes
 \setlength{\TPHorizModule}{1pt}
 \setlength{\TPVertModule}{\TPHorizModule}
 \textblockorigin{0pt}{0pt}
