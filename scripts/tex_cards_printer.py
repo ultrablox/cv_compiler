@@ -419,52 +419,70 @@ class TexCardsPrinter(TexPrinter):
     self.write([
       # r'\begin{minipage}{0.67\textwidth}',
       # r'\fbox{'
-      r'\newgeometry{top=10mm, bottom=20mm, left=%dpt, right=%dpt}' % (PAGE_H_MARGIN + self.CARD_WIDTH + GRID_H_SPACING, PAGE_H_MARGIN)
+      # r'\newgeometry{top=10mm, bottom=20mm, left=%dpt, right=%dpt}' % (PAGE_H_MARGIN, PAGE_H_MARGIN)
     ])
     
-    front_page_projects_count = 6
-
-    fp_projects = profile.projects[0:front_page_projects_count]
-    other_projects = profile.projects[front_page_projects_count:]
-
     self.write([
         r'\cvhead{Main Projects}',
         r'',
         r'\cvsubsubhead{Relevant are first}',
       ])
+
     
-    for i in range(0, len(fp_projects), 2):
-      projects = fp_projects[i:i+2]
+    self.write([
+      r'\begin{multicols}{3}',
+      r'\phantom{x}',
+      r'',
+      r'\columnbreak'
+    ])
+    
+    
+
+    
+    for project in profile.projects:
+
+    # front_page_projects_count = 6
+
+    # fp_projects = profile.projects[0:front_page_projects_count]
+    # other_projects = profile.projects[front_page_projects_count:]
+
+    
+    # for i in range(0, len(fp_projects), 2):
+    #   projects = fp_projects[i:i+2]
   
-    # for project in profile.projects:
-      self.write([
-        r'\setlength{\columnsep}{%dpt}' % GRID_H_SPACING
-      ])
+    # # for project in profile.projects:
+    #   self.write([
+    #     r'\setlength{\columnsep}{%dpt}' % GRID_H_SPACING
+    #   ])
 
-      self.write([
-        # r'\setcolumnwidth{%fpt,%fpt}' % (self.CARD_WIDTH, self.CARD_WIDTH),
-        r'\columnratio{0.5}',
-        r'\begin{paracol}{2}'
-      ])
+    #   self.write([
+    #     # r'\setcolumnwidth{%fpt,%fpt}' % (self.CARD_WIDTH, self.CARD_WIDTH),
+    #     r'\columnratio{0.5}',
+    #     r'\begin{paracol}{2}'
+    #   ])
 
-      for project in projects:
-        self.write([
-          r'\begin{minipage}{\columnwidth}',
-        ])
+    #   for project in projects:
+    #     self.write([
+    #       r'\begin{minipage}{\columnwidth}',
+    #     ])
 
         self.print_project(project)
 
-        self.write([
-          r'\end{minipage}',
-          r'\switchcolumn'
-        ])
+    #     self.write([
+    #       r'\end{minipage}',
+    #       r'\switchcolumn'
+    #     ])
 
-      self.write([
-        r'\end{paracol}',
-        r'\vspace{%dpt}' % GRID_V_SPACING,
-        r''
-      ])
+    #   self.write([
+    #     r'\end{paracol}',
+    #     r'\vspace{%dpt}' % GRID_V_SPACING,
+    #     r''
+    #   ])
     
+    self.write([
+      r'\end{multicols}'
+    ])
+
     self.write([
       # r'}',
       # r'\end{minipage}',
@@ -474,45 +492,45 @@ class TexCardsPrinter(TexPrinter):
     self.write([
       # r'\begin{minipage}{0.67\textwidth}',
       # r'\fbox{'
-      r'\restoregeometry'
+      # r'\restoregeometry'
     ])
 
-    self.write([
-      '\clearpage'
-    ])
+    # self.write([
+    #   '\clearpage'
+    # ])
 
     
 
     # self.write([
     #   r'\setlength{\columnsep}{%dpt}' % GRID_H_SPACING
     # ])
-    self.write([
-      r'\columnratio{0.33}',
-    ])
+    # self.write([
+    #   r'\columnratio{0.33}',
+    # ])
 
 
-    for i in range(0, len(other_projects), 3):
-      projects = other_projects[i:i+3]
-      self.write([
-        r'\begin{paracol}{3}'
-      ])
+    # for i in range(0, len(other_projects), 3):
+    #   projects = other_projects[i:i+3]
+    #   self.write([
+    #     r'\begin{paracol}{3}'
+    #   ])
 
-      for prj in projects:
-        self.write([
-          r'\begin{minipage}{\columnwidth}',
-        ])
+    #   for prj in projects:
+    #     self.write([
+    #       r'\begin{minipage}{\columnwidth}',
+    #     ])
 
-        self.print_project(prj)
+    #     self.print_project(prj)
 
-        self.write([
-          r'\end{minipage}',
-          r'\switchcolumn'
-        ])
+    #     self.write([
+    #       r'\end{minipage}',
+    #       r'\switchcolumn'
+    #     ])
 
-      self.write([
-        r'\end{paracol}'
-        r'\vspace{%dpt}' % GRID_V_SPACING
-      ])
+    #   self.write([
+    #     r'\end{paracol}'
+    #     r'\vspace{%dpt}' % GRID_V_SPACING
+    #   ])
 
     
     
@@ -523,29 +541,20 @@ class TexCardsPrinter(TexPrinter):
       r'\cvsubsubhead{In order of employment}',
       r''
     ])
+    
 
-    for i in range(0, len(profile.employments), 3):
-      empls = profile.employments[i:i+3]
-      self.write([
-        r'\begin{paracol}{3}'
-      ])
+    self.write([
+      r'\begin{multicols}{3}'
+    ])
 
-      for emp in empls:
-        self.write([
-          r'\begin{minipage}{\columnwidth}',
-        ])
+    
+    for employment in profile.employments:
+      self.print_employment(employment)
 
-        self.print_employment(emp)
+    self.write([
+      r'\end{multicols}'
+    ])
 
-        self.write([
-          r'\end{minipage}',
-          r'\switchcolumn'
-        ])
-
-      self.write([
-        r'\end{paracol}'
-        r'\vspace{%dpt}' % GRID_V_SPACING
-      ])
 
     self.write([
       ''

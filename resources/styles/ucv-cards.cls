@@ -176,3 +176,5 @@
 
 \RequirePackage{paracol}
 
+
+\RequirePackage{multicol}
