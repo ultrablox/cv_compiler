@@ -41,7 +41,7 @@ class EmployeeProfile:
     with open(lead_path, 'r') as file:
       self.lead = file.read()
 
-    #self.deserialize_publications(input_dir)
+    self.deserialize_publications(input_dir)
 
   def serialize_data(self, json_node):
     json_node['contacts'] = self.contacts

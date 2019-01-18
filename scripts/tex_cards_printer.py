@@ -7,7 +7,7 @@ PT_IN_MM = 2.83465
 
 # In pt
 GRID_V_SPACING = 15
-GRID_H_SPACING = 15
+GRID_H_SPACING = 25
 PAGE_H_MARGIN = 10*PT_IN_MM
 
 # A4 =  210 mm x  297 mm =  595 pt x  842 pt
@@ -197,21 +197,22 @@ class TexCardsPrinter(TexPrinter):
   
   def print_employment(self, employment):
     self.write([
-      r'%s' % employment.role,
+      r'\itemhead{\textbf{%s}}' % (employment.role),
       r'',
-      r'%s' % employment.name,
-      r'',
-      r'%s' % self.get_href(employment.web),
+      r'\itemsubhead{%s-%s: \textbf{%s}}' % (to_month_year(employment.period.startDate), to_month_year(employment.period.endDate), employment.name),
       r'',
       r'%s' % latex_escape(employment.description),
+      r'',
+      r'%s' % self.get_href(employment.web),
       r''
     ])
     
-    self.write([
-      r'{\rmfamily\fontsize{8}{8}\selectfont %s' % to_month_year(employment.period.startDate),
-      r'%s\par}' % to_month_year(employment.period.endDate),
-      ''
-    ])
+    # self.write([
+    #   r'{\rmfamily\fontsize{8}{8}\selectfont %s' % ,
+    #   r'%s\par}' % ,
+    #   ''
+    # ])
+
   
     notes = []
 
@@ -233,7 +234,7 @@ class TexCardsPrinter(TexPrinter):
 
     self.write([
       r'\end{itemize-cv}',
-      r''
+      r'\vspace{%dpt}' % GRID_V_SPACING
     ])
 
   
@@ -242,29 +243,19 @@ class TexCardsPrinter(TexPrinter):
     period = project.get_period()
 
     self.write([
-      r'%s' % (latex_escape(project.name)),
+      r'\itemhead{\textbf{%s,} %d-%d}' % (latex_escape(project.name), period.startDate.year, period.endDate.year),
       r'',
-      r'%d-%d' % (period.startDate.year, period.endDate.year),
+      r'\itemsubhead{%s}' % latex_escape(project.description),
+      r'',
+      r'\skills{%s}' % latex_escape(', '.join(project.get_total_skill_list())),
       r'',
       r'%s' % self.get_href(project.webLink),
-      # r'\raggedleft',
-      # r'\cvirrelevant{%s}' % (to_month_year(period.startDate), to_month_year(period.endDate), place),
-      r'',
-      r'%s' % latex_escape(project.description),
-      r'',
-      r'%s' % latex_escape(', '.join(project.get_total_skill_list())),
-      
       r''
     ])
 
-    # for note in notes:
-    #   self.write([r'\regulartext %s' % note])
-
-    # Tasks
-    # self.print_tasks(tasks)
-    self.writeln(r'\begin{itemize-cv}')
+    self.writeln(r'\begin{itemize-tasks}')
     for task in project.tasks:
-      self.writeln(r'\item[\done] %s' % latex_escape(task.description))
+      self.writeln(r'\item %s' % latex_escape(task.description))
       if task.achievements:
         self.writeln(r'\begin{itemize-achievments}')
         for ach in task.achievements:
@@ -272,12 +263,11 @@ class TexCardsPrinter(TexPrinter):
         self.writeln(r'\end{itemize-achievments}')
       else:
         self.writeln('')
-    self.writeln(r'\end{itemize-cv}')
-
-
     self.write([
+      r'\end{itemize-tasks}',
       r''
     ])
+
 
   def print_personal(self, profile):
     age = calculate_age(datetime.datetime.strptime(profile.personal['birthdate'], '%d.%m.%Y'))
@@ -286,6 +276,7 @@ class TexCardsPrinter(TexPrinter):
       r'\begin{minipage}{0.3\columnwidth}',
       r'\fbox{\includegraphics[width=0.9\textwidth,keepaspectratio]{%s}}' % self.image_path('img/photo.jpg', [62,62]),
       r'\end{minipage}',
+      r'\hspace{2pt}',
       r'\begin{minipage}{0.67\columnwidth}',
       r'\cvhead{%s}' % profile.personal['name'],
       r'',
@@ -373,6 +364,92 @@ class TexCardsPrinter(TexPrinter):
     ])
     self.print_skills(profile.skills_totals())
 
+  
+  def print_scientific_pubs(self, pubs, scopus_count):
+    summary_str = '%d total' % len(pubs)
+    if scopus_count:
+      summary_str += ', incl. %d Scopus' % scopus_count
+    self.write([r'\itemhead{\textbf{Scientific Publications}}',
+      r'',
+      r'\itemsubhead{%s}' % summary_str,
+      r''])
+
+    self.writeln(r'\begin{itemize-cv}')
+    for pub in pubs:
+      if pub['visible']:
+        is_scopus = '\scopus' if (('source' in pub) and (pub['source'] == 'Scopus')) else ''
+        self.writeln(r'\item \rmfamily %d --- %s // %s %s' % (int(pub['year']), pub['title'], pub['journal'], is_scopus))
+
+    self.writeln(r'\end{itemize-cv}')
+
+  def print_popoular_pubs(self, pubs):    
+    years = int(pubs[0]['year']) - int(pubs[-1]['year']) + 1
+    summary_str = '%d total, avg. %.1f publicatons / year' % (len(pubs), float(len(pubs))/years)
+    # self.write(['\t\\textbf{Recent Popular Publications} (%s):' % summary_str,
+    #   '\\begin{itemize-noindent}'
+    # ])
+    self.write([r'\itemhead{\textbf{Popular Publications}}',
+      r'',
+      r'\itemsubhead{%s}' % summary_str,
+      r''])
+
+    self.writeln(r'\begin{itemize-cv}')
+    for pub in pubs:
+      if pub['visible']:
+        self.writeln(r'\item \rmfamily %d --- %s // %s \href{%s}{[link]}' % (int(pub['year']), pub['title'], pub['source'], pub['url']))
+    self.writeln(r'\end{itemize-cv}')
+  
+  def print_conferences(self, conferences):
+    years = int(conferences[0]['year']) - int(conferences[-1]['year']) + 1
+    summary_str = '%d total, avg. %.1f presentations / year' % (len(conferences), float(len(conferences))/years)
+    conf_strs = []
+    
+
+    self.write([r'\itemhead{\textbf{Conference Presentations}}',
+      r'',
+      r'\itemsubhead{%s}' % summary_str,
+      r'',
+      r'\begin{itemize-cv}'
+    ])
+
+    for conf in conferences:
+      self.write([
+        r'\item %s (%s, %d)' % (conf['name'], conf['location'], conf['year'])
+      ])
+
+    self.write([
+      r'\end{itemize-cv}'
+    ])
+
+  def print_activities(self, profile):
+    if profile.scientificPubs:
+      self.print_scientific_pubs(profile.scientificPubs, profile.scopus_publication_count())
+      self.write([
+        r'\vspace{%dpt}' % GRID_V_SPACING,
+      ])
+  
+    if profile.popularPubs:
+      self.print_popoular_pubs(profile.popularPubs)
+      self.write([
+        r'\vspace{%dpt}' % GRID_V_SPACING,
+      ])
+
+    if profile.conferences:
+      self.print_conferences(profile.conferences)
+      self.write([
+        r'\vspace{%dpt}' % GRID_V_SPACING,
+      ])
+  
+    if profile.traits:
+      self.write([r'\itemhead{\textbf{Personal}}',
+        r'',
+        r'\begin{itemize-cv}'])
+
+      for trait in profile.traits:
+        self.write([r'\item \textbf{%s:} %s' % (trait['name'], trait['details'])])
+
+      self.write([r'\end{itemize-cv}'])
+
 
   def print_data(self, profile, file):
     EMPLOYMENT_CARD_HEIGHT = 100
@@ -393,7 +470,7 @@ class TexCardsPrinter(TexPrinter):
 
     self.write([
       r'\setlength{\parindent}{0pt}',
-      r'\setlength{\columnsep}{50pt}',
+      r'\setlength{\columnsep}{%dpt}' % GRID_H_SPACING,
       # r'\setlength{\intextsep}{0pt}',
       # r'\columnratio{0.33}',
       # r'\begin{paracol}{2}'
@@ -403,30 +480,29 @@ class TexCardsPrinter(TexPrinter):
     
     self.write([
       r'\begin{textblock}{%d}[0, 0](%f,%f)' % (self.CARD_WIDTH, PAGE_H_MARGIN, PT_IN_MM*10),
+      r'\begin{minipage}{%dpt}' % (self.CARD_WIDTH-2),
+      
     ])
 
     self.print_head_column(profile)
 
     self.write([
+      r'\rule{%dpt}{2pt}' % self.CARD_WIDTH,
+      r'\end{minipage}\hspace{1pt}\vrule width 2pt',
+
+      r'',
       r'\end{textblock}'
     ])
 
     
+    header_hoffset = self.CARD_WIDTH + GRID_H_SPACING - 22
     self.write([
-      '\clearpage',
+      r'\hspace{%dpt}' % header_hoffset,
+      r'\cvhead{Main Projects}',
+      r'',
+      r'\hspace{%dpt}' % header_hoffset,
+      r'\cvsubsubhead{Relevant first}',
     ])
-
-    self.write([
-      # r'\begin{minipage}{0.67\textwidth}',
-      # r'\fbox{'
-      # r'\newgeometry{top=10mm, bottom=20mm, left=%dpt, right=%dpt}' % (PAGE_H_MARGIN, PAGE_H_MARGIN)
-    ])
-    
-    self.write([
-        r'\cvhead{Main Projects}',
-        r'',
-        r'\cvsubsubhead{Relevant are first}',
-      ])
 
     
     self.write([
@@ -436,132 +512,53 @@ class TexCardsPrinter(TexPrinter):
       r'\columnbreak'
     ])
     
-    
-
-    
     for project in profile.projects:
-
-    # front_page_projects_count = 6
-
-    # fp_projects = profile.projects[0:front_page_projects_count]
-    # other_projects = profile.projects[front_page_projects_count:]
-
-    
-    # for i in range(0, len(fp_projects), 2):
-    #   projects = fp_projects[i:i+2]
-  
-    # # for project in profile.projects:
-    #   self.write([
-    #     r'\setlength{\columnsep}{%dpt}' % GRID_H_SPACING
-    #   ])
-
-    #   self.write([
-    #     # r'\setcolumnwidth{%fpt,%fpt}' % (self.CARD_WIDTH, self.CARD_WIDTH),
-    #     r'\columnratio{0.5}',
-    #     r'\begin{paracol}{2}'
-    #   ])
-
-    #   for project in projects:
-    #     self.write([
-    #       r'\begin{minipage}{\columnwidth}',
-    #     ])
-
         self.print_project(project)
 
-    #     self.write([
-    #       r'\end{minipage}',
-    #       r'\switchcolumn'
-    #     ])
-
-    #   self.write([
-    #     r'\end{paracol}',
-    #     r'\vspace{%dpt}' % GRID_V_SPACING,
-    #     r''
-    #   ])
+        self.write([
+          r'\vspace{%dpt}' % GRID_V_SPACING,
+        ])
     
     self.write([
-      r'\end{multicols}'
-    ])
-
-    self.write([
-      # r'}',
-      # r'\end{minipage}',
+      r'\end{multicols}',
       r''
-    ])
-
-    self.write([
-      # r'\begin{minipage}{0.67\textwidth}',
-      # r'\fbox{'
-      # r'\restoregeometry'
-    ])
-
-    # self.write([
-    #   '\clearpage'
-    # ])
-
-    
-
-    # self.write([
-    #   r'\setlength{\columnsep}{%dpt}' % GRID_H_SPACING
-    # ])
-    # self.write([
-    #   r'\columnratio{0.33}',
-    # ])
-
-
-    # for i in range(0, len(other_projects), 3):
-    #   projects = other_projects[i:i+3]
-    #   self.write([
-    #     r'\begin{paracol}{3}'
-    #   ])
-
-    #   for prj in projects:
-    #     self.write([
-    #       r'\begin{minipage}{\columnwidth}',
-    #     ])
-
-    #     self.print_project(prj)
-
-    #     self.write([
-    #       r'\end{minipage}',
-    #       r'\switchcolumn'
-    #     ])
-
-    #   self.write([
-    #     r'\end{paracol}'
-    #     r'\vspace{%dpt}' % GRID_V_SPACING
-    #   ])
-
-    
-    
+    ])    
 
     self.write([
       r'\cvhead{Employment History}',
       r'',
-      r'\cvsubsubhead{In order of employment}',
-      r''
-    ])
-    
-
-    self.write([
+      r'\cvsubsubhead{In calendar order}',
+      r'',
       r'\begin{multicols}{3}'
     ])
 
-    
     for employment in profile.employments:
       self.print_employment(employment)
 
     self.write([
-      r'\end{multicols}'
+      r'\end{multicols}',
+      r''
+    ])
+  
+    self.write([
+      r'\cvhead{Activities and Personal}',
+      r'',
+      r'\cvsubsubhead{Only recent is presented}',
+      r'',
+      r'\begin{multicols}{3}'
     ])
 
+    # for employment in profile.employments:
+    #   self.print_employment(employment)
+
+    self.print_activities(profile)
 
     self.write([
-      ''
+      r'\end{multicols}',
+      r''
     ])
 
     self.write([
-      # r'\end{paracol}',
       r'\end{document}'
     ])
 

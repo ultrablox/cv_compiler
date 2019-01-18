@@ -51,7 +51,7 @@
     urlcolor={black!80!black}
 }
 
-\newcommand{\httplink}[2]{{\href{#1}{\rmfamily\color{gray}\fontsize{9}{9}\selectfont#2}}}
+
 
 
 
@@ -62,18 +62,41 @@
 \newcommand{\cmark}{\ding{51}}%
 \newcommand{\done}{\rlap{$\square$}{\raisebox{2pt}{\large\hspace{1pt}\cmark}}\hspace{-2.5pt}}%
 
-\newenvironment{itemize-cv}
+% \setlist[itemize]{labelindent=\parindent, leftmargin=*, align=left}
+% \setlist[itemize]{leftmargin=0pt}
+
+
+\newenvironment{itemize-tasks}
 {
-  \begin{itemize}[noitemsep,nolistsep,leftmargin=12pt]
-    % \renewcommand\labelitemi{\includegraphics[height=12pt]{img/correct.pdf}}
+  \begin{enumerate}[
+    leftmargin=0pt,itemindent=2pt,labelsep=4pt,labelwidth=0pt,align=left,label=\done,
+    noitemsep,
+    nolistsep,
+    ]
     \setlength{\itemsep}{0pt}
     \setlength{\parskip}{0pt}
     \setlength{\parsep}{0pt}}
-{\end{itemize}}
+{\end{enumerate}}
+
+\newenvironment{itemize-cv}
+{
+  \begin{enumerate}[
+    leftmargin=0pt,itemindent=2pt,labelsep=4pt,labelwidth=0pt,align=left,label=\textbullet,
+    noitemsep,
+    nolistsep,
+    % leftmargin=0pt,
+    % itemindent=0pt,
+    % labelwidth=20pt,
+    % align=left
+    ]
+    \setlength{\itemsep}{0pt}
+    \setlength{\parskip}{0pt}
+    \setlength{\parsep}{0pt}}
+{\end{enumerate}}
 
 \newenvironment{itemize-achievments}
 {
-  \begin{itemize}[noitemsep,nolistsep,label=$\star$,leftmargin=2pt]
+  \begin{itemize}[noitemsep,nolistsep,label=$\star$,leftmargin=10pt]
     % \setlength\itemindent{0pt}
     % \setlength{\leftmargini}{0pt}
     \setlength{\itemsep}{0pt}
@@ -110,7 +133,7 @@
 
 \newcommand{\cvsubhead}[1]{
   {
-  \sffamily
+  \rmfamily
   \fontsize{12}{12}
   \bfseries
   #1
@@ -120,9 +143,10 @@
 
 \newcommand{\cvsubsubhead}[1]{
   {
-  \sffamily
+  \rmfamily
   \fontsize{12}{12}
   \selectfont
+  \color{gray}
   % \bfseries
   #1
   \par
@@ -156,6 +180,43 @@
 {\rmfamily\fontsize{12}{12}\selectfont#1\par}
 }
 
+
+\newcommand{\skills}[1]{
+{
+  \rmfamily
+  \fontsize{10}{10}
+  \selectfont
+  \itshape
+  #1
+  \par
+  }
+}
+
+\newcommand{\itemhead}[1]{
+{
+  \sffamily
+  \fontsize{12}{12}
+  \selectfont
+  % \bfseries
+  #1
+  \par
+  }
+}
+
+\newcommand{\itemsubhead}[1]{
+{
+  \rmfamily
+  \fontsize{12}{12}
+  \selectfont
+  #1
+  \par
+  }
+}
+
+
+\newcommand{\httplink}[2]{{\href{#1}{\rmfamily\color{gray}\fontsize{10}{10}\selectfont\bfseries#2}}}
+
+
 \newcommand{\cvnormal}{
   \rmfamily
   % \fontsize{10}{10}
@@ -178,3 +239,5 @@
 
 
 \RequirePackage{multicol}
+
+\newcommand{\scopus}{\textcolor{gray}{[Scopus]}}
