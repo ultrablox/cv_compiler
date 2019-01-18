@@ -275,6 +275,7 @@ class TexCardsPrinter(TexPrinter):
     self.write([
       r'\begin{minipage}{0.3\columnwidth}',
       r'\fbox{\includegraphics[width=0.9\textwidth,keepaspectratio]{%s}}' % self.image_path('img/photo.jpg', [62,62]),
+      # r'\photo{%s}{0.3\columnwidth}' % self.image_path('img/photo.jpg', [62,62]),
       r'\end{minipage}',
       r'\hspace{2pt}',
       r'\begin{minipage}{0.67\columnwidth}',

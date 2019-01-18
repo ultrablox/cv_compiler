@@ -241,3 +241,13 @@
 \RequirePackage{multicol}
 
 \newcommand{\scopus}{\textcolor{gray}{[Scopus]}}
+
+\newcommand{\photo}[2]{
+\tikz\node[circle,draw,
+      text=white,
+      path picture={
+          \node at (path picture bounding box.center){
+              \includegraphics[width=#2]{#1}
+          };
+      }]{xxxxxxxxxxxxxxxxxxx};
+}
