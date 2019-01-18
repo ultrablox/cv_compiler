@@ -1,0 +1,26 @@
+The NVIDIA Graphics Processing Unit Software group is looking for a highly motivated, dynamic Senior System Software Engineer with experience in software design for device drivers/ embedded systems. As part of your responsibility, you will design and implement software for Graphic Processing Units (GPUs).
+Are you passionate about new technology and looking forward to work on next generation GPU architecture? Do you love to provide innovative solutions and have fun while working on complex problems? Nvidia is looking for great system software engineers like you to join us in our journey of building state of the art GPU's.
+What you'll be doing:
+Guide and drive the complete Product life cycle from design, to development and improvement of GPU System software.
+Partner with Software, Hardware and Architecture teams to influence functionality of next generation GPU's to be the best in the world.
+Collaborate with other specialists within and across groups while handling key responsibilities.
+Triage and debug the complex issues in NVIDIA's GPU SW driver stack.
+Develop, influence, mentor and lead engineers.
+What we need to see:
+Bachelors or Master’s degree in Computer Engineering/ Science
+8+ years of industry and relevant experience.
+Excellent C programming skills
+Very strong background in OS fundamentals, data structures and algorithm design
+Strong interpersonal skills and a passion to learn new technology.
+Phenomenal team player with an ability to work with various teams (SW, HW, QA, etc) distributed across the globe to lead complex initiatives.
+Prior experience in system software, device drivers, and/or embedded products is strongly preferred
+Ability to handle multiple tasks while ensuring a high quality of work.
+Experience in technically leading and delivering software projects.
+Great debugging and problem-solving skills. esp. in Windows or real-time OS environment.
+Ways to stand out from the crowd:
+Exposure to/ experience in Display technology and protocols like DisplayPort, HDMI, HDR
+Deep understanding of systems architecture: CPU, GPU, memory, display, buses, kernel internals would be helpful.
+Experience in device driver programming and debugging, windows driver knowledge preferred.
+Knowledge of Windows Device driver architecture
+With competitive salaries and a generous benefits package, NVIDIA is widely considered to be one of the technology world’s most desirable employers. We have some of the most brilliant and talented people in the world working for us and, due to unprecedented growth, our elite engineering teams are rapidly growing. If you're a creative and autonomous engineer with a real passion for technology, we want to hear from you.
+NVIDIA is committed to fostering a diverse work environment and proud to be an equal opportunity employer. As we highly value diversity in our current and future employees, we do not discriminate (including in our hiring and promotion practices) on the basis of race, religion, color, national origin, gender, gender expression , sexual orientation, age, marital status, veteran status, disability status or any other characteristic protected by law.
