@@ -148,7 +148,7 @@ class TexCardsPrinter(TexPrinter):
       ']'])
 
     labels = ['Desired', 'Job\'s a job', 'Prefferably avoid']
-    colors = ['green', 'gray', 'orange']
+    colors = ['color1', 'color3', 'color3']
 
     vals = [[0] * visual_count, [0] * visual_count, [0] * visual_count]
 

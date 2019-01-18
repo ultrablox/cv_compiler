@@ -111,7 +111,7 @@
 
 \RequirePackage{pgfplots}
 
-\newcommand{\projectlink}[2]{\textbf{#2}}
+\newcommand{\projectlink}[2]{{\color{color1}\textbf{#2}}}
 
 \RequirePackage{lipsum}
 
@@ -146,7 +146,7 @@
   \rmfamily
   \fontsize{12}{12}
   \selectfont
-  \color{gray}
+  \color{color2}
   % \bfseries
   #1
   \par
@@ -157,7 +157,7 @@
   {
   \rmfamily
   \fontsize{12}{12}
-  \color{gray}
+  \color{color2}
   \selectfont
   \bfseries
   #1
@@ -169,7 +169,7 @@
   {
   \rmfamily
   \fontsize{10}{10}
-  \color{gray}
+  \color{color2}
   \bfseries
   #1
   \par
@@ -187,6 +187,7 @@
   \fontsize{10}{10}
   \selectfont
   \itshape
+  \color{color1}
   #1
   \par
   }
@@ -240,7 +241,7 @@
 
 \RequirePackage{multicol}
 
-\newcommand{\scopus}{\textcolor{gray}{[Scopus]}}
+\newcommand{\scopus}{\textcolor{color1}{[Scopus]}}
 
 \newcommand{\photo}[2]{
 \tikz\node[circle,draw,
@@ -251,3 +252,13 @@
           };
       }]{xxxxxxxxxxxxxxxxxxx};
 }
+
+
+
+\usepackage{xcolor}
+% https://www.colorcombos.com/color-schemes/40/ColorCombo40.html
+\definecolor{color1}{RGB}{51, 102, 153}
+\definecolor{color2}{RGB}{102, 102, 102}
+\definecolor{color3}{RGB}{153, 153, 153}
+
+
