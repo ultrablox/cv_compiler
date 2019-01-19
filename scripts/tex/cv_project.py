@@ -10,6 +10,8 @@ class ProjectElement:
   def print(self):
     place = 'in %s' % self.__project.parent.name if self.__project.parent else 'hobby'
     period = self.__project.get_period()
+  
+    skills = self.__project.get_total_skill_list()
 
     self.__printer.write([
       r'\itemhead{\textbf{%s}}' % (latex_escape(self.__project.name)),
@@ -18,7 +20,7 @@ class ProjectElement:
       r'',
       r'\itemsubhead{%s}' % latex_escape(self.__project.description),
       r'',
-      r'\skills{%s}' % latex_escape(', '.join(self.__project.get_total_skill_list())),
+      r'\skills{%s}' % latex_escape(', '.join(skills)),
       r'',
       r'%s' % self.__printer.get_href(self.__project.webLink),
       r''

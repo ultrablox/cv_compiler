@@ -27,7 +27,7 @@ class Project:
     serialize_array_to_property(res, 'tasks', self.tasks)
     return res
 
-  def deserialize(self, prj_node):
+  def deserialize(self, prj_node, ctx):
     self.name = prj_node['name']
     self.description = prj_node['description']
     self.teamSize = prj_node['team-size']
@@ -55,7 +55,7 @@ class Project:
 
     for task_node in prj_node['tasks']:
       new_task = Task()
-      new_task.deserialize(task_node)
+      new_task.deserialize(task_node, ctx)
       self.tasks += [new_task]
 
     if 'period' in prj_node:
@@ -68,7 +68,7 @@ class Project:
     res = []
     # res += self.skills
     for task in self.tasks:
-      res += task.skills
+      res += map(lambda x : x.display_name(), task.skills)
 
     return sorted(set(res))
 
@@ -84,3 +84,8 @@ class Project:
 
   def __str__(self):
     return self.name
+
+  def remove_skill(self, skill):
+    for task in self.tasks:
+      task.remove_skill(skill)
+

@@ -163,7 +163,7 @@ class TexCardsPrinter(TexPrinter):
 
     
     header_hoffset = self.CARD_WIDTH + GRID_H_SPACING - 6
-    SectionHeading(self, 'Main Projects', 'Relevant first', header_hoffset)
+    SectionHeading(self, 'Relevant Projects', 'In order of relevance', header_hoffset)
     
     with SectionElement(self):
       self.write([
@@ -177,11 +177,12 @@ class TexCardsPrinter(TexPrinter):
         VSpacingElement(self, GRID_V_SPACING)
     
     ## DEBUG
-    # self.write([
-    #   r'\clearpage'
-    # ])
+    self.write([
+      r'\clearpage'
+    ])
     
-    SectionHeading(self, 'Employment History', 'Employment History')
+
+    SectionHeading(self, 'Employment History', 'Total %.1f years in industrial development' % profile.total_employment_time().years())
 
     with SectionElement(self):
       for employment in profile.employments:

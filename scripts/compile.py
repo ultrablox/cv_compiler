@@ -47,6 +47,8 @@ def add_bool_arg(parser, name, default=False):
 
 
 def main():
+  logging.basicConfig(level=logging.INFO)
+  
   parser = argparse.ArgumentParser(description='Compile CV into PDF file.')
   parser.add_argument('--input_dir', type=str, default='/input', help='input profile directory')
   parser.add_argument('--paper_size', type=str, default='a4', choices=['a4', 'a5'], help='Paper size')

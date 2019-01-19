@@ -9,10 +9,15 @@ class Task:
   def __str__(self):
     return self.description
 
-  def deserialize(self, json_node):
+  def deserialize(self, json_node, ctx):
     self.description = json_node['description']
     self.period = TimePeriod(json_node['period'])
-    self.skills = json_node['skills']
+    
+    self.skills = []
+    for skill_name in json_node['skills']:
+      new_skill = ctx.skillDb.find_skill(skill_name, True)
+      self.skills += [new_skill]
+
     if 'achievements' in json_node:
       self.achievements = json_node['achievements']
 
@@ -20,8 +25,12 @@ class Task:
     return {
       'description': self.description,
       'relevance': self.relevance,
-      'skills': self.skills,
+      'skills': list(map(lambda x: x.name, self.skills)),
       'period': str(self.period),
       'achievements': self.achievements
     }
 
+  def remove_skill(self, skill):
+    if skill in self.skills:
+      index = self.skills.index(skill)
+      del self.skills[index]

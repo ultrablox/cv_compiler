@@ -73,7 +73,8 @@
     "full_name" : "Compilers"
   },
   {
-    "full_name" : "Algorithms"
+    "full_name" : "Algorithms",
+    "synonims" : ["algorithm"]
   },
   {
     "full_name" : "JavaScript",
@@ -82,7 +83,7 @@
   {
     "full_name" : "Continious Integration",
     "display_name" : "Cont. Int.",
-    "synonims" : ["CI"]
+    "synonims" : ["CI", "Cont. Int."]
   },
   {
     "full_name" : "Shaders"
@@ -181,7 +182,8 @@
   },
   {
     "full_name" : "Visual Studio",
-    "display_name" : "MSVS"
+    "display_name" : "MSVS",
+    "synonims" : ["MSVS"]
   },
   {
     "full_name" : "QNX"
@@ -234,6 +236,20 @@
   },
   {
     "full_name" : "FreeRTOS"
+  },
+  {
+    "full_name" : "GPU"
+  },
+  {
+    "full_name" : "CPU"
+  },
+  {
+    "full_name" : "Quality Analysis",
+    "synonims" : ["QA"]
+  },
+  {
+    "full_name" : "Debugging",
+    "synonims" : ["debug"]
   }
 ]
 

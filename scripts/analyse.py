@@ -7,6 +7,7 @@ from cv.employee_profile import *
 import re
 from projection import *
 import argparse
+import logging
 
 
 def regex_escape(text):
@@ -33,33 +34,57 @@ def text_contains(vacancy_test, keyword):
     return False
 
 
-def task_relevance(task, skill_table, skill_db):
+def task_relevance(task, skill_table, skill_db, vacancy_skill_count):
   # Less skill you have - more focused you are
   # Take product of skill usage by their relevance and divide it by full task length
   # It's rough averaging, but looks good for now
 
-  per_skill_time = 1.0 / len(task.skills)
+  # per_skill_time = 1.0 / len(task.skills)
+  # print_pairs = []
+  # component_relevance = [0.0] * len(task.skills)
+  # for i in range(0, len(task.skills)):
+  #   component_relevance[i] = per_skill_time * skill_table[skill_db.find_skill(task.skills[i])]
+  #   print_pairs += ['%s: %f' % (task.skills[i], component_relevance[i])]
+  # res = sum(component_relevance)
+  
+  # Check intersection with vacancy requirements
+  res = 0.0
+  for skill in task.skills:
+    res += skill_table[skill]
+  res = res / vacancy_skill_count
+  
+  if task.achievements:
+    res = res * 1.2
+  # print(skill_table)
 
-  print_pairs = []
-  component_relevance = [0.0] * len(task.skills)
-  for i in range(0, len(task.skills)):
-    component_relevance[i] = per_skill_time * skill_table[skill_db.find_skill(task.skills[i])]
-    print_pairs += ['%s: %f' % (task.skills[i], component_relevance[i])]
 
+
+
+  assert res <= 1.0, 'Task relevance cant exceed 1.0'
   # log_print('; '.join(print_pairs))
 
-  return sum(component_relevance)
+  return res
 
 
 def project_relevance(project):
   # (sum task_time * task_relevance ) / project_length
-  relevant_timespan = sum((x.relevance * x.period.get_length()) for x in project.tasks)
-  total_timespan = project.get_period().get_length()
-  # print('Relevant=%f, total=%f' % (relevant_timespan, total_timespan))
-  return relevant_timespan / total_timespan
+  # relevant_timespan = sum((x.relevance * x.period.get_length()) for x in project.tasks)
+  # total_timespan = project.get_period().get_length()
+  # res = relevant_timespan / total_timespan
+  res = max(x.relevance for x in project.tasks)
+  
+  # Nobody believes that hobby projects worth discussing...
+  # ..except me
+  if not project.parent:
+    res = 0.7 * res
+
+  assert res <= 1.0, 'Relevance cant exceed 1.0'
+  return res
 
 
 def main():
+  logging.basicConfig(level=logging.INFO)
+
   parser = argparse.ArgumentParser(description='Compile CV projection for given vacancy')
   parser.add_argument('vacancy_file', type=str, help='vacancy text file')
   parser.add_argument('input_dir', type=str, default='../sample_input', help='input profile directory')
@@ -88,7 +113,10 @@ def main():
   for skill in matched_skills:
     skill_db.connect_to_matcher(skill)
 
+  vacancy_skill_count = len(matched_skills)
+
   # Compute skill relevance
+  logging.info('Skill Relevances:')
   skill_relevance = {}
   for skill_rec in profile.skillRecords:
     skill_ref = skill_rec.skill
@@ -97,23 +125,31 @@ def main():
     skill_relevance[skill_ref] = relevance
     skill_rec.relevance = relevance
     if relevance:
-      log_print(LOG_LEVEL_DEBUG, 'Relevance %s: %f' % (skill_ref.name, relevance))
+      logging.info('::: %s: %f' % (skill_ref.name, relevance))
 
   # Compute tasks and project relevances
   for project in profile.projects:
+    logging.info('Checking tasks for "%s" project:' % project.name)
     for task in project.tasks:
-      task_assesment = task_relevance(task, skill_relevance, skill_db)
+      task_assesment = task_relevance(task, skill_relevance, skill_db, vacancy_skill_count)
       task.relevance = task_assesment
-      log_print(LOG_LEVEL_DEBUG, '%s -> %f' % (task, task.relevance))
+      logging.info('::: %s -> %f' % (task, task.relevance))
 
     proj_assesment = project_relevance(project)
     project.relevance = proj_assesment
-    log_print(LOG_LEVEL_DEBUG, '%s -> %f' % (project, proj_assesment))
+    
 
   # Serialize to different folder
   cprsr = Compressor()
-  relevant_profile = cprsr.create_relevant_projection(profile)
+  relevant_profile = cprsr.create_relevant_projection(profile, 0.09)
+  
+  logging.info('Project relevance:')
+
+  for prj in relevant_profile.projects:
+    logging.info('===Relevance for %s: %f' % (prj, prj.relevance))
+
   relevant_profile.save_to('profile.analysed')
+  # exit(1)
 
 
 if __name__ == "__main__":

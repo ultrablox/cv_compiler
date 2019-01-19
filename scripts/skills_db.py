@@ -3,6 +3,7 @@ import os
 import json
 import networkx as nx
 import csv
+import logging
 
 
 class Skill:
@@ -13,8 +14,8 @@ class Skill:
   def get_synonims(self):
     return [self.name] + self.synonims
 
-  def __str__(self):
-    return self.name
+  # def __str__(self):
+  #   return self.name
 
   def has_synonim(self, name):
     return name in self.get_synonims()
@@ -41,9 +42,11 @@ class SkillsDB:
       if create_if_not_exists:
         return self.create_skill(skill_name)
       else:
+        logging.warning('Skill not found: %s' % skill_name)
         return None
 
   def create_skill(self, name):
+    logging.info('Creating skill %s' % name)
     new_skill = Skill(name)
     new_skill.set_display_name(name)
     self.skills += [new_skill]

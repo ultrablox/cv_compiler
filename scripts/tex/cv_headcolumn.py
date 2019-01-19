@@ -1,6 +1,7 @@
 from utils import *
 from cv.time import *
 from cv.skill_experience import *
+from tex.elements import *
 
 class HeadColumn:
   def __init__(self, tex_printer, profile):
@@ -50,23 +51,30 @@ class HeadColumn:
   
   def print_personal(self):
     age = calculate_age(datetime.datetime.strptime(self.__profile.personal['birthdate'], '%d.%m.%Y'))
+    
+    with MinipageElement(self.__printer, r'0.3\columnwidth'):
+      self.__printer.write([
+        r'\fbox{\includegraphics[width=0.9\textwidth,keepaspectratio]{%s}}' % self.__printer.image_path('img/photo.jpg', [62,62]),
+        # r'\photo{%s}{0.3\columnwidth}' % self.image_path('img/photo.jpg', [62,62]),
+      ])
 
     self.__printer.write([
-      r'\begin{minipage}{0.3\columnwidth}',
-      r'\fbox{\includegraphics[width=0.9\textwidth,keepaspectratio]{%s}}' % self.__printer.image_path('img/photo.jpg', [62,62]),
-      # r'\photo{%s}{0.3\columnwidth}' % self.image_path('img/photo.jpg', [62,62]),
-      r'\end{minipage}',
-      r'\hspace{2pt}',
-      r'\begin{minipage}{0.67\columnwidth}',
-      r'\cvhead{%s}' % self.__profile.personal['name'],
-      r'',
-      r'%s, %s y.o.' % (self.__profile.personal['sex'], age),
-      r'',
-      r'Citizenship: %s' % self.__profile.personal['nationality'],
-      r'',
-      r'Residence: %s' % self.__profile.contacts['residence'],
-      r'',
-      r'\end{minipage}',
+      r'\hspace{2pt}'
+    ])
+
+    with MinipageElement(self.__printer, r'0.67\columnwidth'):
+      self.__printer.write([
+        r'\cvhead{%s}' % self.__profile.personal['name'],
+        r'',
+        r'%s, %s y.o.' % (self.__profile.personal['sex'], age),
+        r'',
+        r'Citizenship: %s' % self.__profile.personal['nationality'],
+        r'',
+        r'Residence: %s' % self.__profile.contacts['residence'],
+        r''
+      ])
+
+    self.__printer.write([
       r'',
       r'\colsectionspace'
     ])
@@ -74,36 +82,33 @@ class HeadColumn:
 
   def print_contacts(self):
     self.__printer.write([
-      r'\noindent\rule{\columnwidth}{0.5pt}',
+      r'\noindent\textcolor{color1}{\rule{\columnwidth}{0.5pt}}',
       r''
     ])
 
     linkedin_name = self.__profile.contacts['linkedin'].split('/')[-1]
-
-    self.__printer.write([
-      r'\begin{minipage}{0.38\columnwidth}',
-      r'\vcenteredinclude{%s}' % self.__printer.image_path('img/linkedin.svg'),
-      r'\rmfamily %s' % linkedin_name,
-      r'',
-      r'\vcenteredinclude{%s}' % self.__printer.image_path('img/skype.svg'),
-      r'\rmfamily %s' % (self.__profile.contacts['skype']),
-      r'\end{minipage}',
-    ])
-
-    self.__printer.write([
-      r'\begin{minipage}{0.58\columnwidth}',
-      r'\raggedleft',
-      r'\rmfamily \href{mailto:%s}{%s}' % (self.__profile.contacts['email'], self.__profile.contacts['email']),
-      r'\vcenteredinclude{%s}' % self.__printer.image_path('img/email.svg'),
-      r'',
-      r'\rmfamily %s' % (self.__profile.contacts['phone']),
-      r'\vcenteredinclude{%s}' % self.__printer.image_path('img/phone.svg'),
-      r'\end{minipage}',
-      r''
-    ])
+    
+    with MinipageElement(self.__printer, r'0.38\columnwidth'):
+      self.__printer.write([
+        r'\vcenteredinclude{%s}' % self.__printer.image_path('img/linkedin.svg'),
+        r'\rmfamily %s' % linkedin_name,
+        r'',
+        r'\vcenteredinclude{%s}' % self.__printer.image_path('img/skype.svg'),
+        r'\rmfamily %s' % (self.__profile.contacts['skype'])
+      ])
+    
+    with MinipageElement(self.__printer, r'0.58\columnwidth'):
+      self.__printer.write([
+        r'\raggedleft',
+        r'\rmfamily \href{mailto:%s}{%s}' % (self.__profile.contacts['email'], self.__profile.contacts['email']),
+        r'\vcenteredinclude{%s}' % self.__printer.image_path('img/email.svg'),
+        r'',
+        r'\rmfamily %s' % (self.__profile.contacts['phone']),
+        r'\vcenteredinclude{%s}' % self.__printer.image_path('img/phone.svg'),
+      ])
     self.__printer.write([
       r'',
-      r'\noindent\rule{\columnwidth}{0.5pt}',
+      r'\noindent\textcolor{color1}{\rule{\columnwidth}{0.5pt}}',
       r'',
       r'\colsectionspace',
       r''

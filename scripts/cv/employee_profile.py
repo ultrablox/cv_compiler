@@ -71,7 +71,7 @@ class EmployeeProfile:
     prj_id = 1
     for prj in json_node['projects']:
       new_prj = Project()
-      new_prj.deserialize(prj)
+      new_prj.deserialize(prj, self)
       new_prj.id = prj_id
       self.projects += [new_prj]
       prj_id += 1
@@ -178,14 +178,15 @@ class EmployeeProfile:
     shutil.copy(self.__pop_pubs_file, pop_pubs_path)
 
 
-
     #   data = json.load(json_data)
     #   self.deserialize(data)
 
   def add_skill_experience(self, skill, period):
-    logging.debug('Adding period: %s -> %s' % (skill, period))
+    logging.info('Adding period: %s -> %s' % (skill.name, period))
     # Find skill record for the name
-    skill_rec = list(x for x in self.skillRecords if x.skill.has_synonim(skill))[0]
+
+    # print(self.skillRecords)
+    skill_rec = list(x for x in self.skillRecords if x.skill == skill)[0]
     skill_rec.add_period(period)
     # pass
 
@@ -213,6 +214,23 @@ class EmployeeProfile:
 
   def scopus_publication_count(self):
     return sum(is_scopus(pub) for pub in self.scientificPubs)
+
+  def total_employment_time(self):
+    res = TimePeriod()
+    res.startDate = self.employments[-1].period.startDate
+    res.endDate = self.employments[0].period.endDate
+    return res
+
+  def remove_skill(self, skill):
+    # Remove experience
+    for i in range(0, len(self.skillRecords)):
+      if self.skillRecords[i].skill == skill:
+        del self.skillRecords[i]
+        break
+    
+    # Remove from project tasks
+    for prj in self.projects:
+      prj.remove_skill(skill)
 
   # Marks most important publication as visible
   def compress(self):

@@ -22,3 +22,14 @@ ARM;Hardware;0.6
 ARM;Embedded;0.9
 BigData;Machine Learning;0.7
 FreeRTOS;Embedded;0.9
+GPU;OpenGL;0.75
+GPU;CUDA;0.9
+CPU;Hardware;0.6
+GPU;Hardware;0.6
+Hardware;Compilers;0.7
+Compiler Development;Hardware;0.8
+Compiler Development;CPU;0.95
+CPU;GPU;0.8
+Vulkan;GPU;0.8
+Qt;C++;0.3
+RTR;GPU;0.7

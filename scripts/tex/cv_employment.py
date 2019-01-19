@@ -1,20 +1,30 @@
 from utils import *
+from tex.elements import *
 
 
 class EmploymentBlock:
   def __init__(self, tex_printer, employment):
     self.__printer = tex_printer
-    self.__employment= employment
+    self.__employment = employment
     self.print()
 
   def print(self):
+    with MinipageElement(self.__printer, '30pt'):
+      self.__printer.write([
+        r'\includegraphics[width=30pt,height=30pt,keepaspectratio]{%s}' % (self.__printer.image_path(self.__employment.logo)),
+      ])
+  
+    with MinipageElement(self.__printer, r'{\textwidth-30pt}'):
+      self.__printer.write([
+        r'\itemhead{\textbf{%s}}' % (self.__employment.role),
+        r'',
+        r'\itemsubsubhead{\textbf{%s}}' % (self.__employment.name),
+        r'',
+        r'\itemsubsubhead{%s-%s}' % (to_month_year(self.__employment.period.startDate), to_month_year(self.__employment.period.endDate)),
+        r'',
+      ])
+
     self.__printer.write([
-      r'\itemhead{\textbf{%s}}' % (self.__employment.role),
-      # r'',
-      # r'\itemsubhead{\textbf{%s}}' % self.__employment.name,
-      r'',
-      r'\itemsubsubhead{\textbf{%s}, %s-%s}' % (self.__employment.name, to_month_year(self.__employment.period.startDate), to_month_year(self.__employment.period.endDate)),
-      r'',
       r'%s' % latex_escape(self.__employment.description),
       r'',
       r'%s' % self.__printer.get_href(self.__employment.web),

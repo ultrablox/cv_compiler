@@ -4,19 +4,20 @@ import datetime
 class TimePeriod:
   DATE_FORMAT = '%d.%m.%Y'
 
-  def __init__(self, data):
-    interval = data.split('-')
-    self.startDate = datetime.datetime.strptime(interval[0], TimePeriod.DATE_FORMAT)
+  def __init__(self, data = None):
+    if data:
+      interval = data.split('-')
+      self.startDate = datetime.datetime.strptime(interval[0], TimePeriod.DATE_FORMAT)
 
-    if interval[1] == 'now':
-      self.endDate = datetime.datetime.now()
-      self.isOpen = True
-    else:
-      self.endDate = datetime.datetime.strptime(interval[1], TimePeriod.DATE_FORMAT)
+      if interval[1] == 'now':
+        self.endDate = datetime.datetime.now()
+        self.isOpen = True
+      else:
+        self.endDate = datetime.datetime.strptime(interval[1], TimePeriod.DATE_FORMAT)
 
-      self.isOpen = False
+        self.isOpen = False
 
-    assert self.startDate < self.endDate, 'Invalid time period : %s' % self
+      assert self.startDate < self.endDate, 'Invalid time period : %s' % self
 
   def __str__(self):
     start = self.startDate.strftime(TimePeriod.DATE_FORMAT)
@@ -26,6 +27,9 @@ class TimePeriod:
   # Return days count in float
   def get_length(self):
     return (self.endDate - self.startDate).days
+  
+  def years(self):
+    return self.get_length() / 365.0
 
 
 class DateIndexer:
