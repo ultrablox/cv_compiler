@@ -5,6 +5,7 @@
 #
 
 # set -x
+set -e
 
 COMPILE_ARGS=${@:1}
 DOCKER_IMAGE="ultrablox/latex-python3.6"

@@ -2,11 +2,19 @@
 # Copyright: (c) 2018, Yury Blokhin ultrablox@gmail.com
 # GNU General Public License v3.0+ (see https://www.gnu.org/licenses/gpl-3.0.txt)
 
-from basic_entities import *
+import os
+from cv.project import *
+from cv.employment import *
+from cv.skill_experience import *
+# from cv.task import *
 import bibtexparser
 import json
 from bibtexparser.bparser import BibTexParser
+from bibtexparser.bwriter import BibTexWriter
 from bibtexparser.customization import homogenize_latex_encoding
+import logging
+from bibtexparser.bibdatabase import BibDatabase
+import shutil
 
 MAX_SCI_PUBS = 4
 MAX_NON_SCI_PUBS = 3
@@ -29,10 +37,10 @@ class EmployeeProfile:
   def load(self, input_dir):
     # Check input structure
     data_path = os.path.join(input_dir, 'data.json')
-    check_always(os.path.exists(data_path), 'Primary input "%s" does not exist' % data_path)
+    assert os.path.exists(data_path), 'Primary input "%s" does not exist' % data_path
 
     lead_path = os.path.join(input_dir, 'lead.txt')
-    check_always(os.path.exists(lead_path), 'Lead text "%s" does not exist' % lead_path)
+    assert os.path.exists(lead_path), 'Lead text "%s" does not exist' % lead_path
 
     with open(data_path, 'r') as json_data:
       data = json.load(json_data)
@@ -88,14 +96,14 @@ class EmployeeProfile:
 
         skill_ref = self.skillDb.find_skill(skill_name)
         if not skill_ref:
-          log_print(LOG_LEVEL_WARNING, 'Unkown skill found: %s' % skill_name)
+          logging.warning('Unkown skill found: %s' % skill_name)
           skill_ref = self.skillDb.create_skill(skill_name)
 
         skill_rec = SkillExperience(skill_ref)
         skill_rec.attitude = skill_att
         self.skillRecords += [skill_rec]
     else:
-      check_always('skills' in json_node, 'Strange JSON, where did you get it?')
+      assert 'skills' in json_node, 'Strange JSON, where did you get it?'
       for skill_node in json_node['skills']:
         skill_ref = self.skillDb.find_skill(skill_node['name'], True)
         skill_rec = SkillExperience(skill_ref)
@@ -105,11 +113,6 @@ class EmployeeProfile:
 
     # Fill skill periods
     for prj in self.projects:
-      # log_print(LOG_LEVEL_DEBUG, 'Adding skill periods from project: %s' % prj.name)
-      # for prj_skill in prj.skills:
-      #   self.add_skill_experience(prj_skill, prj.period)
-        # self.skills[prj_skill].add_period(prj.period)
-
       for task in prj.tasks:
         for skill in task.skills:
           self.add_skill_experience(skill, task.period)
@@ -127,21 +130,21 @@ class EmployeeProfile:
 
   def deserialize_publications(self, base_path):
     # Scientific publications
-    sci_pubs_file = os.path.join(base_path, 'sci_publications.bib')
-    if os.path.exists(sci_pubs_file):
+    self.__sci_pubs_file = os.path.join(base_path, 'sci_publications.bib')
+    if os.path.exists(self.__sci_pubs_file):
       parser = BibTexParser()
       parser.customization = homogenize_latex_encoding
-      with open(sci_pubs_file, encoding='utf-8') as bibtex_file:
-        bib_database = bibtexparser.load(bibtex_file, parser=parser)
-        self.scientificPubs = bib_database.entries
+      with open(self.__sci_pubs_file, encoding='utf-8') as bibtex_file:
+        self.__sci_bib_database = bibtexparser.load(bibtex_file, parser=parser)
+        self.scientificPubs = self.__sci_bib_database.entries
     # Popular publications
-    pop_pubs_file = os.path.join(base_path, 'pop_publications.bib')
-    if os.path.exists(pop_pubs_file):
+    self.__pop_pubs_file = os.path.join(base_path, 'pop_publications.bib')
+    if os.path.exists(self.__pop_pubs_file):
       parser = BibTexParser()
       parser.customization = homogenize_latex_encoding
-      with open(pop_pubs_file, encoding='utf-8') as bibtex_file:
-        bib_database = bibtexparser.load(bibtex_file, parser=parser)
-        self.popularPubs = bib_database.entries
+      with open(self.__pop_pubs_file, encoding='utf-8') as bibtex_file:
+        self.__pop_bib_database = bibtexparser.load(bibtex_file, parser=parser)
+        self.popularPubs = self.__pop_bib_database.entries
 
   def save_to(self, dir_name):
     ensure_dir_exists(dir_name)
@@ -151,7 +154,8 @@ class EmployeeProfile:
       data = {
         'projects': serialize_array(self.projects),
         'employments': serialize_array(self.employments),
-        'skills': serialize_array(self.skillRecords)
+        'skills': serialize_array(self.skillRecords),
+        'conferences' : self.conferences
       }
 
       self.serialize_data(data)
@@ -160,12 +164,26 @@ class EmployeeProfile:
     lead_path = os.path.join(dir_name, 'lead.txt')
     with open(lead_path, 'w+') as lead_file:
       lead_file.write(self.lead)
+    
+    sci_pubs_path = os.path.join(dir_name, 'sci_publications.bib')
+    # with open(sci_pubs_path, 'w+', encoding='utf-8') as bibtex_file:
+    #   bibtexparser.dump(self.__sci_bib_database, bibtex_file)
+    
+    # db = BibDatabase()
+    # writer = BibTexWriter()
+    # db.entries = self.popularPubs
+    shutil.copy(self.__sci_pubs_file, sci_pubs_path)
+
+    pop_pubs_path = os.path.join(dir_name, 'pop_publications.bib')
+    shutil.copy(self.__pop_pubs_file, pop_pubs_path)
+
+
 
     #   data = json.load(json_data)
     #   self.deserialize(data)
 
   def add_skill_experience(self, skill, period):
-    log_print(LOG_LEVEL_DEBUG, 'Adding period: %s -> %s' % (skill, period))
+    logging.debug('Adding period: %s -> %s' % (skill, period))
     # Find skill record for the name
     skill_rec = list(x for x in self.skillRecords if x.skill.has_synonim(skill))[0]
     skill_rec.add_period(period)
@@ -228,7 +246,7 @@ class EmployeeProfile:
       for pub in self.scientificPubs[0:good_count]:
         if is_scopus(pub):
           scopus_count += 1
-      log_print(LOG_LEVEL_DEBUG, 'Total scopus publications: %d' % scopus_count)
+      logging.debug('Total scopus publications: %d' % scopus_count)
 
       self.scientificPubs[0:scopus_count] = sorted(self.scientificPubs[0:scopus_count], key=lambda pub: int(pub['year']), reverse=True)
       # print(self.scientificPubs[0:good_count])

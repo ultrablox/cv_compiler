@@ -2,19 +2,27 @@ from tex_printer import *
 from skill_matrix import *
 from project_printer import *
 from employment_printer import *
+from cv.time import *
+from cv.skill_experience import *
+from tex.elements import *
+from tex.cv_project import *
+from tex.cv_employment import *
 
 PT_IN_MM = 2.83465
 
 # In pt
 GRID_V_SPACING = 15
-GRID_H_SPACING = 25
+GRID_H_SPACING = 12
 PAGE_H_MARGIN = 10*PT_IN_MM
+
+
 
 # A4 =  210 mm x  297 mm =  595 pt x  842 pt
 class TexCardsPrinter(TexPrinter):
   V_SPACING = 15
-  CARD_WIDTH = (595 - 4 * V_SPACING)/3
-  CARD_HEIGHT = 206
+  # CARD_WIDTH = (595 - 4 * V_SPACING)/3
+  # CARD_HEIGHT = 206
+  CARD_WIDTH = (595 - 2 * PAGE_H_MARGIN - 2* GRID_H_SPACING) / 3
   CARDS_IN_ROW = 3
   HEADER_HEIGHT = 24
   HOR_SPACING = 4
@@ -195,80 +203,6 @@ class TexCardsPrinter(TexPrinter):
     self.print_skill_list(skills[VISUAL_SKILL_COUNT:])
 
   
-  def print_employment(self, employment):
-    self.write([
-      r'\itemhead{\textbf{%s}}' % (employment.role),
-      r'',
-      r'\itemsubhead{%s-%s: \textbf{%s}}' % (to_month_year(employment.period.startDate), to_month_year(employment.period.endDate), employment.name),
-      r'',
-      r'%s' % latex_escape(employment.description),
-      r'',
-      r'%s' % self.get_href(employment.web),
-      r''
-    ])
-    
-    # self.write([
-    #   r'{\rmfamily\fontsize{8}{8}\selectfont %s' % ,
-    #   r'%s\par}' % ,
-    #   ''
-    # ])
-
-  
-    notes = []
-
-    if employment.projects:
-      prj_names = []
-      for prj in employment.projects:
-        prj_names += ['\projectlink{%s:project}{%s}' % ('xx', latex_escape(prj.name))]
-      note = 'worked in %s project%s' % (', '.join(prj_names), 's' if len(prj_names) > 1 else '')
-      notes += [note]
-
-    notes += employment.notes
-
-    self.write([
-      r'\begin{itemize-cv}'
-    ])
-
-    for note in notes:
-      self.write([r'\item %s' % note])
-
-    self.write([
-      r'\end{itemize-cv}',
-      r'\vspace{%dpt}' % GRID_V_SPACING
-    ])
-
-  
-  def print_project(self, project):
-    place = 'in %s' % project.parent.name if project.parent else 'hobby'
-    period = project.get_period()
-
-    self.write([
-      r'\itemhead{\textbf{%s,} %d-%d}' % (latex_escape(project.name), period.startDate.year, period.endDate.year),
-      r'',
-      r'\itemsubhead{%s}' % latex_escape(project.description),
-      r'',
-      r'\skills{%s}' % latex_escape(', '.join(project.get_total_skill_list())),
-      r'',
-      r'%s' % self.get_href(project.webLink),
-      r''
-    ])
-
-    self.writeln(r'\begin{itemize-tasks}')
-    for task in project.tasks:
-      self.writeln(r'\item %s' % latex_escape(task.description))
-      if task.achievements:
-        self.writeln(r'\begin{itemize-achievments}')
-        for ach in task.achievements:
-          self.writeln(r'\item %s' % latex_escape(ach))
-        self.writeln(r'\end{itemize-achievments}')
-      else:
-        self.writeln('')
-    self.write([
-      r'\end{itemize-tasks}',
-      r''
-    ])
-
-
   def print_personal(self, profile):
     age = calculate_age(datetime.datetime.strptime(profile.personal['birthdate'], '%d.%m.%Y'))
 
@@ -424,32 +358,36 @@ class TexCardsPrinter(TexPrinter):
 
   def print_activities(self, profile):
     if profile.scientificPubs:
-      self.print_scientific_pubs(profile.scientificPubs, profile.scopus_publication_count())
+      with MinipageElement(self, '{}pt'.format(self.CARD_WIDTH)):
+        self.print_scientific_pubs(profile.scientificPubs, profile.scopus_publication_count())
       self.write([
         r'\vspace{%dpt}' % GRID_V_SPACING,
       ])
   
     if profile.popularPubs:
-      self.print_popoular_pubs(profile.popularPubs)
+      with MinipageElement(self, '{}pt'.format(self.CARD_WIDTH)):
+        self.print_popoular_pubs(profile.popularPubs)
       self.write([
         r'\vspace{%dpt}' % GRID_V_SPACING,
       ])
 
     if profile.conferences:
-      self.print_conferences(profile.conferences)
+      with MinipageElement(self, '{}pt'.format(self.CARD_WIDTH)):
+        self.print_conferences(profile.conferences)
       self.write([
         r'\vspace{%dpt}' % GRID_V_SPACING,
       ])
   
     if profile.traits:
-      self.write([r'\itemhead{\textbf{Personal}}',
-        r'',
-        r'\begin{itemize-cv}'])
+      with MinipageElement(self, '{}pt'.format(self.CARD_WIDTH)):
+        self.write([r'\itemhead{\textbf{Personal}}',
+          r'',
+          r'\begin{itemize-cv}'])
 
-      for trait in profile.traits:
-        self.write([r'\item \textbf{%s:} %s' % (trait['name'], trait['details'])])
+        for trait in profile.traits:
+          self.write([r'\item \textbf{%s:} %s' % (trait['name'], trait['details'])])
 
-      self.write([r'\end{itemize-cv}'])
+        self.write([r'\end{itemize-cv}'])
 
 
   def print_data(self, profile, file):
@@ -490,13 +428,12 @@ class TexCardsPrinter(TexPrinter):
     self.write([
       r'\rule{%dpt}{2pt}' % self.CARD_WIDTH,
       r'\end{minipage}\hspace{1pt}\vrule width 2pt',
-
       r'',
       r'\end{textblock}'
     ])
 
     
-    header_hoffset = self.CARD_WIDTH + GRID_H_SPACING - 22
+    header_hoffset = self.CARD_WIDTH + GRID_H_SPACING - 8
     self.write([
       r'\hspace{%dpt}' % header_hoffset,
       r'\cvhead{Main Projects}',
@@ -506,38 +443,36 @@ class TexCardsPrinter(TexPrinter):
     ])
 
     
-    self.write([
-      r'\begin{multicols}{3}',
-      r'\phantom{x}',
-      r'',
-      r'\columnbreak'
-    ])
+    with SectionElement(self):
+      self.write([
+        r'\phantom{x}',
+        r'',
+        r'\columnbreak'
+      ])
+      for project in profile.projects:
+        with MinipageElement(self, '{}pt'.format(self.CARD_WIDTH)):
+          ProjectElement(self, project)
+        VSpacingElement(self, GRID_V_SPACING)
     
-    for project in profile.projects:
-        self.print_project(project)
-
-        self.write([
-          r'\vspace{%dpt}' % GRID_V_SPACING,
-        ])
+    ## DEBUG
+    # self.write([
+    #   r'\clearpage'
+    # ])
     
-    self.write([
-      r'\end{multicols}',
-      r''
-    ])    
-
     self.write([
       r'\cvhead{Employment History}',
       r'',
       r'\cvsubsubhead{In calendar order}',
-      r'',
-      r'\begin{multicols}{3}'
+      r''
     ])
 
-    for employment in profile.employments:
-      self.print_employment(employment)
+    with SectionElement(self):
+      for employment in profile.employments:
+        with MinipageElement(self, '{}pt'.format(self.CARD_WIDTH)):
+          EmploymentBlock(self, employment)
+        VSpacingElement(self, GRID_V_SPACING)
 
     self.write([
-      r'\end{multicols}',
       r''
     ])
   
@@ -545,19 +480,13 @@ class TexCardsPrinter(TexPrinter):
       r'\cvhead{Activities and Personal}',
       r'',
       r'\cvsubsubhead{Only recent is presented}',
-      r'',
-      r'\begin{multicols}{3}'
+      r''
     ])
 
     # for employment in profile.employments:
     #   self.print_employment(employment)
-
-    self.print_activities(profile)
-
-    self.write([
-      r'\end{multicols}',
-      r''
-    ])
+    with SectionElement(self):
+      self.print_activities(profile)
 
     self.write([
       r'\end{document}'

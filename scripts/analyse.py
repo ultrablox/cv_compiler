@@ -3,7 +3,7 @@
 import os
 from skills_db import *
 from log import *
-from employee_profile import *
+from cv.employee_profile import *
 import re
 from projection import *
 import argparse

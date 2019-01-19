@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
+set -e
+
 INPUT_DIR=../../my_cv/data
-./analyse.py ../test_data/vacancy_1.txt $INPUT_DIR
+./analyse.py ../test_data/vacancy_6.txt $INPUT_DIR
 cp -R $INPUT_DIR/img ./profile.analysed/
 NEW_CMD="INPUT_DIR=./profile.analysed ./generate.sh"
 echo "Running compiler with: $NEW_CMD"

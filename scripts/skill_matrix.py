@@ -4,7 +4,7 @@
 
 
 import math
-from skill_attitude import *
+# from skill_attitude import *
 from utils import *
 
 VISUAL_SKILL_COUNT = 10

@@ -214,6 +214,16 @@
   }
 }
 
+\newcommand{\itemsubsubhead}[1]{
+{
+  \rmfamily
+  \fontsize{11}{11}
+  \selectfont
+  #1
+  \par
+  }
+}
+
 
 \newcommand{\httplink}[2]{{\href{#1}{\rmfamily\color{gray}\fontsize{10}{10}\selectfont\bfseries#2}}}
 

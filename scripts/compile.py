@@ -4,7 +4,7 @@
 # GNU General Public License v3.0+ (see https://www.gnu.org/licenses/gpl-3.0.txt)
 
 
-from skill_attitude import *
+# from skill_attitude import *
 import json
 import datetime
 
@@ -14,18 +14,15 @@ import os
 import argparse
 from check import *
 from skill_matrix import *
-from basic_entities import *
 import glob
 import shutil
 from tex_classic_printer import *
 from tex_cards_printer import *
-from employee_profile import *
+from cv.employee_profile import *
 from skills_db import *
 import qrcode
 import qrcode.image.svg
 import tempfile
-
-
 
 
 def print_qr_code(file_name):

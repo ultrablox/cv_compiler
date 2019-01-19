@@ -6,7 +6,7 @@
 import os
 from check import *
 from utils import *
-from basic_entities import *
+# from basic_entities import *
 from skill_matrix import *
 from urllib.parse import urlparse
 import sys
