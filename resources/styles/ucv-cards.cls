@@ -271,4 +271,4 @@
 \definecolor{color2}{RGB}{102, 102, 102}
 \definecolor{color3}{RGB}{153, 153, 153}
 
-
+\RequirePackage{calc}
