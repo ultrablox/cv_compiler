@@ -102,7 +102,7 @@ class TexCardsPrinter(TexPrinter):
       r'\begin{textblock}{%d}[0, 0](%f,%f)' % (self.CARD_WIDTH, PAGE_H_MARGIN, PT_IN_MM*10)
     ])
 
-    with MinipageElement(self, r'%dpt' % (self.CARD_WIDTH - 2)):
+    with MinipageElement(self, r'%dpt' % (self.CARD_WIDTH - 2), r'[t][\textheight]'):
       HeadColumn(self, profile)
 
     self.write([
@@ -117,21 +117,10 @@ class TexCardsPrinter(TexPrinter):
     SectionHeading(self, 'Relevant Projects', 'In order of relevance', header_hoffset)
     
     with SectionElement(self):
-      self.write([
-        r'\phantom{x}',
-        r'',
-        r'\columnbreak'
-      ])
       for project in profile.projects:
         with MinipageElement(self, '{}pt'.format(self.CARD_WIDTH)):
           with VSpaceGuard(self, GRID_V_SPACING):
-            ProjectElement(self, project)
-    
-    ## DEBUG
-    # self.write([
-    #   r'\clearpage'
-    # ])
-    
+            ProjectElement(self, project)   
 
     SectionHeading(self, 'Employment History', 'Total %.1f years in industrial development' % profile.total_employment_time().years(), header_hoffset)
 

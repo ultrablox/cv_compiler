@@ -298,3 +298,11 @@
   \columnwidth
   \fi
 }
+
+\newcommand{\cvsectionbegin}{
+  \ifnum\value{page}=1
+  \phantom{x}
+  \columnbreak
+  \else
+  \fi
+}

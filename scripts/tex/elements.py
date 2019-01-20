@@ -1,12 +1,13 @@
 
 class MinipageElement:
-  def __init__(self, tex_printer, w = r'\textwidth'):
+  def __init__(self, tex_printer, w = r'\textwidth', opt_params = ''):
     self.__printer = tex_printer
     self.__width = w
+    self.__params = opt_params
 
   def __enter__(self):
     self.__printer.write([
-      r'\begin{minipage}{%s}' % self.__width
+      r'\begin{minipage}%s{%s}' % (self.__params, self.__width)
     ])
 
   def __exit__(self, type, value, tb):
@@ -47,6 +48,7 @@ class SectionElement:
   def __enter__(self):
     self.__printer.write([
       r'\begin{multicols}{3}',
+      r'\cvsectionbegin'
     ])
 
   def __exit__(self, type, value, tb):
