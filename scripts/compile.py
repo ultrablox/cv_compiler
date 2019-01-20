@@ -12,7 +12,6 @@ import urllib.parse
 import sys
 import os
 import argparse
-from check import *
 from skill_matrix import *
 import glob
 import shutil
@@ -56,9 +55,9 @@ def main():
   args = parser.parse_args()
 
   # Check necessary paths exist
-  check_always(os.path.exists(args.input_dir), 'Input directory "%s" does not exist' % args.input_dir)
+  assert os.path.exists(args.input_dir), 'Input directory "%s" does not exist' % args.input_dir
   out_dir = os.path.abspath(os.path.join('..', 'out'))
-  check_always(os.path.exists(out_dir), 'Output directory "%s" does not exist' % out_dir)
+  assert os.path.exists(out_dir), 'Output directory "%s" does not exist' % out_dir
 
   # Load input data
   skill_db = SkillsDB()

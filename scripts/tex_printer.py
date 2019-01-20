@@ -4,13 +4,10 @@
 
 
 import os
-from check import *
 from utils import *
-# from basic_entities import *
 from skill_matrix import *
 from urllib.parse import urlparse
 import sys
-from log import *
 import tempfile
 import glob
 import shutil
@@ -41,12 +38,12 @@ class TexPrinterBase:
     return r'\httplink{%s}{%s}' % (latex_escape(parsed_url.geturl()), latex_escape(label))
 
   def find_resouce(self, base_path):
-    check_always(self.rcPaths, 'No resource paths initialized!')
+    assert self.rcPaths, 'No resource paths initialized!'
     for rc_dir in self.rcPaths:
       cur_path = os.path.join(rc_dir, base_path)
       if os.path.exists(cur_path) and os.path.isfile(cur_path):
         return os.path.abspath(cur_path)
-    log_print(LOG_LEVEL_DEBUG, 'Resource not found: %s' % base_path)
+    logging.debug('Resource not found: %s' % base_path)
     return None
 
   def image_path(self, base_path, size = None):

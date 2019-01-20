@@ -1,9 +1,15 @@
 #!/usr/bin/env bash
 
 set -e
+set -x
 
+VACANCY=../test_data/vacancy_7.txt
 INPUT_DIR=../../my_cv/data
-./analyse.py ../test_data/vacancy_7.txt $INPUT_DIR
+OUT_DIR=../out
+
+
+./extract_skills.py $VACANCY > $OUT_DIR/skills.txt
+./analyse.py $INPUT_DIR $OUT_DIR/skills.txt
 cp -R $INPUT_DIR/img ./profile.analysed/
 NEW_CMD="INPUT_DIR=./profile.analysed ./generate.sh"
 echo "Running compiler with: $NEW_CMD"

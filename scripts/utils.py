@@ -2,7 +2,6 @@
 # Copyright: (c) 2018, Yury Blokhin ultrablox@gmail.com
 # GNU General Public License v3.0+ (see https://www.gnu.org/licenses/gpl-3.0.txt)
 
-from check import *
 import os
 import pathlib
 import urllib.parse
@@ -10,8 +9,9 @@ from transliterate import translit, get_available_language_codes
 import re
 import datetime
 from datetime import date
+import logging
 
-DEBUG_LATEX = True
+DEBUG_LATEX = False
 
 LATEX_OUTPUT = '' if DEBUG_LATEX else '1>/dev/null'
 LATEX_PARAMS = [] if DEBUG_LATEX else ['-halt-on-error', '--interaction=batchmode']
@@ -39,9 +39,9 @@ def latex_escape(msg):
 
 
 def call_system(cmd_line):
-  print('Calling: %s' % cmd_line)
+  logging.debug('Calling: %s' % cmd_line)
   res = os.system(cmd_line)
-  check_always(res == 0, 'Non-zero return code')
+  assert res == 0, 'Non-zero return code'
 
 
 def ensure_file_dir_exists(file_path):
@@ -101,3 +101,10 @@ def calculate_age(born):
 def call_latex(dest_dir):
   call_system('cd %s && xelatex %s main.tex %s' % (dest_dir, ' '.join(LATEX_PARAMS), LATEX_OUTPUT))
   return os.path.join(dest_dir, 'main.pdf')
+
+def get_text(file_path):
+  with open(file_path, 'r') as f:
+    return f.read()
+
+def load_skills(file_name):
+  return get_text(file_name).strip().split('\n')

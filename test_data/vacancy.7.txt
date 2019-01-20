@@ -1,0 +1,45 @@
+C++ Developer – Finance/Trading Software
+
+
+Do you have a passion for C++ and are you looking for a place where you can go nuts on a big migration from Java into C++? Do you like to work in a trading environment but is a big company not something you are looking for? 
+
+Work on real-time systems with a dedicated small team of 6 engineers. 
+
+
+
+Keywords: C++, Java, Continuous Integration, Agile/SCRUM, Unit-testing, Algorithms, Multithreading, real-time systems
+
+
+You will work on C++ development in an environment where they also use C# and Java. Their core system is built in Java but they are looking to migrate to C++ for performance reasons.   
+
+
+
+The company:
+
+The company consists out of 20 people and their office in close to Amsterdam. The company is active in a high demanding and fast market: trading! They have built their own platform in 2009 on the addict and now they have two floors in a nice office with plenty of space for new engineers!
+
+
+
+Required skills:
+
+Bachelor or Master in Computer Science (or similar)
+Minimum of 3-7 years experience in C++ (must)
+Experience in OO programming (must)
+Experience in Unit-testing (must)
+Experience with Multithreading, high demanding distributed applications (must)
+Experience in Finance/Trading is a big plus 
+Agile/SCRUM is a plus
+Experience with Java is a plus
+Dutch speaking is preferable
+
+
+Benefits:
+
+Competitive Salary
+
+Holiday Allowance
+Bonus component
+
+30% tax ruling
+
+Travel allowance

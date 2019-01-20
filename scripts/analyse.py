@@ -2,7 +2,6 @@
 
 import os
 from skills_db import *
-from log import *
 from cv.employee_profile import *
 import re
 from projection import *
@@ -12,28 +11,7 @@ import math
 from datetime import datetime
 
 
-def regex_escape(text):
-  bad_symbols = ['+', '#']
 
-  res = ''
-  for symb in text:
-    if symb in bad_symbols:
-      res += '\\'
-    res += symb
-  return res
-
-
-def get_text(file_path):
-  with open(file_path, 'r') as f:
-    return f.read()
-
-
-def text_contains(vacancy_test, keyword):
-  match = re.search(r'\W%s\W' % regex_escape(keyword), vacancy_test, flags=re.IGNORECASE)
-  if match:
-    return True
-  else:
-    return False
 
 
 def task_relevance(task, skill_table, skill_db, vacancy_skill_count):
@@ -104,30 +82,20 @@ def main():
   logging.basicConfig(level=logging.INFO)
 
   parser = argparse.ArgumentParser(description='Compile CV projection for given vacancy')
-  parser.add_argument('vacancy_file', type=str, help='vacancy text file')
   parser.add_argument('input_dir', type=str, default='../sample_input', help='input profile directory')
+  parser.add_argument('skills', type=str, help='skills text file')
   args = parser.parse_args()
 
   skill_db = SkillsDB()
   skill_db.load(os.path.join('..', 'database'))
 
   profile = EmployeeProfile(skill_db)
-  # profile.load('../../my_cv/data')
   profile.load(args.input_dir)
 
-  vacancy_text = get_text(args.vacancy_file)
-  # print(vacancy_test)
-
-  # Split by words
-  matched_skills = []
-  for skill in skill_db.skills:
-    for syn in skill.get_synonims():
-      if text_contains(vacancy_text, syn):
-        log_print(LOG_LEVEL_DEBUG, 'Matched %s by "%s"' % (skill, syn))
-        matched_skills += [skill]
-        break
-
-  print('Known skills in vacancy: %s' % ', '.join((str(x.name) for x in matched_skills)))
+  matched_skills = [skill_db.find_skill(x) for x in get_text(args.skills).strip().split('\n')]
+ 
+  logging.info('Matching with skills: %s' % matched_skills)
+  
   for skill in matched_skills:
     skill_db.connect_to_matcher(skill)
 

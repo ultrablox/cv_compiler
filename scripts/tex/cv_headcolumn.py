@@ -179,6 +179,8 @@ class HeadColumn:
 
   def print_skill_chart(self, skills):
     skills.reverse()
+    if not skills:
+      return
     max_value = skills[0]['size']
     visual_count = len(skills)
 
