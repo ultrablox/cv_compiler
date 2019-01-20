@@ -13,8 +13,10 @@ class ProjectElement:
   
     skills = self.__project.get_total_skill_list()
 
+    prj_link_id = 'prj_%d' % self.__project.id    
+
     self.__printer.write([
-      r'\itemhead{\textbf{%s}}' % (latex_escape(self.__project.name)),
+      r'\hypertarget{%s}{\itemhead{\textbf{%s}}}' % (prj_link_id, latex_escape(self.__project.name)),
       r'',
       r'\itemsubsubhead{\textbf{%d-%d, %s}}' % (period.startDate.year, period.endDate.year, place),
       r'',

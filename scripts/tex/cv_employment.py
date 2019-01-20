@@ -39,7 +39,7 @@ class EmploymentBlock:
     if self.__employment.projects:
       prj_names = []
       for prj in self.__employment.projects:
-        prj_names += ['\projectlink{%s:project}{%s}' % ('xx', latex_escape(prj.name))]
+        prj_names += ['\projectlink{%d}{%s}' % (prj.id, latex_escape(prj.name))]
       note = 'worked in %s project%s' % (', '.join(prj_names), 's' if len(prj_names) > 1 else '')
       notes += [note]
 
