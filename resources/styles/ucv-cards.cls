@@ -284,3 +284,17 @@
 \definecolor{color3}{RGB}{153, 153, 153}
 
 \RequirePackage{calc}
+
+\newcommand{\headoffset}[1]{
+  \ifnum\value{page}=1
+  \hspace{#1pt}
+  \else\fi
+}
+
+\newcommand{\headlinelen}[1]{
+  \ifnum\value{page}=1
+  \columnwidth-#1pt
+  \else
+  \columnwidth
+  \fi
+}

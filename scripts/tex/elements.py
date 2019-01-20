@@ -24,8 +24,7 @@ class VSpacingElement:
 
   def print(self):
     self.__printer.write([
-      r'\vspace{%dpt}' % self.__spacing,
-      # r''
+      r'\vspace{%dpt}' % self.__spacing
     ])
 
 
@@ -65,11 +64,11 @@ class SectionHeading:
     self.print()
 
   def print(self):
-    space = ''
-    col_width = '\columnwidth'
-    if self.__spacing:
-      space = r'\hspace{%dpt}' % self.__spacing
-      col_width = '{\columnwidth-%dpt}' % self.__spacing
+    space = r'\headoffset{%d}' % self.__spacing
+    # col_width = '\columnwidth'
+    col_width = '\headlinelen{%d}' % self.__spacing
+    # if self.__spacing:
+    #   col_width = '{\columnwidth-%dpt}' % self.__spacing
 
     self.__printer.write([
       r'%s\textcolor{color1}{\noindent\rule{%s}{0.5pt}}' % (space, col_width),

@@ -128,12 +128,12 @@ class TexCardsPrinter(TexPrinter):
             ProjectElement(self, project)
     
     ## DEBUG
-    self.write([
-      r'\clearpage'
-    ])
+    # self.write([
+    #   r'\clearpage'
+    # ])
     
 
-    SectionHeading(self, 'Employment History', 'Total %.1f years in industrial development' % profile.total_employment_time().years())
+    SectionHeading(self, 'Employment History', 'Total %.1f years in industrial development' % profile.total_employment_time().years(), header_hoffset)
 
     with SectionElement(self):
       for employment in profile.employments:
@@ -141,7 +141,7 @@ class TexCardsPrinter(TexPrinter):
           with VSpaceGuard(self, GRID_V_SPACING):
             EmploymentBlock(self, employment)
     
-    SectionHeading(self, 'Activities and Personal', 'Only recent is presented')
+    SectionHeading(self, 'Activities and Personal', 'Only recent is presented', header_hoffset)
     with SectionElement(self):
       if profile.scientificPubs:
         with MinipageElement(self, '{}pt'.format(self.CARD_WIDTH)):
