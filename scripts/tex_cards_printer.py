@@ -84,39 +84,6 @@ class TexCardsPrinter(TexPrinter):
       r'\end{itemize-cv}'
     ])
 
-  def print_activities(self, profile):
-    if profile.scientificPubs:
-      with MinipageElement(self, '{}pt'.format(self.CARD_WIDTH)):
-        self.print_scientific_pubs(profile.scientificPubs, profile.scopus_publication_count())
-      self.write([
-        r'\vspace{%dpt}' % GRID_V_SPACING,
-      ])
-  
-    if profile.popularPubs:
-      with MinipageElement(self, '{}pt'.format(self.CARD_WIDTH)):
-        self.print_popoular_pubs(profile.popularPubs)
-      self.write([
-        r'\vspace{%dpt}' % GRID_V_SPACING,
-      ])
-
-    if profile.conferences:
-      with MinipageElement(self, '{}pt'.format(self.CARD_WIDTH)):
-        self.print_conferences(profile.conferences)
-      self.write([
-        r'\vspace{%dpt}' % GRID_V_SPACING,
-      ])
-  
-    if profile.traits:
-      with MinipageElement(self, '{}pt'.format(self.CARD_WIDTH)):
-        self.write([r'\itemhead{\textbf{Personal}}',
-          r'',
-          r'\begin{itemize-cv}'])
-
-        for trait in profile.traits:
-          self.write([r'\item \textbf{%s:} %s' % (trait['name'], trait['details'])])
-
-        self.write([r'\end{itemize-cv}'])
-
 
   def print_data(self, profile, file):
     EMPLOYMENT_CARD_HEIGHT = 100
@@ -124,39 +91,23 @@ class TexCardsPrinter(TexPrinter):
     out_dir = self.rootDir
     self.write([
       r'\documentclass[10pt]{ucv-cards}',
-      r'\usepackage[a4paper, top=10mm, bottom=20mm, left=%dpt, right=%dpt]{geometry}' % (PAGE_H_MARGIN, PAGE_H_MARGIN)
-    ])
-
-    # self.image_path('img/correct.svg')
-
-    self.write([
+      r'\usepackage[a4paper, top=10mm, bottom=20mm, left=%dpt, right=%dpt]{geometry}' % (PAGE_H_MARGIN, PAGE_H_MARGIN),
       r'\begin{document}',
-    #   r'\setlength\parindent{0pt}'
-      ])
-
-
-    self.write([
+      r'\setlength\multicolsep{0pt}',
       r'\setlength{\parindent}{0pt}',
-      r'\setlength{\columnsep}{%dpt}' % GRID_H_SPACING,
-      # r'\setlength{\intextsep}{0pt}',
-      # r'\columnratio{0.33}',
-      # r'\begin{paracol}{2}'
-      # r'\begin{wrapfigure}{l}{180pt}',
-      # r'\begin{minipage}[t][0.98\textheight]{180pt}'
+      r'\setlength{\columnsep}{%dpt}' % GRID_H_SPACING
     ])
-    
+   
     self.write([
-      r'\begin{textblock}{%d}[0, 0](%f,%f)' % (self.CARD_WIDTH, PAGE_H_MARGIN, PT_IN_MM*10),
-      r'\begin{minipage}{%dpt}' % (self.CARD_WIDTH-2),
-      
+      r'\begin{textblock}{%d}[0, 0](%f,%f)' % (self.CARD_WIDTH, PAGE_H_MARGIN, PT_IN_MM*10)
     ])
-    
-    HeadColumn(self, profile)
-    # self.print_head_column(profile)
+
+    with MinipageElement(self, r'%dpt' % (self.CARD_WIDTH - 2)):
+      HeadColumn(self, profile)
 
     self.write([
-      r'\rule{%dpt}{2pt}' % self.CARD_WIDTH,
-      r'\end{minipage}\hspace{1pt}\vrule width 2pt',
+      # r'\rule{%dpt}{2pt}' % self.CARD_WIDTH,
+      r'\hspace{1pt}\textcolor{color1}{\vrule width 1.5pt}',
       r'',
       r'\end{textblock}'
     ])
@@ -173,8 +124,8 @@ class TexCardsPrinter(TexPrinter):
       ])
       for project in profile.projects:
         with MinipageElement(self, '{}pt'.format(self.CARD_WIDTH)):
-          ProjectElement(self, project)
-        VSpacingElement(self, GRID_V_SPACING)
+          with VSpaceGuard(self, GRID_V_SPACING):
+            ProjectElement(self, project)
     
     ## DEBUG
     self.write([
@@ -187,13 +138,37 @@ class TexCardsPrinter(TexPrinter):
     with SectionElement(self):
       for employment in profile.employments:
         with MinipageElement(self, '{}pt'.format(self.CARD_WIDTH)):
-          EmploymentBlock(self, employment)
-        VSpacingElement(self, GRID_V_SPACING)
-
+          with VSpaceGuard(self, GRID_V_SPACING):
+            EmploymentBlock(self, employment)
     
     SectionHeading(self, 'Activities and Personal', 'Only recent is presented')
     with SectionElement(self):
-      self.print_activities(profile)
+      if profile.scientificPubs:
+        with MinipageElement(self, '{}pt'.format(self.CARD_WIDTH)):
+          with VSpaceGuard(self, GRID_V_SPACING):
+            self.print_scientific_pubs(profile.scientificPubs, profile.scopus_publication_count())
+    
+      if profile.popularPubs:
+        with MinipageElement(self, '{}pt'.format(self.CARD_WIDTH)):
+          with VSpaceGuard(self, GRID_V_SPACING):
+            self.print_popoular_pubs(profile.popularPubs)
+
+      if profile.conferences:
+        with MinipageElement(self, '{}pt'.format(self.CARD_WIDTH)):
+          with VSpaceGuard(self, GRID_V_SPACING):
+            self.print_conferences(profile.conferences)
+    
+      if profile.traits:
+        with MinipageElement(self, '{}pt'.format(self.CARD_WIDTH)):
+          with VSpaceGuard(self, GRID_V_SPACING):
+            self.write([r'\itemhead{\textbf{Personal}}',
+              r'',
+              r'\begin{itemize-cv}'])
+
+            for trait in profile.traits:
+              self.write([r'\item \textbf{%s:} %s' % (trait['name'], trait['details'])])
+
+            self.write([r'\end{itemize-cv}'])
 
     self.write([
       r'\end{document}'

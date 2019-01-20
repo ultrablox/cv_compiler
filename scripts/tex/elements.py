@@ -16,16 +16,29 @@ class MinipageElement:
 
 class VSpacingElement:
   def __init__(self, tex_printer, spacing):
+    assert isinstance(spacing, int) or isinstance(spacing, float), 'Provide number to VSpacingElement'
+
     self.__printer = tex_printer
     self.__spacing = spacing
     self.print()
 
   def print(self):
     self.__printer.write([
-      r'',
       r'\vspace{%dpt}' % self.__spacing,
-      r''
+      # r''
     ])
+
+
+class VSpaceGuard:
+  def __init__(self, tex_printer, spacing):
+    self.__printer = tex_printer
+    self.__spacing = spacing
+
+  def __enter__(self):
+    VSpacingElement(self.__printer, self.__spacing / 2)
+
+  def __exit__(self, type, value, tb):
+    VSpacingElement(self.__printer, self.__spacing / 2)
 
 
 class SectionElement:
@@ -34,7 +47,7 @@ class SectionElement:
 
   def __enter__(self):
     self.__printer.write([
-      r'\begin{multicols}{3}'
+      r'\begin{multicols}{3}',
     ])
 
   def __exit__(self, type, value, tb):

@@ -39,6 +39,8 @@ class HeadColumn:
     # Skills
     self.__printer.write([
       r'\cvhead{Skills}',
+      r'',
+      r'\colsubhead{Disired highlighted}',
       r''
     ])
     self.print_skills(self.__profile.skills_totals())
@@ -68,10 +70,10 @@ class HeadColumn:
         r'',
         r'%s, %s y.o.' % (self.__profile.personal['sex'], age),
         r'',
+        r'Residence: %s' % self.__profile.contacts['residence'],
+        r'',
         r'Citizenship: %s' % self.__profile.personal['nationality'],
         r'',
-        r'Residence: %s' % self.__profile.contacts['residence'],
-        r''
       ])
 
     self.__printer.write([
@@ -120,11 +122,8 @@ class HeadColumn:
       '',
       r'%s' % (facility),
       r'',
-      r'%s' % self.__printer.get_href(web),
-      r'',
-      r'%s' % latex_escape(gpa),
-      r'',
-      r'\vspace{6pt}'
+      r'%s | %s' % (latex_escape(gpa), self.__printer.get_href(web)),
+      r''
     ])
 
   def print_education(self, educations):
@@ -136,6 +135,7 @@ class HeadColumn:
         facility['web'],
         facility['notes']
       )
+      VSpacingElement(self.__printer, 6)
 
   def print_skill_list(self, skills):
 
@@ -182,7 +182,7 @@ class HeadColumn:
     max_value = skills[0]['size']
     visual_count = len(skills)
 
-    coords = ['{%s}' % x['name'] for x in skills]
+    coords = ['{%s}' % latex_escape(x['name']) for x in skills]
 
     self.__printer.write(['\pgfplotsset{',
       'compat=1.13,',
@@ -228,12 +228,15 @@ class HeadColumn:
       # r'y=8mm,',
       # r'enlarge y limits={abs=0.625},',
       r'nodes near coords,',
-      r'every node near coord/.append style={at ={(\pgfplotspointmeta,\pgfplotspointy)},anchor=west},',
+      # r'every node near coord/.style={font=\bfseries},',
+      r'every node near coord/.append style={at ={(\pgfplotspointmeta,\pgfplotspointy)},anchor=west, xshift=-5pt},',
       r'every node near coord/.append style={/pgf/number format/.cd, fixed, fixed zerofill, precision=1},',
       r'every node near coord/.append style={/pgf/number format/assume math mode=false},',
       r'visualization depends on=y \as \pgfplotspointy,',
-      r'every axis plot/.append style={fill}',
-      ']'])
+      r'every axis plot/.append style={fill},',
+      
+      # r'every node near coord/.append style={yshift=-0.5cm}',
+      r']'])
 
     labels = ['Desired', 'Job\'s a job', 'Prefferably avoid']
     colors = ['color1', 'color3', 'color3']

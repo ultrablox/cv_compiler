@@ -8,6 +8,8 @@ import re
 from projection import *
 import argparse
 import logging
+import math
+from datetime import datetime
 
 
 def regex_escape(text):
@@ -56,9 +58,25 @@ def task_relevance(task, skill_table, skill_db, vacancy_skill_count):
   if task.achievements:
     res = res * 1.2
   # print(skill_table)
+  
+  # Check how long time passed since then
+  # After 5 years (T) relevance becomes 1/4 (R)
+  # r(t) = exp(-k*t), k = - ln(R)/T
+  t1 = (datetime.today() - task.period.endDate).days
+  t2 = (datetime.today() - task.period.startDate).days
 
+  print('t1=%f, t2=%f' % (t1, t2))
 
+  T = 5*365.0
+  R = 0.25
+  k = - math.log(R) / T
+  # print(k)
 
+  elapsed_rel = (math.exp(-k*t1) - math.exp(-k * t2)) / (k *(t2 - t1))
+  
+  # print(elapsed_rel)
+  res *= elapsed_rel
+  # exit(1)
 
   assert res <= 1.0, 'Task relevance cant exceed 1.0'
   # log_print('; '.join(print_pairs))
@@ -109,7 +127,7 @@ def main():
         matched_skills += [skill]
         break
 
-  print('Known skills in vacancy: %s' % ', '.join((str(x) for x in matched_skills)))
+  print('Known skills in vacancy: %s' % ', '.join((str(x.name) for x in matched_skills)))
   for skill in matched_skills:
     skill_db.connect_to_matcher(skill)
 

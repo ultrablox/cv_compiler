@@ -70,7 +70,8 @@
     "full_name" : "Python"
   },
   {
-    "full_name" : "Compilers"
+    "full_name" : "Compilers",
+    "synonims" : ["Compiler Development"]
   },
   {
     "full_name" : "Algorithms",
@@ -250,6 +251,13 @@
   {
     "full_name" : "Debugging",
     "synonims" : ["debug"]
+  },
+  {
+    "full_name" : "Real-Time Systems",
+    "synonims" : ["RT Systems"]
+  },
+  {
+    "full_name" : "Trading"
   }
 ]
 

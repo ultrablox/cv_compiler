@@ -19,7 +19,7 @@ class Compressor:
         irrelevant_skills += [rec.skill]
 
     for iskill in irrelevant_skills:
-      logging.info('Skill "%s" is non-relevant and removed' % iskill)
+      logging.info('Skill "%s" is non-relevant and removed' % iskill.name)
       profile.remove_skill(iskill)
 
     # Remove non-relevant projects

@@ -224,6 +224,18 @@
   }
 }
 
+\newcommand{\colsubhead}[1]{
+{
+  \rmfamily
+  \fontsize{12}{12}
+  \selectfont
+  \bfseries
+  \color{color2}
+  #1
+  \par
+  }
+}
+
 
 \newcommand{\httplink}[2]{{\href{#1}{\rmfamily\color{gray}\fontsize{10}{10}\selectfont\bfseries#2}}}
 

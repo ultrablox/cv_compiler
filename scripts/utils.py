@@ -11,7 +11,7 @@ import re
 import datetime
 from datetime import date
 
-DEBUG_LATEX = False
+DEBUG_LATEX = True
 
 LATEX_OUTPUT = '' if DEBUG_LATEX else '1>/dev/null'
 LATEX_PARAMS = [] if DEBUG_LATEX else ['-halt-on-error', '--interaction=batchmode']
