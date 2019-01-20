@@ -233,7 +233,7 @@ class HeadColumn:
       # r'every node near coord/.style={font=\bfseries},',
       r'every node near coord/.append style={at ={(\pgfplotspointmeta,\pgfplotspointy)},anchor=west, xshift=-5pt},',
       r'every node near coord/.append style={/pgf/number format/.cd, fixed, fixed zerofill, precision=1},',
-      r'every node near coord/.append style={/pgf/number format/assume math mode=false},',
+      r'every node near coord/.append style={/pgf/number format/assume math mode},',
       r'visualization depends on=y \as \pgfplotspointy,',
       r'every axis plot/.append style={fill},',
       
