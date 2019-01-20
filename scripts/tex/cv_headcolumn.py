@@ -188,8 +188,6 @@ class HeadColumn:
 
     self.__printer.write(['\pgfplotsset{',
       'compat=1.13,',
-      # 'every non boxed x axis/.append style={x axis line style=-},',
-      # 'every non boxed y axis/.append style={y axis line style=-},',
       r'tick label style = {font=\cvnormal},',
       r'every axis label = {font=\cvnormal},',
       r'legend style = {font=\cvnormal},',
@@ -203,42 +201,24 @@ class HeadColumn:
       r'xlabel={Experience, years},',
       r'xbar stacked,',
       r'width=0.9\columnwidth,',
-      # r'legend style={',
-      # r'legend columns=4,',
-      # r'    at={(xticklabel cs:0.5)},',
-      # r'    anchor=north,',
-      # r'    draw=none',
-      # r'},',
       r'xtick=\empty,',
       r'ytick=data,',
       r'axis y line*=none,',
-      # r'axis x line*=none,',
       r'axis x line*=top,',
-      # r'x axis line style={-stealth},'
-      # r'tick label style={font=\footnotesize},',
-      # r'legend style={font=\footnotesize},',
-      # r'label style={font=\footnotesize},',
-      # r'xtick={0,100,...,600},',
-      # r'bar width=6mm,',
       r'bar width=10pt,',
       r'yticklabels={%s},' % ','.join(coords),
       r'xmin=0,',
-      # r'xmax=600,',
       r'area legend,',
       r'clip=false,',
       r'height=200pt,',
-      # r'y=8mm,',
-      # r'enlarge y limits={abs=0.625},',
       r'nodes near coords,',
-      # r'every node near coord/.style={font=\bfseries},',
       r'every node near coord/.append style={at ={(\pgfplotspointmeta,\pgfplotspointy)},anchor=west, xshift=-5pt},',
       r'every node near coord/.append style={/pgf/number format/.cd, fixed, fixed zerofill, precision=1},',
       r'every node near coord/.append style={/pgf/number format/assume math mode},',
       r'visualization depends on=y \as \pgfplotspointy,',
       r'every axis plot/.append style={fill},',
-      
-      # r'every node near coord/.append style={yshift=-0.5cm}',
-      r']'])
+      r']'
+    ])
 
     labels = ['Desired', 'Job\'s a job', 'Prefferably avoid']
     colors = ['color1', 'color3', 'color3']
