@@ -16,7 +16,7 @@ class EmploymentBlock:
   
     with MinipageElement(self.__printer, r'{\textwidth-30pt}'):
       start_date = to_month_year(self.__employment.period.startDate)
-      end_date = 'Present' if self.__employment.period.isOpen else to_month_year(self.__employment.period.endDate)
+      end_date = 'present' if self.__employment.period.isOpen else to_month_year(self.__employment.period.endDate)
 
       self.__printer.write([
         r'\itemhead{\textbf{%s}}' % (self.__employment.role),

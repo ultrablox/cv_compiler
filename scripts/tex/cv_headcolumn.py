@@ -46,7 +46,7 @@ class HeadColumn:
     self.print_skills(self.__profile.skills_totals())
 
   def print_skills(self, skills):
-    VISUAL_SKILL_COUNT = 12
+    VISUAL_SKILL_COUNT = 20
     self.print_skill_chart(skills[:VISUAL_SKILL_COUNT])
     self.print_skill_list(skills[VISUAL_SKILL_COUNT:])
 
@@ -205,11 +205,14 @@ class HeadColumn:
       r'ytick=data,',
       r'axis y line*=none,',
       r'axis x line*=top,',
+      # r'axis y line style={draw=none},',
       r'bar width=10pt,',
       r'yticklabels={%s},' % ','.join(coords),
       r'xmin=0,',
       r'area legend,',
       r'clip=false,',
+      r'enlarge y limits=0.03,',
+      r'y=0.45cm,',
       r'height=200pt,',
       r'nodes near coords,',
       r'every node near coord/.append style={at ={(\pgfplotspointmeta,\pgfplotspointy)},anchor=west, xshift=-5pt},',

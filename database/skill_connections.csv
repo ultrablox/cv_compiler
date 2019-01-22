@@ -33,3 +33,8 @@ CPU;GPU;0.8
 Vulkan;GPU;0.8
 Qt;C++;0.3
 RTR;GPU;0.7
+Atlassian;Confluence;0.1
+Atlassian;JIRA;0.1
+Atlassian;Bitbucket;0.1
+Atlassian;Scrum;0.2
+RT Systems;Trading;0.1

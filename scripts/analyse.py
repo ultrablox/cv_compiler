@@ -127,7 +127,7 @@ def main():
 
   # Serialize to different folder
   cprsr = Compressor()
-  relevant_profile = cprsr.create_relevant_projection(profile, 0.09)
+  relevant_profile = cprsr.create_relevant_projection(profile, 0.07)
   
   logging.info('Project relevance:')
 

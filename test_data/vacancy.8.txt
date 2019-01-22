@@ -1,0 +1,62 @@
+C++ Software Engineer
+
+
+Flow Traders is a leading principal trading firm with Headquarters in Amsterdam, and offices worldwide in New York, Singapore and Cluj, Romania.
+
+What will you work on?
+
+C++ plays a critical role in our critical path (so called ultra-low latency path) from handling huge amounts of market data in reliable, and in the fastest possible manner, to making business decisions (trading strategies) to shooting huge amounts of orders back to the Exchanges.
+
+We expect our new colleague to write code, create new designs and maintain existing applications with focus on low latency, and stability.  Our business users are typically only a walk away, which helps to create short feedback loops and to see your changes provide value in the shortest time possible.
+
+To enable that, we strive to follow best software engineering practices and are supported by the best working environment, latest technology and continuous support from all parts of Flow Traders organization.  
+
+
+
+How you do it
+
+We work in small teams, grouped by business area. Each team is typically responsible for a set of related applications, and works in tight collaboration with business owners. We maintain libraries shared across the product groups to enable code re-use and to have a common view on application architecture. We write extensive unit tests, and have a QA team that supports us with integration testing. We follow agile practices, tailored to the problem area and preferred team approach.
+
+
+
+Some of the things we use in development process:
+
+C++11
+Template Meta-Programming (TMP)
+Git
+Atlassian Stack
+◦         Bitbucket for code review. We do all work in pull requests, which are reviewed by other developers
+
+◦         Bamboo for continuous integration
+
+◦         JIRA, Confluence
+
+Python for scripts/testing
+Linux
+IDE of our choice (Vim, Emacs, CLion, Eclipse, NetBeans etc.)
+ 
+A day in the life
+
+Morning is normally started with a standup meeting with your team. This is an opportunity to catch up on progress of development, raise problems and discuss plans for the day. A business representative is also present, so questions to trading can be resolved instantly. After standup, you go back to your desk to program, review code on pull requests submitted by colleagues, and discuss functionality with traders. Sometimes a production issue is raised by support, and help from development is needed to provide advice. At lunch time, you join your team for lunch in the lounge and enjoy a company-provided lunch. During the day, if there are no pressing issues or you feel that you need a break, you can unwind at the pool table or table tennis, or do a workout at the gym. After the day is done you can join your colleagues to celebrate a successful release or just socialize at our bar.
+
+
+
+What you need to succeed
+
+BSc, MSc, or PhD in Computer Science, Mathematics or equivalent
+5+ post-graduation work experience
+Core experience as a Software Engineer in C++
+Knowledge of algorithms and data structures
+Interest in achieving maximum performance from available hardware and software
+Ability to write clean, reliable and highly scalable code
+Ability to communicate with technical and business colleagues
+Fluency in English
+
+
+Application process
+
+Apply on our website: flowtraders.com/careers/jobs/tech
+Complete our HackerRank test
+Phone interview with the responsible recruiter
+Codepair with one of our Java Developers
+Face to face interviews in Amsterdam

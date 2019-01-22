@@ -84,7 +84,7 @@
   {
     "full_name" : "Continious Integration",
     "display_name" : "Cont. Int.",
-    "synonims" : ["CI", "Cont. Int."]
+    "synonims" : ["CI", "Cont. Int.", "Continious Integration", "continuous integration"]
   },
   {
     "full_name" : "Shaders"
@@ -99,7 +99,16 @@
     "full_name" : "OpenMP"
   },
   {
+    "full_name" : "Atlassian"
+  }, 
+  {
+    "full_name" : "Confluence"
+  },  
+  {
     "full_name" : "JIRA"
+  },
+  {
+    "full_name" : "Bitbucket"
   },
   {
     "full_name" : "Linux",
@@ -122,7 +131,8 @@
     "full_name" : "Agile"
   },
   {
-    "full_name" : "Scrum"
+    "full_name" : "Scrum",
+    "synonims" : ["SCRUM"]
   },
   {
     "full_name" : "Assembler",
