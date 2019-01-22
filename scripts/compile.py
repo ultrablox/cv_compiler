@@ -22,6 +22,7 @@ from skills_db import *
 import qrcode
 import qrcode.image.svg
 import tempfile
+from tex.cl_printer import *
 
 
 def print_qr_code(file_name):
@@ -92,6 +93,13 @@ def main():
 
     # Move result to output
     shutil.copy(os.path.join(tmp_dir, 'main.pdf'), os.path.join(out_dir, '%s_CV.pdf' % to_file_name(profile.personal['name'])))
+
+    with LetterPrinter(tmp_dir, rc_dirs, 'cover_letter.tex') as printer:
+      printer.print(profile)
+    call_system('cd %s && xelatex %s cover_letter.tex %s' % (tmp_dir, ' '.join(LATEX_PARAMS), LATEX_OUTPUT))
+    shutil.copy(os.path.join(tmp_dir, 'cover_letter.pdf'), os.path.join(out_dir, '%s_letter.pdf' % to_file_name(profile.personal['name'])))
+    
+
 
 
 if __name__ == "__main__":
