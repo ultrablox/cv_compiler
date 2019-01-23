@@ -112,6 +112,7 @@
 \RequirePackage{pgfplots}
 
 \newcommand{\projectlink}[2]{{\hyperlink{prj_#1}{\color{color1}\textbf{#2}}}}
+\newcommand{\emplink}[2]{{\hyperlink{emp_#1}{\color{color1}#2}}}
 
 \RequirePackage{lipsum}
 

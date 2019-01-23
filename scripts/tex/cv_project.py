@@ -8,12 +8,16 @@ class ProjectElement:
     self.print()
 
   def print(self):
-    place = 'in %s' % self.__project.parent.name if self.__project.parent else 'hobby'
+    
+    place = 'hobby'
+    if self.__project.parent:
+      place = 'in \emplink{%d}{%s}' % (self.__project.parent.id, self.__project.parent.name)
+
     period = self.__project.get_period()
   
     skills = self.__project.get_total_skill_list()
 
-    prj_link_id = 'prj_%d' % self.__project.id    
+    prj_link_id = 'prj_%d' % self.__project.id
     
     end_date = str(period.endDate.year) if not period.isOpen else 'present'
     self.__printer.write([
