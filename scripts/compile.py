@@ -15,7 +15,6 @@ import argparse
 from skill_matrix import *
 import glob
 import shutil
-from tex_classic_printer import *
 from tex_cards_printer import *
 from cv.employee_profile import *
 from skills_db import *

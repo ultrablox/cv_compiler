@@ -77,6 +77,9 @@ def project_relevance(project):
   assert res <= 1.0, 'Relevance cant exceed 1.0'
   return res
 
+def employment_relevance(employment):
+  return max(x.relevance for x in employment.projects)
+
 
 def main():
   logging.basicConfig(level=logging.INFO)
@@ -123,7 +126,13 @@ def main():
 
     proj_assesment = project_relevance(project)
     project.relevance = proj_assesment
-    
+
+
+  # Compute employments relevances
+  logging.info('Employments relevance:')
+  for employment in profile.employments:
+    employment.relevance = employment_relevance(employment)
+    logging.info('::: %s -> %f' % (employment.name, employment.relevance))
 
   # Serialize to different folder
   cprsr = Compressor()

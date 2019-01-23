@@ -5,6 +5,8 @@ class TimePeriod:
   DATE_FORMAT = '%d.%m.%Y'
 
   def __init__(self, data = None):
+    self.isOpen = False
+    
     if data:
       interval = data.split('-')
       self.startDate = datetime.datetime.strptime(interval[0], TimePeriod.DATE_FORMAT)
@@ -14,8 +16,6 @@ class TimePeriod:
         self.isOpen = True
       else:
         self.endDate = datetime.datetime.strptime(interval[1], TimePeriod.DATE_FORMAT)
-
-        self.isOpen = False
 
       assert self.startDate < self.endDate, 'Invalid time period : %s' % self
 

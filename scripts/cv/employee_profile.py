@@ -33,6 +33,7 @@ class EmployeeProfile:
     self.traits = []
     self.specialSkillGroups = []
     self.conferences = []
+    self.__total_employment = None
 
   def load(self, input_dir):
     # Check input structure
@@ -128,6 +129,11 @@ class EmployeeProfile:
     if 'conferences' in json_node:
       self.conferences = json_node['conferences']
 
+    if 'total_employment' in json_node:
+      self.__total_employment = TimePeriod(json_node['total_employment'])
+    else:
+      self.__total_employment = self.total_employment()
+
   def deserialize_publications(self, base_path):
     # Scientific publications
     self.__sci_pubs_file = os.path.join(base_path, 'sci_publications.bib')
@@ -155,7 +161,8 @@ class EmployeeProfile:
         'projects': serialize_array(self.projects),
         'employments': serialize_array(self.employments),
         'skills': serialize_array(self.skillRecords),
-        'conferences' : self.conferences
+        'conferences' : self.conferences,
+        'total_employment': str(self.__total_employment)
       }
 
       self.serialize_data(data)
@@ -166,29 +173,16 @@ class EmployeeProfile:
       lead_file.write(self.lead)
     
     sci_pubs_path = os.path.join(dir_name, 'sci_publications.bib')
-    # with open(sci_pubs_path, 'w+', encoding='utf-8') as bibtex_file:
-    #   bibtexparser.dump(self.__sci_bib_database, bibtex_file)
-    
-    # db = BibDatabase()
-    # writer = BibTexWriter()
-    # db.entries = self.popularPubs
     shutil.copy(self.__sci_pubs_file, sci_pubs_path)
 
     pop_pubs_path = os.path.join(dir_name, 'pop_publications.bib')
     shutil.copy(self.__pop_pubs_file, pop_pubs_path)
 
 
-    #   data = json.load(json_data)
-    #   self.deserialize(data)
-
   def add_skill_experience(self, skill, period):
     logging.info('Adding period: %s -> %s' % (skill.name, period))
-    # Find skill record for the name
-
-    # print(self.skillRecords)
     skill_rec = list(x for x in self.skillRecords if x.skill == skill)[0]
     skill_rec.add_period(period)
-    # pass
 
   # Returns array [{'name' : 'skill_name', 'size' : .f_years}]
   def skills_totals(self):
@@ -198,12 +192,6 @@ class EmployeeProfile:
     res = (item for item in res if item['size'] > 0.0)
     return sorted(res, key=lambda rec: rec['size'], reverse=True)
 
-  # def add_period_for_skill(self, skill, period):
-  #     if not skill in self.skills:
-  #         new_skill = Skill(skill)
-  #         self.skills[skill] = new_skill
-  #     cur_skill = self.skills[skill]
-  #     cur_skill.add_period(period)
 
   def best_skill(self):
       skills = self.skills_totals()
@@ -215,11 +203,14 @@ class EmployeeProfile:
   def scopus_publication_count(self):
     return sum(is_scopus(pub) for pub in self.scientificPubs)
 
-  def total_employment_time(self):
-    res = TimePeriod()
-    res.startDate = self.employments[-1].period.startDate
-    res.endDate = self.employments[0].period.endDate
-    return res
+  def total_employment(self):
+    if self.__total_employment:
+      return self.__total_employment
+    else:
+      res = TimePeriod()
+      res.startDate = self.employments[-1].period.startDate
+      res.endDate = self.employments[0].period.endDate
+      return res
 
   def remove_skill(self, skill):
     # Remove experience
@@ -294,3 +285,8 @@ class EmployeeProfile:
     ### Conferences
     self.conferences = self.conferences[0:MAX_CONFERENCES]
 
+  def parttime_employments(self):
+    return (x for x in self.employments if x.is_part_time())
+
+  def fulltime_employments(self):
+    return (x for x in self.employments if x.is_full_time())

@@ -41,10 +41,17 @@ class Compressor:
           del proj.tasks[i - 1]
       proj.tasks.sort(key=lambda x: x.relevance, reverse=True)
 
+    # Remove non-relevant part-time employments
+    for i in range(len(profile.employments), 0, -1):
+      emp = profile.employments[i - 1]
+      if emp.is_part_time() and (emp.relevance <= minimal_relevance):
+        logging.info('Part-time employment "%s" is non-relevant and removed' % emp.name)
+        del profile.employments[i - 1]
+
     # Convert references to non-relevant projects into notes
-    for employments in profile.employments:
-      for i in range(len(employments.projects), 0, -1):
-        if employments.projects[i - 1].relevance <= minimal_relevance:
-          del employments.projects[i - 1]
+    for employment in profile.employments:
+      for i in range(len(employment.projects), 0, -1):
+        if employment.projects[i - 1].relevance <= minimal_relevance:
+          del employment.projects[i - 1]
 
     return profile
