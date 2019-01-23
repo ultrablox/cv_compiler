@@ -4,7 +4,8 @@ set -e
 set -x
 
 VACANCY=../test_data/vacancy.8.txt
-INPUT_DIR=../../my_cv/data
+#INPUT_DIR=../../my_cv/data
+INPUT_DIR=../sample_input
 OUT_DIR=../out
 
 
