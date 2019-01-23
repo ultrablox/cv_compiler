@@ -33,8 +33,29 @@ CPU;GPU;0.8
 Vulkan;GPU;0.8
 Qt;C++;0.3
 RTR;GPU;0.7
-Atlassian;Confluence;0.1
-Atlassian;JIRA;0.1
-Atlassian;Bitbucket;0.1
-Atlassian;Scrum;0.2
-RT Systems;Trading;0.1
+Atlassian;Confluence;0.9
+Atlassian;JIRA;0.9
+Atlassian;Bitbucket;0.9
+Atlassian;Scrum;0.7
+RT Systems;Trading;0.2
+Embedded;Automotive;0.7
+Expert Systems;AI;0.8
+Algorithms;C++;0.7
+Debugging;GDB;0.9
+Debugging;LLDB;0.9
+Emscripten;JavaScript;0.6
+Agile;SCRUM;0.9
+QNX;RT Systems;0.8
+Ruby On Rails;HTML;0.5
+JavaScript;RoR;0.8
+Unix;Mac OS;0.7
+Unix;Linux;0.9
+ASP.NET;C#;0.7
+QA;TDD;0.9
+QA;BDD;0.9
+MSVS;C++;0.1
+MSVS;C#;0.2
+Embedded;RT Systems;0.3
+AI Planning;AI;0.9
+ML;AI;0.8
+git;Bitbucket;0.9

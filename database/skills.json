@@ -27,9 +27,6 @@
     "synonims" : ["STL"]
   },
   {
-    "full_name" : "OpenGL"
-  },
-  {
     "full_name" : "Vulkan"
   },
   {
@@ -125,9 +122,6 @@
     "full_name" : "FPGA"
   },
   {
-    "full_name" : "LLVM"
-  },
-  {
     "full_name" : "Agile"
   },
   {
@@ -173,12 +167,6 @@
   },
   {
     "full_name" : "GDB"
-  },
-  {
-    "full_name" : "LLDB"
-  },
-  {
-    "full_name" : "LLDB"
   },
   {
     "full_name" : "Windows"

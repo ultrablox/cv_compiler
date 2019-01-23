@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import os
-from skills_db import *
+from db import skills_db
 from cv.employee_profile import *
 import re
 from projection import *
@@ -89,7 +89,7 @@ def main():
   parser.add_argument('skills', type=str, help='skills text file')
   args = parser.parse_args()
 
-  skill_db = SkillsDB()
+  skill_db = skills_db.SkillsDB()
   skill_db.load(os.path.join('..', 'database'))
 
   profile = EmployeeProfile(skill_db)

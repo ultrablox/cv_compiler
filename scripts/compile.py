@@ -17,7 +17,7 @@ import glob
 import shutil
 from tex_cards_printer import *
 from cv.employee_profile import *
-from skills_db import *
+from db import skills_db
 import qrcode
 import qrcode.image.svg
 import tempfile
@@ -60,7 +60,7 @@ def main():
   assert os.path.exists(out_dir), 'Output directory "%s" does not exist' % out_dir
 
   # Load input data
-  skill_db = SkillsDB()
+  skill_db = skills_db.SkillsDB()
   skill_db.load(os.path.join('..', 'database'))
 
   profile = EmployeeProfile(skill_db)
