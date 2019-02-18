@@ -1,0 +1,20 @@
+Keywords: C++, python, algorithms
+
+The function
+As a Senior (Lead) Engineer  you are the driving force and responsible for coaching of junior colleagues, the realization of the architecture in design, implementation, test and integration and maintenance of software for complex modules and machines. You work with a code base of C, C++, Python or C#. This code base is under strict configuration management in order to deliver in a reliable way for multiple systems and multiple users. You cooperate closely with colleagues from other disciplines and strategic customers  (mechanics, mechatronics, electronics, equipment engineering) in a multidisciplinary team. The software team works in an agile fashion in scrum teams.
+
+You see it as a challenge to take up new things and explore new tools and techniques.
+
+Your Profile
+
+Bachelor or Master degree informatics or technically oriented with 10 years’ experience in an equivalent environment
+Large experience with high tech complex machine control
+Experience in coaching and leading smaller software teams
+Experience with independently designing and delivering software modules
+Experience with Agile software development
+Experience with Model Driven Design
+Large experience with Real-time control software and Real-time Operating systems / Linux / Sun Solaris
+Experience with real-time software development. You can think of control/control loops and protocols that are necessary to, for example, a robotic arm o.i.d. to move
+Knowledge of Design Patterns
+Knowledge of C / C++ / C# / Python
+Experience with Continuous Integration and Configuration Management

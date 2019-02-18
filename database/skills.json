@@ -116,7 +116,7 @@
   },
   {
     "full_name" : "Hardware",
-    "synonims" : ["PCB development", "PCB"]
+    "synonims" : ["PCB development", "PCB", "robotic"]
   },
   {
     "full_name" : "FPGA"
@@ -140,7 +140,7 @@
   },
   {
     "full_name" : "Mentor",
-    "synonims" : ["Guide", "Mentoring"]
+    "synonims" : ["Guide", "Mentoring", "Coaching"]
   },
   {
     "full_name" : "OpenCV"
@@ -257,6 +257,12 @@
   },
   {
     "full_name" : "Trading"
+  },
+  {
+    "full_name" : "Software Delivery"
+  },
+  {
+    "full_name" : "Integration"
   }
 ]
 

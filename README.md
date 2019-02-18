@@ -199,11 +199,20 @@ INPUT_DIR=$HOME/Documents/journal_dir ./generate.sh
 
 ## Projecting (experimental)
 
+Create a textfile with vacancy description. Then run
+
+```bash
+cd cv_compiler/scripts
+./extract_skills.py ../test_data/vacancy.9.txt > ../test_data/vacancy.9.txt.skills
+```
+
+Adjust output and improve DB with links if some skills are missed.
+
 In order to create CV projection for exact vacncy:
 
 ```bash
 cd cv_compiler/scripts
-INPUT_DIR=../sample_input ./generate_projection.sh test_data/vacancy_1.txt
+INPUT_DIR=../../my_cv ./generate_projection.sh ../test_data/vacancy.9.txt
 ```
 
 ## Technologies
