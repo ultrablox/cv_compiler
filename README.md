@@ -43,14 +43,30 @@ git clone https://github.com/ultrablox/cv_compiler.git
 4. **Compile Sample CV**, which journal is in *cv_compiler/sample_input*.
 
 ```bash
-cd cv_compiler/scripts
-./generate.sh
+scripts/generate.sh
 ```
 5. **Find** compiled CV in pdf at:
 ```bash
-> ls cv_compiler/out
+> ls out/
 bruce_wayne_CV.pdf
 ```
+
+## Adopt CV for Vacancy (experimental)
+
+Create a textfile with vacancy description. Then run
+
+```bash
+src/extract_skills.py test_data/vacancy.9.txt > test_data/vacancy.9.txt.skills
+```
+
+Adjust output and improve DB with links if some skills are missed.
+
+In order to create relevant CV for given vacncy:
+
+```bash
+INPUT_DIR=../../my_cv scripts/generate_projection.sh test_data/vacancy.9.txt
+```
+
 
 ## Skills Onthology
 
@@ -204,23 +220,6 @@ cd cv_compiler/scripts
 INPUT_DIR=$HOME/Documents/journal_dir ./generate.sh
 ```
 
-## Projecting (experimental)
-
-Create a textfile with vacancy description. Then run
-
-```bash
-cd cv_compiler/scripts
-./extract_skills.py ../test_data/vacancy.9.txt > ../test_data/vacancy.9.txt.skills
-```
-
-Adjust output and improve DB with links if some skills are missed.
-
-In order to create CV projection for exact vacncy:
-
-```bash
-cd cv_compiler/scripts
-INPUT_DIR=../../my_cv ./generate_projection.sh ../test_data/vacancy.9.txt
-```
 
 ## Technologies
 

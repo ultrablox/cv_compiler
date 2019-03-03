@@ -90,7 +90,9 @@ def main():
   args = parser.parse_args()
 
   skill_db = skills_db.SkillsDB()
-  skill_db.load(os.path.join('..', 'database'))
+  script_dir = os.path.dirname(os.path.realpath(__file__)) 
+  skill_db.load(os.path.join(script_dir, os.pardir, 'database'))
+
 
   profile = EmployeeProfile(skill_db)
   profile.load(args.input_dir)

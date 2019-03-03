@@ -11,7 +11,8 @@ def main():
   logging.basicConfig(level=logging.INFO)
 
   skill_db = skills_db.SkillsDB()
-  skill_db.load(os.path.join('..', 'database'))
+  script_dir = os.path.dirname(os.path.realpath(__file__)) 
+  skill_db.load(os.path.join(script_dir, os.pardir, 'database'))
 
   plt.figure(figsize=(20, 20))
   res = nx.draw_networkx(skill_db.graph)

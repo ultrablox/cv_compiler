@@ -39,7 +39,9 @@ def main():
   assert os.path.exists(args.vacancy_file), 'File with text does not exist'
 
   skill_db = skills_db.SkillsDB()
-  skill_db.load(os.path.join('..', 'database'))
+  script_dir = os.path.dirname(os.path.realpath(__file__)) 
+
+  skill_db.load(os.path.join(script_dir, os.pardir, 'database'))
 
   vacancy_text = get_text(args.vacancy_file)
 
