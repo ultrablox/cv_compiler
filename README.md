@@ -52,6 +52,13 @@ cd cv_compiler/scripts
 bruce_wayne_CV.pdf
 ```
 
+## Skills Onthology
+
+In order for adopt CV to vacancy, currently following onthology is used. It can be extended in */data/base*.
+
+[<img src="docs/assets/img/skills_onthology.png?raw=true" width="640" />](docs/assets/img/skills_onthology.png)
+
+
 ## Writing Your Journal
 
 ### Directory Structure
