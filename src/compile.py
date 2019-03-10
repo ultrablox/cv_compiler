@@ -22,6 +22,8 @@ import qrcode
 import qrcode.image.svg
 import tempfile
 from tex.cl_printer import *
+from tex.printer import *
+# from tex import printer as tex_printer
 
 
 def print_qr_code(file_name):
@@ -68,6 +70,8 @@ def main():
 
   profile.compress()
 
+  out_fname = os.path.join(out_dir, '%s_CV.pdf' % to_file_name(profile.personal['name']))
+
   with tempfile.TemporaryDirectory() as tmp_dir:
     # tmp_dir = os.path.join('..', 'tmp')
     # Generate watermark qr_code
@@ -77,21 +81,20 @@ def main():
     # Generate tex files
     rc_dirs = [os.path.join('..', 'resources'), os.path.join(args.input_dir), tmp_dir]
 
-    # tex_printer = TexClassicPrinter(tmp_dir, rc_dirs)
-    tex_printer = TexCardsPrinter(tmp_dir, rc_dirs)
-    # tex_printer.paperSize = args.paper_size
-    tex_printer.enableWatermark = args.watermark
-    tex_printer.print_to(profile, 'main.tex')
 
-    # Copy static resources
-    for file in glob.glob(r'../resources/styles/*.*') + glob.glob(r'../resources/fonts/*.*'):
-      shutil.copy(file, tmp_dir)
+    with TexCardsPrinter(out_fname) as tex_printer:
+      # tex_printer.rootDir = rc_dirs
+      # tex_printer.paperSize = args.paper_size
+      tex_printer.enableWatermark = args.watermark
+      tex_printer.rcPaths = rc_dirs
+      # tex_printer.print_to(profile, 'main.tex')
 
-    # Compile PDF
-    call_system('cd %s && xelatex %s main.tex %s' % (tmp_dir, ' '.join(LATEX_PARAMS), LATEX_OUTPUT))
+      # Copy static resources
+      for file in glob.glob(r'../resources/styles/*.*') + glob.glob(r'../resources/fonts/*.*'):
+        shutil.copy(file, tex_printer.tmpDirName)
+      
+      tex_printer.print_profile(profile)
 
-    # Move result to output
-    shutil.copy(os.path.join(tmp_dir, 'main.pdf'), os.path.join(out_dir, '%s_CV.pdf' % to_file_name(profile.personal['name'])))
 
     with LetterPrinter(tmp_dir, rc_dirs, 'cover_letter.tex') as printer:
       printer.print(profile)

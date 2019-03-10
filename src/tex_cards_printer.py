@@ -9,6 +9,7 @@ from tex.cv_project import *
 from tex.cv_employment import *
 from tex.cv_headcolumn import *
 
+
 PT_IN_MM = 2.83465
 
 # In pt
@@ -20,6 +21,7 @@ PAGE_H_MARGIN = 10*PT_IN_MM
 
 # A4 =  210 mm x  297 mm =  595 pt x  842 pt
 class TexCardsPrinter(TexPrinter):
+
   V_SPACING = 15
   # CARD_WIDTH = (595 - 4 * V_SPACING)/3
   # CARD_HEIGHT = 206
@@ -27,6 +29,27 @@ class TexCardsPrinter(TexPrinter):
   CARDS_IN_ROW = 3
   HEADER_HEIGHT = 24
   HOR_SPACING = 4
+
+  TEX_ARGS = []#['-halt-on-error', '--interaction=batchmode']
+
+  def __init__(self, out_fname):
+    self._pdfName = out_fname
+
+  def __enter__(self):
+    self._tmpDir = tempfile.TemporaryDirectory()
+    self.tmpDirName = os.path.abspath('tmp')#self._tmpDir.name # #
+    self._texName = os.path.join(self.tmpDirName, 'main.tex')
+    self._texFile = open(self._texName, 'w+')
+    self.file = self._texFile
+    self.rootDir = self.tmpDirName
+    return self
+
+  def __exit__(self, type, value, tb):
+    print(self.tmpDirName)
+    self._texFile.close()
+    call_system('cd {} && xelatex {} main.tex'.format(self.tmpDirName, ' '.join(self.TEX_ARGS)))
+    shutil.copy(os.path.join(self.tmpDirName, 'main.pdf'), self._pdfName)
+
   
   def print_scientific_pubs(self, pubs, scopus_count):
     summary_str = '%d total' % len(pubs)
@@ -74,11 +97,11 @@ class TexCardsPrinter(TexPrinter):
         itemize.item('%s (%s, %d)' % (conf['name'], conf['location'], conf['year']))
 
 
-  def print_data(self, profile, file):
+  def print_profile(self, profile):
     EMPLOYMENT_CARD_HEIGHT = 100
    
     out_dir = self.rootDir
-    with Document(self, 10):     
+    with Document(self, 10):
       self.write([
         r'\setlength\multicolsep{0pt}',
         r'\setlength{\parindent}{0pt}',
