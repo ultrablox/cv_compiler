@@ -7,7 +7,6 @@ jobs:
   include:
     - stage: "Test"
       os: linux
-      language: python
       services:
         - docker
       addons:
@@ -18,5 +17,6 @@ jobs:
       before_script:
         - docker pull ultrablox/latex-python3.6
       script:
+        - pip3 install --user -r requirements.txt
         - cd src && python3 -m unittest discover
 
