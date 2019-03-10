@@ -1,0 +1,22 @@
+language: generic
+
+notifications:
+  email: false
+
+jobs:
+  include:
+    - stage: "Test"
+      os: linux
+      language: python
+      services:
+        - docker
+      addons:
+        apt:
+          packages:
+            - realpath
+          update: true
+      before_script:
+        - docker pull ultrablox/latex-python3.6
+      script:
+        - cd src && python3 -m unittest discover
+
