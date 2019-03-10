@@ -124,7 +124,7 @@
             "period" : "01.11.2016-31.03.2017",
             "skills" : ["C++", "Python"],
             "achievements" : [
-              "decreased potentially-insecure outdated version usage time down to 15%"
+              "decreased outdated SW usage down to 15%"
             ]
           }
         ]
@@ -150,26 +150,7 @@
             "period" : "01.01.2016-30.08.2016",
             "skills" : ["C++", "C#", "Python"],
             "achievements" : [
-              "expanded API with Python and C#, increased plugin developers by 70%"
-            ]
-          }
-        ]
-      },
-      {
-        "name" : "Core i7",
-        "icon" : "i7_project.png",
-        "description" : "Intel i7 Core CPU series",
-        "team-size" : 5,
-        "web" : "https://en.wikipedia.org/wiki/Intel_Core#Core_i7",
-        "code_size" : 870000,
-        "tasks" : [
-          {
-            "description" : "Development synchronization mechanism between cores for i7 generation",
-            "period" : "01.09.2014-30.08.2015",
-            "skills" : ["Assembler"],
-            "achievements" : [
-              "increased performance for multithreaded tasks up to 185%",
-              "overperformed AMD similar model line by 30%"
+              "expanded API with Python and C#"
             ]
           }
         ]
@@ -205,16 +186,6 @@
             "period" : "01.09.2015-30.08.2016",
             "web" : "https://www.adobe.com",
             "projects" : ["Photoshop"]
-        },
-        {
-            "name" : "Intel Inc",
-            "logo" : "img/logo_intel.svg",
-            "description" : "Hardware producing company specialized in processors development",
-            "role" : "Software Engineer",
-            "location" : "Los Angeles, CA",
-            "period" : "01.09.2014-30.08.2015",
-            "web" : "https://www.intel.com",
-            "projects" : ["Core i7"]
         }
     ],
     "conferences" : [

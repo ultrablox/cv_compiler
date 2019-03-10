@@ -26,7 +26,7 @@ This is automatic compiler of your **working experience journal** into standardi
 ## Demo
 
 [<img src="docs/assets/img/cv_preview_0.png?raw=true" width="384" />](out/bruce_wayne_CV.pdf)
-[<img src="docs/assets/img/cv_preview_1.png?raw=true" width="384" />](out/bruce_wayne_CV.pdf)
+<!-- [<img src="docs/assets/img/cv_preview_1.png?raw=true" width="384" />](out/bruce_wayne_CV.pdf) -->
 
 ## Quick Start
 

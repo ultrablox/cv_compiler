@@ -50,7 +50,7 @@ def main():
   
   parser = argparse.ArgumentParser(description='Compile CV into PDF file.')
   parser.add_argument('--input_dir', type=str, default='/input', help='input profile directory')
-  parser.add_argument('--paper_size', type=str, default='a4', choices=['a4', 'a5'], help='Paper size')
+  # parser.add_argument('--paper_size', type=str, default='a4', choices=['a4', 'a5'], help='Paper size')
   add_bool_arg(parser, 'watermark', True)
   args = parser.parse_args()
 
@@ -69,7 +69,7 @@ def main():
   profile.compress()
 
   with tempfile.TemporaryDirectory() as tmp_dir:
-    tmp_dir = os.path.join('..', 'tmp')
+    # tmp_dir = os.path.join('..', 'tmp')
     # Generate watermark qr_code
     qr_path = os.path.join(tmp_dir, 'watermark.svg')
     print_qr_code(qr_path)
@@ -79,7 +79,7 @@ def main():
 
     # tex_printer = TexClassicPrinter(tmp_dir, rc_dirs)
     tex_printer = TexCardsPrinter(tmp_dir, rc_dirs)
-    tex_printer.paperSize = args.paper_size
+    # tex_printer.paperSize = args.paper_size
     tex_printer.enableWatermark = args.watermark
     tex_printer.print_to(profile, 'main.tex')
 

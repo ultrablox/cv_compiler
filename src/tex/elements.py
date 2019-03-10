@@ -82,3 +82,62 @@ class SectionHeading:
       r'%s\textcolor{color1}{\noindent\rule{%s}{0.5pt}}' % (space, col_width),
     ])
 
+
+class Document:
+  def __init__(self, tex_printer, h_margin):
+    self._printer = tex_printer
+    self._hMargin = h_margin
+
+  def __enter__(self):
+    self._printer.write([
+      r'\documentclass[10pt]{ucv-cards}',
+      r'\usepackage[a4paper, top=10mm, bottom=20mm, left=%dmm, right=%dmm]{geometry}' % (self._hMargin, self._hMargin),
+      r'\begin{document}'
+    ])
+
+  def __exit__(self, type, value, tb):
+    self._printer.write([
+      r'\end{document}'
+    ])
+
+
+class TextBlock:
+  def __init__(self, printer, width, anchor_x, anchor_y, x, y):
+    self._printer = printer
+    self._width = width
+    self._anchorX = anchor_x
+    self._anchorY = anchor_y
+    self._x = x
+    self._y = y
+
+  def __enter__(self):
+    self._printer.write([
+      r'\begin{textblock}{%d}[%f, %f](%d,%d)' % (self._width, self._anchorX, self._anchorY, self._x, self._y)
+    ])
+
+  def __exit__(self, type, value, tb):
+    self._printer.write([
+      r'\end{textblock}'
+    ])
+
+
+class Itemize:
+  def __init__(self, tex_printer):
+    self._printer = tex_printer
+
+  def __enter__(self):
+    self._printer.write([
+      r'\begin{itemize-cv}'
+    ])
+    return self
+
+  def item(self, text):
+    self._printer.write([
+      r'\item {}'.format(text)
+    ])
+
+  def __exit__(self, type, value, tb):
+    self._printer.write([
+      r'\end{itemize-cv}'
+    ])
+

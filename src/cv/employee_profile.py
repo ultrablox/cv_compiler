@@ -286,7 +286,7 @@ class EmployeeProfile:
     self.conferences = self.conferences[0:MAX_CONFERENCES]
 
   def parttime_employments(self):
-    return (x for x in self.employments if x.is_part_time())
+    return [x for x in self.employments if x.is_part_time()]
 
   def fulltime_employments(self):
-    return (x for x in self.employments if x.is_full_time())
+    return [x for x in self.employments if x.is_full_time()]
