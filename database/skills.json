@@ -136,7 +136,7 @@
   {
     "full_name" : "Test Driven Development",
     "display_name" : "TDD",
-    "synonims" : ["TDD"]
+    "synonims" : ["TDD", "unit testing"]
   },
   {
     "full_name" : "Mentor",

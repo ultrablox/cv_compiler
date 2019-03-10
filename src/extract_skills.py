@@ -7,27 +7,44 @@ import logging
 import os
 import argparse
 import re
+import sys
 from db import skills_db
 from utils import *
+from vacancy_analyzer import analyzer
+from PyQt5 import QtCore, QtWidgets, QtGui
+from PyQt5.QtWidgets import QMainWindow, QLabel, QGridLayout, QWidget, QPlainTextEdit
+from PyQt5.QtCore import QSize
+from PyQt5.QtGui import QTextCursor, QTextCharFormat, QColor
 
 
-def regex_escape(text):
-  bad_symbols = ['+', '#']
 
-  res = ''
-  for symb in text:
-    if symb in bad_symbols:
-      res += '\\'
-    res += symb
-  return res
+class ParsedVacancyWindow(QMainWindow):
+  def __init__(self):
+    QMainWindow.__init__(self)
 
+    self.setMinimumSize(QSize(640, 480))    
+    self.setWindowTitle("Extracted Skills") 
 
-def text_contains(vacancy_test, keyword):
-  match = re.search(r'\W%s\W' % regex_escape(keyword), vacancy_test, flags=re.IGNORECASE)
-  if match:
-    return True
-  else:
-    return False
+    centralWidget = QWidget(self)          
+    self.setCentralWidget(centralWidget)   
+
+    gridLayout = QGridLayout(self)     
+    centralWidget.setLayout(gridLayout)  
+
+    self.textEdit = QPlainTextEdit(self) 
+    # self.textEdit.setAlignment(QtCore.Qt.AlignCenter) 
+    gridLayout.addWidget(self.textEdit, 0, 0)
+
+  def flash_skill(self, pos, word_len):
+    cursor = self.textEdit.textCursor()
+    cursor.setPosition(pos, QTextCursor.MoveAnchor)
+    cursor.setPosition(pos + word_len, QTextCursor.KeepAnchor)
+
+    fmt = QTextCharFormat()
+    fmt.setBackground(QColor(0, 255, 0))
+    cursor.setCharFormat(fmt)
+    
+
 
 def main():
   logging.basicConfig(level=logging.ERROR)
@@ -38,22 +55,22 @@ def main():
 
   assert os.path.exists(args.vacancy_file), 'File with text does not exist'
 
-  skill_db = skills_db.SkillsDB()
-  script_dir = os.path.dirname(os.path.realpath(__file__)) 
-
-  skill_db.load(os.path.join(script_dir, os.pardir, 'database'))
-
   vacancy_text = get_text(args.vacancy_file)
 
-  matched_skills = []
-  for skill in skill_db.skills:
-    for syn in skill.get_synonims():
-      if text_contains(vacancy_text, syn):
-        logging.debug('Matched %s by "%s"' % (skill, syn))
-        matched_skills += [skill]
-        break
+  v_analyzer = analyzer.Analyzer()
+  v_analyzer.parse(vacancy_text)
 
-  print('\n'.join((str(x.name) for x in matched_skills)))
+  # print('\n'.join(v_analyzer.matched_names()))
+
+  app = QtWidgets.QApplication(sys.argv)
+  wnd = ParsedVacancyWindow()
+  wnd.textEdit.setPlainText(vacancy_text)
+  
+  for skill in v_analyzer.matched_skills():
+    wnd.flash_skill(skill.pos, skill.len)
+
+  wnd.show()
+  sys.exit(app.exec_())
 
 
 if __name__ == "__main__":
