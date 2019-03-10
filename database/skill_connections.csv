@@ -59,3 +59,7 @@ Embedded;RT Systems;0.3
 AI Planning;AI;0.9
 ML;AI;0.8
 git;Bitbucket;0.9
+Hypervisor;KVM;0.8
+Hypervisor;libvirt;0.8
+Scripting;Python;0.9
+Scripting;Ruby;0.9

@@ -30,14 +30,14 @@ class TexCardsPrinter(TexPrinter):
   HEADER_HEIGHT = 24
   HOR_SPACING = 4
 
-  TEX_ARGS = []#['-halt-on-error', '--interaction=batchmode']
+  TEX_ARGS = ['-halt-on-error', '--interaction=batchmode']
 
   def __init__(self, out_fname):
     self._pdfName = out_fname
 
   def __enter__(self):
     self._tmpDir = tempfile.TemporaryDirectory()
-    self.tmpDirName = os.path.abspath('tmp')#self._tmpDir.name # #
+    self.tmpDirName = self._tmpDir.name # #os.path.abspath('tmp')#
     self._texName = os.path.join(self.tmpDirName, 'main.tex')
     self._texFile = open(self._texName, 'w+')
     self.file = self._texFile

@@ -87,6 +87,7 @@ def main():
   parser = argparse.ArgumentParser(description='Compile CV projection for given vacancy')
   parser.add_argument('input_dir', type=str, default='../sample_input', help='input profile directory')
   parser.add_argument('skills', type=str, help='skills text file')
+  parser.add_argument('--min_relevance', type=float, default=0.07, help='barrier for irrelevant records')
   args = parser.parse_args()
 
   skill_db = skills_db.SkillsDB()
@@ -138,7 +139,7 @@ def main():
 
   # Serialize to different folder
   cprsr = Compressor()
-  relevant_profile = cprsr.create_relevant_projection(profile, 0.07)
+  relevant_profile = cprsr.create_relevant_projection(profile, args.min_relevance)
   
   logging.info('Project relevance:')
 

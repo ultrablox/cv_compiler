@@ -22,8 +22,6 @@ import qrcode
 import qrcode.image.svg
 import tempfile
 from tex.cl_printer import *
-from tex.printer import *
-# from tex import printer as tex_printer
 
 
 def print_qr_code(file_name):

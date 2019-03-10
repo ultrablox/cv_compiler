@@ -23,7 +23,7 @@ else
    SKILLS_FILE=$SKILLS_CORRECT_FILE
 fi
 
-$DIRECTORY/src/analyse.py $INPUT_DIR $SKILLS_FILE
+$DIRECTORY/src/analyse.py $INPUT_DIR $SKILLS_FILE --min_relevance=0.07
 cp -R $INPUT_DIR/img ./profile.analysed/
 NEW_CMD="INPUT_DIR=./profile.analysed $DIRECTORY/scripts/generate.sh"
 echo "Running compiler with: $NEW_CMD"

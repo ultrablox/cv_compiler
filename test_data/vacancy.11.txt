@@ -1,0 +1,25 @@
+Software Development Engineer 4
+
+Location: Schiphol-Rijk / Amsterdam office
+
+This Will Involve Complete Life Cycle Of Product Development Spanning And Not Limited To The Following
+
+Juniper is seeking for an experienced Software Developer Engineer to be part of the JDI - Juniper Development and Innovation Team in Amsterdam (Netherlands) that is responsible for designing, developing and maintaining Platform & System software for Juniper routing and switching product lines.
+Work with product management and other cross functional teams to develop detailed software functional specification, articulate system/software architecture specifications, for product features, to meet product requirements.
+Juniper’s next generation routers and switches run new JUNOS distributed operating system platform comprised of multiple Unix nodes coupled together with an efficient communications substrate. You will be required to design and develop software that makes use of this environment and delivers highly flexible and programmable systems.
+You will be required to carry out detailed design and implementation, unit testing, integration with packet forwarding, related device/kernel drivers and other related software components for products and features.
+Work closely with system and solution test teams to ensure correct and complete verification of software and components, for the feature to meet real-life network deployments.
+The role requires also that the Engineer has a strong team and interpersonal skills and be able to work efficiently with other members of the Engineering team, JTAC - Juniper Technical Assistance Center organization, Systems Engineers and Customers. It is expected that he/she works on tasks independently with no need of supervision. 
+
+Requirements
+
+7+ years of experience as a Software Developer in Layer2/Layer3 networking or related systems area.
+Proficiency with device management, system bringup, FreeBSD/Linux internals, Virtualization concepts, KVM, libvirt.
+Excellent problem solving and debugging skills.
+A strong understanding of concepts related to computer architecture, operating system and data structures
+Strong in C/C++ programming, data structures, algorithms.
+Proficiency in software development with Linux/FreeBSD or similar UNIX systems.
+Proficiency in switching and routing technologies.
+Experience with Python or Perl programming
+Exposure to ISSU, High Availability infrastructure.
+BS/MS in Computer Science or similar discipline.

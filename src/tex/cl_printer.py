@@ -14,8 +14,8 @@ class LetterPrinter(TexPrinter):
     self.file.close()
 
   def print(self, profile):
-    company = 'Flow Traders'
-    role = 'C++ Software Engineer'
+    company = 'Optiver'
+    role = 'SOFTWARE DEVELOPER in AUTOMATED TRADING SYSTEMS'
 
     name_parts = profile.personal['name'].split(' ')
     first_name = name_parts[0]

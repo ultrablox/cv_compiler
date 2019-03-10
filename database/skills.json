@@ -256,13 +256,39 @@
     "synonims" : ["RT Systems"]
   },
   {
-    "full_name" : "Trading"
+    "full_name" : "Trading",
+    "synonims" : ["financial"]
   },
   {
     "full_name" : "Software Delivery"
   },
   {
     "full_name" : "Integration"
+  },
+  {
+    "full_name" : "Hypervisor",
+    "synonims" : ["Virtualization"]
+  },
+  {
+    "full_name" : "KVM"
+  },
+  {
+    "full_name" : "libvirt"
+  },
+  {
+    "full_name" : "Scripting",
+    "synonims" : ["scripting"]
+  },
+  {
+    "full_name" : "TCP/IP"
+  },
+  {
+    "full_name" : "Google Protocol Buffers",
+    "display_name" : "protobuf",
+    "synonims" : ["protobuf"]
+  },
+  {
+    "full_name" : "Multithreading"
   }
 ]
 

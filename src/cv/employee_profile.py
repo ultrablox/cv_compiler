@@ -16,9 +16,9 @@ import logging
 from bibtexparser.bibdatabase import BibDatabase
 import shutil
 
-MAX_SCI_PUBS = 4
+MAX_SCI_PUBS = 3
 MAX_NON_SCI_PUBS = 3
-MAX_CONFERENCES = 5
+MAX_CONFERENCES = 2
 
 
 class EmployeeProfile:

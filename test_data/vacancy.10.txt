@@ -1,0 +1,22 @@
+Deep Learning Engineer - Overview
+
+I am headhunting for one of the worlds largest Digital Map Providers in the world. They are looking for a Deep learning engineer that will be a part of thier team whos responsilibity is to design, Implement and maintain thier deep learning mapping software.
+
+My client is commited to supporting a sustainable work/life balance and holds team motivation as thier highest concern.
+
+You Must Have
+
+- Msc or PHd, preferably in machine learning, computer vision, computer
+science, mathematics or physics
+- Excellent knowledge of Deep Learning
+- Strong software engineering skills in C++ and Python
+- You have experience in object detection, segmentation, classification and reidentification or Mapping
+- Prototyping experience in TensorFlow etc.
+- Experience with GPU acceleration for AI
+- Familiar with production-scale data pipelines in Python.
+- English Speaker
+
+Bonus
+- Can speak, write and understand Chinese
+
+- Previous Experince working for a Digital Map Company

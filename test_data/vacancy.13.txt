@@ -1,0 +1,18 @@
+Do you want to add value to our trading business? Enjoy working on a variety of products across the stack? Solve complex problems through simple solutions? Then you might be our new Software Developer!
+
+Technology at Optiver
+Since trading on the floor changed to screen-based trading, we constantly need the most advanced technology, trading software and connections to the market. In short, we need the best Engineers to develop, optimise and support our systems and tools. The atmosphere we are working in is fast, but exciting. This makes Tech at Optiver a great challenge whereby expertise, innovation and fun go hand in hand every day.
+
+What you'll do
+Being part of our Trading Technology team, you are responsible for the full stack of applications required to run the trading business. Activities range from developing ultra-low-latency exchange protocol encoders and decoders, writing and fine-tuning our automated trading strategies, to helping our monitoring and analysis effort by creating and extending user interfaces to provide the traders with more information and control. You interact closely with traders and researchers to understand the business needs and design effective solutions. Sitting on the trading floor you will be amidst the action and get instant feedback on the results of your work. 
+
+What you'll need
+
+Mastery of one or more OOP languages (e.g. C++, C# or Java);
+The ability and desire to write simple and clean code;
+A solid grasp of computer science, algorithms, memory-, and concurrency models, CPU-architecture, operating systems, relational databases, etc.;
+An entrepreneurial attitude and interest in the financial industry;
+An ambition to stay on top of things and keep improving.
+What you can expect from us
+
+An energetic and collaborative work culture with ambitious, down-to-earth colleagues . We constantly ask ourselves how to do better, which creates a stimulating and fun environment. Next to a competitive salary and excellent benefits (such as an attractive profit sharing structure, training opportunities, fully paid first-class commuting expenses, a premium-free pension, discounts on health insurance, breakfast and lunch facilities, sports and leisure activities, weekly chair massages and Friday afternoon drinks), you will get the support and tools to develop your skills on the job so that you feel empowered to be at your best, both personally and professionally. We also provide relocation assistance.
