@@ -10,6 +10,8 @@ import re
 import datetime
 from datetime import date
 import logging
+import locale
+
 
 DEBUG_LATEX = False
 
@@ -90,6 +92,7 @@ def human_code_size(n):
     return '%.1fM' % (float(n) / 1000000)
 
 def to_month_year(time_point):
+  locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
   return time_point.strftime('%b %Y')
 
 

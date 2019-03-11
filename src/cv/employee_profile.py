@@ -178,7 +178,6 @@ class EmployeeProfile:
     pop_pubs_path = os.path.join(dir_name, 'pop_publications.bib')
     shutil.copy(self.__pop_pubs_file, pop_pubs_path)
 
-
   def add_skill_experience(self, skill, period):
     logging.info('Adding period: %s -> %s' % (skill.name, period))
     skill_rec = list(x for x in self.skillRecords if x.skill == skill)[0]

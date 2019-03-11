@@ -1,0 +1,34 @@
+[
+	{
+		"kind": "INTRO",
+		"text": "My name is \\fullname and I would like to apply for the vacancy \\vacancy, where I guess my skills and experience fit good."
+	},
+	{
+		"kind": "CHARACTER",
+		"text": "I can do everything and ready to work for food. I have all the experience a human is able to have. Hire me, you won't regret."
+	},
+	{
+		"kind": "EDUCATION",
+		"text": "I studied hard and get Phd in Maths, Phylosophy and bnch of others.",
+		"skills": ["Algorithms"]
+	},
+	{
+		"kind": "EDUCATION",
+		"text": "I took lots of trainings and have bunch of certificates for some useless languages, that suit well for your vacancy.",
+		"skills": ["C#", "Java"]
+	},
+	{
+		"kind": "EXPERIENCE",
+		"text": "I build a robot in my garage and soldered a nuclear bomb from dirt and rocks and I am very proud of it.",
+		"skills": ["Embedded"]
+	},
+	{
+		"kind": "EXPERIENCE",
+		"text": "I worked in innovative projects with interesting algorithmic and performance challenges including multithreading and distributed sysyems.",
+		"skills": ["C++", "Algorithms"]
+	},
+	{
+		"kind": "CONCLUSION",
+		"text": "I have enclosed my resume for your review and would be thankful for an opportunity to meet with you and discuss my application more detailed."
+	}
+]

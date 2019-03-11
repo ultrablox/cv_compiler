@@ -11,9 +11,6 @@ import math
 from datetime import datetime
 
 
-
-
-
 def task_relevance(task, skill_table, skill_db, vacancy_skill_count):
   # Less skill you have - more focused you are
   # Take product of skill usage by their relevance and divide it by full task length
@@ -93,7 +90,6 @@ def main():
   skill_db = skills_db.SkillsDB()
   script_dir = os.path.dirname(os.path.realpath(__file__)) 
   skill_db.load(os.path.join(script_dir, os.pardir, 'database'))
-
 
   profile = EmployeeProfile(skill_db)
   profile.load(args.input_dir)

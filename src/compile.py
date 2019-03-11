@@ -79,7 +79,6 @@ def main():
     # Generate tex files
     rc_dirs = [os.path.join('..', 'resources'), os.path.join(args.input_dir), tmp_dir]
 
-
     with TexCardsPrinter(out_fname) as tex_printer:
       # tex_printer.rootDir = rc_dirs
       # tex_printer.paperSize = args.paper_size
@@ -93,13 +92,10 @@ def main():
       
       tex_printer.print_profile(profile)
 
-
     with LetterPrinter(tmp_dir, rc_dirs, 'cover_letter.tex') as printer:
       printer.print(profile)
     call_system('cd %s && xelatex %s cover_letter.tex %s' % (tmp_dir, ' '.join(LATEX_PARAMS), LATEX_OUTPUT))
     shutil.copy(os.path.join(tmp_dir, 'cover_letter.pdf'), os.path.join(out_dir, '%s_letter.pdf' % to_file_name(profile.personal['name'])))
-    
-
 
 
 if __name__ == "__main__":

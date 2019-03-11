@@ -13,14 +13,12 @@ class SkillReference:
   def name(self):
     return self.skill.name
 
-class Analyzer:
-  def __init__(self):
-    self._matchedSkills = []
 
-    self._skillDb = skills_db.SkillsDB()
-    script_dir = os.path.dirname(os.path.realpath(__file__)) 
-    self._skillDb.load(os.path.join(script_dir, os.pardir, os.pardir, 'database'))
-  
+class Analyzer:
+  def __init__(self, db):
+    self._matchedSkills = []
+    self._skillDb = db
+
   def _regex_escape(self, text):
     bad_symbols = ['+', '#']
 
@@ -30,7 +28,6 @@ class Analyzer:
         res += '\\'
       res += symb
     return res
-
 
   def _text_contains(self, vacancy_test, keyword):
     match = re.search(r'\W%s\W' % self._regex_escape(keyword), vacancy_test, flags=re.IGNORECASE)
@@ -46,7 +43,7 @@ class Analyzer:
         matched, first, last = self._text_contains(text, syn)
         if matched:
           logging.debug(r'Matched {} by "{}" ({}-{})'.format(skill, syn, first, last))
-          self._matchedSkills += [SkillReference(skill, first, last - first)]
+          self._matchedSkills += [SkillReference(skill, first + 1, last - first - 2)]
           break
 
   def matched_names(self):

@@ -14,6 +14,8 @@ import shutil
 
 
 class TexPrinterBase:
+  TEX_ARGS = ['-halt-on-error', '--interaction=batchmode']
+
   def __init__(self):
     self.rcPaths = []
     self.rootDir = '.'
@@ -72,7 +74,7 @@ class TexPrinterBase:
       else:
         return os.path.abspath(path)
     else:
-      log_print(LOG_LEVEL_DEBUG, 'Image not found: %s' % base_path)
+      logging.error('Image not found: {}'.format(base_path))
       return ''
 
   def compile_to(self, entity, out_pdf):
@@ -108,7 +110,6 @@ class TexPrinter(TexPrinterBase):
     self.file = file_ref
     self.print_data(profile)
     self.file = None
-
 
   def decorated_href(self, url):
     parsed_url = urlparse(url)

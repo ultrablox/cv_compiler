@@ -13,7 +13,7 @@ class SkillsDB:
     self.matchNode = skill.Skill('#matcher#')
     self.graph.add_node(self.matchNode)
     self.skills = []
-  
+
   def has_skill(self, skill_name):
     res = list(x for x in self.skills if (x.name == skill_name) or x.has_synonim(skill_name))
     return len(res) > 0
@@ -45,6 +45,10 @@ class SkillsDB:
 
   def connect_to_matcher(self, node):
     self.graph.add_edge(node, self.matchNode, weight=0.0)
+
+  def load_from_default_location(self):
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    self.load(os.path.join(script_dir, os.pardir, os.pardir, 'database'))
 
   def load(self, db_dir):
     with open(os.path.join(db_dir, 'skills.json')) as f:
