@@ -23,6 +23,7 @@ fi
 
 DOCKER_USER="$(id -u):$(id -g)"
 docker run -u $DOCKER_USER --rm -v $ROOT_DIR:/repo -v $(realpath .local):/.local -v $(realpath .cache):/.cache -v $(realpath $INPUT_DIR):/input -w /repo $DOCKER_IMAGE bash -c "\
+    pip3 install --user --upgrade pip ;
     pip3 install --user -r requirements.txt ;
     cd src;
     ./compile.py --input_dir=/input $COMPILE_ARGS
