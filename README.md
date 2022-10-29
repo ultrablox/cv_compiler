@@ -43,6 +43,7 @@ git clone https://github.com/ultrablox/cv_compiler.git
 4. **Compile Sample CV**, which journal is in *cv_compiler/sample_input*.
 
 ```bash
+# export INPUT_DIR=$(pwd)/../my_cv/data
 scripts/generate.sh
 ```
 5. **Find** compiled CV in pdf at:

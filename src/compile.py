@@ -46,7 +46,7 @@ def add_bool_arg(parser, name, default=False):
 
 
 def main():
-  logging.basicConfig(level=logging.INFO)
+  logging.basicConfig(level=logging.DEBUG)
   
   parser = argparse.ArgumentParser(description='Compile CV into PDF file.')
   parser.add_argument('--input_dir', type=str, default='/input', help='input profile directory')
@@ -69,10 +69,11 @@ def main():
   profile.compress()
 
   with tempfile.TemporaryDirectory() as tmp_dir:
-    tmp_dir = os.path.join('..', 'tmp')
+    # tmp_dir = os.path.join('..', 'tmp')
     # Generate watermark qr_code
-    qr_path = os.path.join(tmp_dir, 'watermark.svg')
-    print_qr_code(qr_path)
+    if args.watermark:
+      qr_path = os.path.join(tmp_dir, 'watermark.svg')
+      print_qr_code(qr_path)
 
     # Generate tex files
     rc_dirs = [os.path.join('..', 'resources'), os.path.join(args.input_dir), tmp_dir]
