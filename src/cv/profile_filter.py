@@ -3,9 +3,10 @@ import logging
 
 
 class ProfileFilter:
-  def create_relevant_projection(self, src_profile):
+  def create_relevant_projection(self, src_profile, compress_publications=True):
     profile = copy.deepcopy(src_profile)
-    profile.compress()
+    if compress_publications:
+      profile.compress_scientific()
 
     profile.skillRecords.sort(key=lambda x: x.relevance, reverse=True)
 

@@ -12,7 +12,7 @@ import argparse
 
 
 def main():
-  logging.basicConfig(level=logging.ERROR)
+  logging.basicConfig(level=logging.INFO)
 
   parser = argparse.ArgumentParser(description='Compile CV into PDF file.')
   parser.add_argument('--input_dir', type=str, default='../sample_input', help='input profile directory')

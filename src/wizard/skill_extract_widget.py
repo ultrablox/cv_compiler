@@ -66,6 +66,7 @@ class SkillExtractWidget(QWizardPage):
     for skill in self._skillDb.skills:
       item = QStandardItem(skill.name)
       item.setCheckable(True)
+      item.setCheckState(Qt.CheckState.Checked)
       self._skillsModel.appendRow(item)
       self._skillItems[skill] = item
 

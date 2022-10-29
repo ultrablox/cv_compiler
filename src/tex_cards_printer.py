@@ -62,7 +62,7 @@ class TexCardsPrinter(TexPrinter):
       for pub in pubs:
         if pub['visible']:
           is_scopus = '\scopus' if (('source' in pub) and (pub['source'] == 'Scopus')) else ''
-          itemize.item(r'\rmfamily %d --- %s // %s %s' % (int(pub['year']), pub['title'], pub['journal'], is_scopus))
+          itemize.item(r'\rmfamily %d --- %s // %s %s' % (int(pub['year']), latex_escape(pub['title']), pub['journal'] if 'journal' in pub else 'Unknown', is_scopus))
 
 
   def print_popoular_pubs(self, pubs):    
@@ -95,7 +95,7 @@ class TexCardsPrinter(TexPrinter):
         itemize.item('%s (%s, %d)' % (conf['name'], conf['location'], conf['year']))
 
 
-  def print_profile(self, profile):
+  def print_profile(self, profile, cfg):
     EMPLOYMENT_CARD_HEIGHT = 100
    
     out_dir = self.rootDir
@@ -108,14 +108,13 @@ class TexCardsPrinter(TexPrinter):
       
       with TextBlock(self, self.CARD_WIDTH, 0, 0, PAGE_H_MARGIN, PT_IN_MM*10):
         with MinipageElement(self, r'%dpt' % (self.CARD_WIDTH - 2), r'[t][\textheight]'):
-          HeadColumn(self, profile)
+          HeadColumn(self, profile, cfg)
 
         self.write([
           r'\hspace{1pt}\textcolor{color1}{\vrule width 1.5pt}',
           r''
         ])
 
-      
       header_hoffset = self.CARD_WIDTH + GRID_H_SPACING - 6
       SectionHeading(self, 'Relevant Projects', 'In order of relevance', header_hoffset)
       

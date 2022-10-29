@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtWidgets, QtGui
-from PyQt5.QtWidgets import QMainWindow, QLabel, QGridLayout, QWidget, QPlainTextEdit, QHBoxLayout, QListView, QWizardPage, QTreeView, QSlider, QPushButton
+from PyQt5.QtWidgets import QMainWindow, QLabel, QGridLayout, QWidget, QPlainTextEdit, QVBoxLayout, QListView, QWizardPage, QTreeView, QSlider, QPushButton, QSpinBox
 from PyQt5.QtCore import QSize, Qt, QSortFilterProxyModel, QRandomGenerator, QUrl
 from PyQt5.QtGui import QTextCursor, QTextCharFormat, QColor, QStandardItemModel, QStandardItem, QBrush, QIcon, QPixmap, QDesktopServices
 from utils import *
@@ -17,10 +17,19 @@ class FinalWidget(QWizardPage):
     self._profileInputDir = input_dir
     self._outDir = tempfile.mkdtemp()
 
+    bnCompile = QPushButton('Compile')
+    bnCompile.clicked.connect(self._compile_data)
+
     bnOpenDir = QPushButton('Open Output Directory')
     bnOpenDir.clicked.connect(self._open_out_dir)
 
-    lyt = QHBoxLayout()
+    # , 'Visual Skill Count'
+    self._visualSkillCount = QSpinBox(self)
+    self._visualSkillCount.setValue(10)
+
+    lyt = QVBoxLayout()
+    lyt.addWidget(self._visualSkillCount)
+    lyt.addWidget(bnCompile)
     lyt.addWidget(bnOpenDir)
     self.setLayout(lyt)
 
@@ -42,8 +51,12 @@ class FinalWidget(QWizardPage):
         # Copy static resources
         for file in glob.glob(r'../resources/styles/*.*') + glob.glob(r'../resources/fonts/*.*'):
           shutil.copy(file, tex_printer.tmpDirName)
+  
+        cfg = {
+          'visual_skill_count': self._visualSkillCount.value(),
+        }
 
-        tex_printer.print_profile(profile)
+        tex_printer.print_profile(profile, cfg)
 
   def _compile_letter(self, profile):
     body = self._letterWidget.assemble_body()
@@ -66,6 +79,9 @@ class FinalWidget(QWizardPage):
         tex_printer.write([r'\makeletterclosing'])
 
   def initializePage(self):
+    pass
+
+  def _compile_data(self):
     profile = self._profileFilter.filtered_profile()
     self._compile_letter(profile)
     self._compile_cv(profile)

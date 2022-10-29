@@ -4,9 +4,10 @@ from cv.skill_experience import *
 from tex.elements import *
 
 class HeadColumn:
-  def __init__(self, tex_printer, profile):
+  def __init__(self, tex_printer, profile, cfg):
     self.__printer = tex_printer
     self.__profile= profile
+    self.config = cfg
     self.print()
 
   def print(self):
@@ -46,7 +47,7 @@ class HeadColumn:
     self.print_skills(self.__profile.skills_totals())
 
   def print_skills(self, skills):
-    VISUAL_SKILL_COUNT = 20
+    VISUAL_SKILL_COUNT = self.config['visual_skill_count']
     self.print_skill_chart(skills[:VISUAL_SKILL_COUNT])
     self.print_skill_list(skills[VISUAL_SKILL_COUNT:])
 

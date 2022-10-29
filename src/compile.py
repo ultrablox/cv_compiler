@@ -21,7 +21,7 @@ from db import skills_db
 import qrcode
 import qrcode.image.svg
 import tempfile
-from tex.cl_printer import *
+from letter.cl_printer import *
 
 
 def print_qr_code(file_name):
@@ -66,7 +66,7 @@ def main():
   profile = EmployeeProfile(skill_db)
   profile.load(args.input_dir)
 
-  profile.compress()
+  # profile.compress()
 
   out_fname = os.path.join(out_dir, '%s_CV.pdf' % to_file_name(profile.personal['name']))
 

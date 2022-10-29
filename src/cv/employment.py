@@ -21,11 +21,12 @@ class Employment:
     
     logging.debug('Deserializing projects for {} employment...'.format(self.name))
     self.projects = []
-    for prj in json_node['projects']:
-      prj_ref = first_true(profile.projects, None, lambda p: p.name == prj)
-      assert prj_ref, 'Invalid project reference: %s' % prj
-      prj_ref.parent = self
-      self.projects += [prj_ref]
+    if 'projects' in json_node:
+      for prj in json_node['projects']:
+        prj_ref = first_true(profile.projects, None, lambda p: p.name == prj)
+        assert prj_ref, 'Invalid project reference: %s' % prj
+        prj_ref.parent = self
+        self.projects += [prj_ref]
 
   def serialize(self):
     return {

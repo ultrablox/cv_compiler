@@ -38,7 +38,7 @@ class EmployeeProfile:
   def load(self, input_dir):
     # Check input structure
     data_path = os.path.join(input_dir, 'data.json')
-    assert os.path.exists(data_path), 'Primary input "%s" does not exist' % data_path
+    assert os.path.exists(data_path), 'Primary input "{}" does not exist'.format(data_path)
 
     lead_path = os.path.join(input_dir, 'lead.txt')
     assert os.path.exists(lead_path), 'Lead text "%s" does not exist' % lead_path
@@ -143,6 +143,13 @@ class EmployeeProfile:
       with open(self.__sci_pubs_file, encoding='utf-8') as bibtex_file:
         self.__sci_bib_database = bibtexparser.load(bibtex_file, parser=parser)
         self.scientificPubs = self.__sci_bib_database.entries
+        for pub in self.scientificPubs:
+          pub['visible'] = True
+          if ('language' in pub) and (pub['language'] != 'en'):
+            logging.warning('Non-english alphabet is not supported')
+            pub['visible'] = False
+          if int(pub['year']) < datetime.datetime.now().year - 3:
+            pub['visible'] = False
     # Popular publications
     self.__pop_pubs_file = os.path.join(base_path, 'pop_publications.bib')
     if os.path.exists(self.__pop_pubs_file):
@@ -151,6 +158,8 @@ class EmployeeProfile:
       with open(self.__pop_pubs_file, encoding='utf-8') as bibtex_file:
         self.__pop_bib_database = bibtexparser.load(bibtex_file, parser=parser)
         self.popularPubs = self.__pop_bib_database.entries
+        for pub in self.popularPubs:
+          pub['visible'] = True
 
   def save_to(self, dir_name):
     ensure_dir_exists(dir_name)
@@ -223,12 +232,13 @@ class EmployeeProfile:
       prj.remove_skill(skill)
 
   # Marks most important publication as visible
-  def compress(self):
+  def compress_scientific(self):
     ###
     ### Scientific publications
     ###
     # Only articles are printed
     # Scopus have priority over simple publication
+    assert False
 
     good_count = 0
     for pub in self.scientificPubs:

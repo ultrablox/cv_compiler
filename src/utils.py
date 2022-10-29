@@ -37,11 +37,13 @@ def latex_escape(msg):
   msg = msg.replace('_', '\_')
   msg = msg.replace('%', '\%')
   msg = msg.replace('#', '\#')
+  msg = msg.replace('{', '')
+  msg = msg.replace('}', '')
   return msg
 
 
 def call_system(cmd_line):
-  logging.debug('Calling: %s' % cmd_line)
+  logging.info('Calling: %s' % cmd_line)
   res = os.system(cmd_line)
   assert res == 0, 'Non-zero return code'
 

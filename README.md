@@ -68,6 +68,12 @@ In order to create relevant CV for given vacncy:
 INPUT_DIR=../../my_cv scripts/generate_projection.sh test_data/vacancy.9.txt
 ```
 
+## Use wizzard
+
+```bash
+cd src
+./run_wizard.py --input_dir=../../my_cv/data
+```
 
 ## Skills Onthology
 

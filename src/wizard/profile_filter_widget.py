@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtWidgets, QtGui
-from PyQt5.QtWidgets import QMainWindow, QLabel, QGridLayout, QWidget, QPlainTextEdit, QHBoxLayout, QListView, QWizardPage, QTreeView, QSlider
+from PyQt5.QtWidgets import QMainWindow, QLabel, QGridLayout, QWidget, QPlainTextEdit, QHBoxLayout, QListView, QWizardPage, QTreeView, QSlider, QCheckBox
 from PyQt5.QtCore import QSize, Qt, QSortFilterProxyModel, QRandomGenerator
 from PyQt5.QtGui import QTextCursor, QTextCharFormat, QColor, QStandardItemModel, QStandardItem, QBrush, QIcon, QPixmap
 from db import skills_db
@@ -44,9 +44,14 @@ class ProfileFilterWidget(QWizardPage):
       self._relevanceLimit.setRange(0, 100)
       self._relevanceLimit.valueChanged.connect(lambda: self._update_relevance_limit(self._relevanceLimit.value() / 100.0))
 
+      self._addAllPublications = QCheckBox('Add all publications', self)
+      self._addAllPublications.setCheckState(Qt.CheckState.Checked)
+
       lyt = QHBoxLayout()
       lyt.addWidget(self._treeProfile)
       lyt.addWidget(self._relevanceLimit)
+      lyt.addWidget(self._addAllPublications)
+
       self.setLayout(lyt)
 
       self._employmentItems = {}
@@ -158,7 +163,11 @@ class ProfileFilterWidget(QWizardPage):
     return res
 
   def employment_relevance(self, employment):
-    return max(x.relevance for x in employment.projects)
+    if employment.projects:
+      return max(x.relevance for x in employment.projects)
+    else:
+      logging.info('No projects in employment {}'.format(employment))
+      return 1.0
 
   def _compute_relevance(self):
     matched_skills = [self._skillDb.find_skill(x) for x in self._matcherPage.matched_skills()]
@@ -233,6 +242,6 @@ class ProfileFilterWidget(QWizardPage):
       skill.keep = (item.checkState() == Qt.CheckState.Checked)
 
     pr_filter = profile_filter.ProfileFilter()
-    res = pr_filter.create_relevant_projection(self._profile)
-    res.compress()
+    res = pr_filter.create_relevant_projection(self._profile, self._addAllPublications.checkState() != Qt.CheckState.Checked)
+
     return res
